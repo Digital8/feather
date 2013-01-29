@@ -1,0 +1,13 @@
+{
+  "name": "feather",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "index.coffee",
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
