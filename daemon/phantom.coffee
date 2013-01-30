@@ -9,21 +9,28 @@ console.log 'args', args
 page = require('webpage').create()
 
 page.viewportSize =
-  width: 100000
-  height: 20000
+  width: 12000
+  height: 12000
 
 console.log 'opening', "http://localhost:1337/?project=#{project_id}"
 
 page.onCallback = ->
   console.log 'callback', arguments...
   
-  console.log 'rendering'
+  # console.log 'rendering'
+  console.time 'render'
+  
+  # setTimeout ->
   
   page.render "renders/#{project_id}_#{page.viewportSize.width}_#{page.viewportSize.height}.png", -> console.log 'rendddeereerr'
   
-  console.log 'rendered'
+  # console.log 'rendered'
+  
+  console.timeEnd 'render'
   
   phantom.exit()
+  
+  # , 1000
 
 page.open "http://localhost:1337/?project_id=#{project_id}", ->
   
