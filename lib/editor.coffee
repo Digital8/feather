@@ -32,13 +32,24 @@ module.exports = class Editor extends EventEmitter
       $image.css
         width: @width
         height: @height
+        position: 'absolute'
+        top: 0
+        left: 0
       $image.resizable(
         handles: 'all'
         minWidth: 100
         minHeight: 100
       ).parent('.ui-wrapper').draggable()
       
+      $image.resizable 'disable'
+      $image.parent('.ui-wrapper').removeClass 'ui-state-disabled'
+      
       (jQuery '.ui-wrapper').css overflow: 'visible'
+  
+  activateTool: (key) ->
+    console.log arguments...
+    
+    @emit 'tool', arguments...
   
   spawnImage: (url) ->
     
