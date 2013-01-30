@@ -41,10 +41,12 @@ module.exports = class Editor extends EventEmitter
         minHeight: 100
       ).parent('.ui-wrapper').draggable()
       
-      $image.resizable 'disable'
-      $image.parent('.ui-wrapper').removeClass 'ui-state-disabled'
+      # $image.resizable 'disable'
+      # $image.parent('.ui-wrapper').removeClass 'ui-state-disabled'
       
       (jQuery '.ui-wrapper').css overflow: 'visible'
+      
+      (jQuery '#stage').selectable()
   
   activateTool: (key) ->
     console.log arguments...
