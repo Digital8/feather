@@ -13,8 +13,6 @@ module.exports = class Editor extends EventEmitter
     @width = (jQuery '#tools').width()
     @height = (jQuery '#tools').height()
     
-    debugger
-    
     @images = {}
     
     handle = jQuery """
