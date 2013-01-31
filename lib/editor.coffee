@@ -135,6 +135,12 @@ module.exports = class Editor extends EventEmitter
     @on 'setFilter', =>
       @pushFilters()
   
+  soft: ->
+    @activate 'soft'
+  
+  singe: ->
+    @activate 'singe'
+  
   sepia: ->
     @activate 'sepia'
   

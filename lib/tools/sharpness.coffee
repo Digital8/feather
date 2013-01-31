@@ -17,7 +17,7 @@ module.exports = class Sharpness extends Tool
       value /= 50
       value *= -1
       
-      value = Math.round value
+      # value = Math.round value
       
       value = Math.max 0, value
       

@@ -10,3 +10,5 @@ module.exports =
   sepia: require './tools/sepia'
   greyscale: require './tools/greyscale'
   sharpness: require './tools/sharpness'
+  singe: require './tools/singe'
+  soft: require './tools/soft'
