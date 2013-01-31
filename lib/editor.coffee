@@ -13,6 +13,7 @@ mixins =
   move: require './mixins/move'
   scale: require './mixins/scale'
   select: require './mixins/select'
+  delete: require './mixins/delete'
 
 module.exports = class Editor extends EventEmitter
   
@@ -46,7 +47,7 @@ module.exports = class Editor extends EventEmitter
       
       @ui.stage.append graphic.dom
     
-    for mixin in [mixins.select, mixins.scale, mixins.move]
+    for mixin in [mixins.select, mixins.scale, mixins.move, mixins.delete]
       augmentation = mixin.augment this
       augmentation ?= {}
       @augmentations.add augmentation

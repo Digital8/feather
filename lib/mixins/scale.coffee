@@ -10,11 +10,6 @@ module.exports = class Scale extends EventEmitter
     
 
 Scale.augment = (editor) ->
-  {stage} = editor.ui
-  
-  # stage.mousedown ->
-  #   handles = stage.find '.ui-resizable-handle'
-  #   handles.fadeOut 'swift'
   
   editor.on 'graphic', (graphic) ->
     
@@ -35,6 +30,8 @@ Scale.augment = (editor) ->
       minHeight: 100
     
     graphic.handles = graphic.dom.find '.ui-resizable-handle'
+    
+    graphic.handles.addClass 'ui-handle'
     
     graphic.hideHandles()
     
