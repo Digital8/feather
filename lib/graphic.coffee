@@ -32,14 +32,6 @@ module.exports = class Graphic extends EventEmitter
     @element.fadeIn()
     
     @editor = args.editor
-    
-    @setFilter()
-  
-  setFilter: (map = {}) ->
-    @editor.filters ?= {}
-    
-    for key, value of map
-      @editor.filters[key] = value
   
   pushFilters: ->
     val = ''

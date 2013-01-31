@@ -112,9 +112,9 @@ module.exports = class Editor extends EventEmitter
     
     @on 'graphic', (graphic) =>
       
-      graphic.pushFilters()
-      
       @ui.stage.append graphic.dom
+      
+      @pushFilters {}
     
     mixins =
       select: Mixins.select
@@ -130,14 +130,12 @@ module.exports = class Editor extends EventEmitter
     for key, tool of Tools
       @kit.include tool
     
-    # @kit.on 'activate', (tool) =>
-    #   @emit 'tool', tool
-    
-    # @on 'tool:request', (key, ui) =>
-      
-    #   @activateTool arguments...
-    
-    # @effects = new Library type: Effect
+    @on 'setFilter', =>
+      @pushFilters()
+  
+  pushFilters: =>
+    for key, graphic of @graphics.objects then do (key, graphic) =>
+      graphic.pushFilters()
   
   image: (src) ->
     
@@ -149,22 +147,10 @@ module.exports = class Editor extends EventEmitter
     
     image.src = src
   
-  # toJSON: ->
-  #   return {
-  #     images: @images.toJSON()
-  #     kit: @kit.toJSON()
-  #     journal: @journal.toJSON()
-  #   }
-  
-  # commit: (callback = ->) ->
-  #   return unless @kit.active?
+  setFilter: (map = {}) ->
+    @filters ?= {}
     
-  #   @journal.commit entry
-  
-  # cancel: (callback = ->) ->
-  #   @kit.cancel callback
-  
-  # activateTool: (key) ->
-  #   return unless @gates.activateTool? key
+    for key, value of map
+      @filters[key] = value
     
-  #   @kit.activate key
+    @emit 'setFilter'

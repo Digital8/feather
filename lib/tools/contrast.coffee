@@ -12,32 +12,14 @@ module.exports = class Contrast extends Tool
   
   activate: ->
     
-    @['previous:filters'] ?=
-      brightness: '0'
-      saturate: '100%'
-      'hue-rotate': '0deg'
-      contrast: '100%'
-    
-    for key, value of @kit.editor.filters
-      @['previous:filters'][key] = value
+    @cache()
     
     listener = @on 'slide', (value) =>
       
-      for key, graphic of @kit.editor.graphics.objects then do (key, graphic) =>
-        if value < 0
-          value *= -0.75
-          value = 100 - value
-        else
-          value *= 3.33
-        
-        console.log value
-        
-        graphic.setFilter contrast: "#{value}%"
-        graphic.pushFilters()
-  
-  deactivate: ->
-    
-    @kit.editor.filters = @['previous:filters']
-    
-    for key, graphic of @kit.editor.graphics.objects then do (key, graphic) =>
-      graphic.pushFilters()
+      if value < 0
+        value *= -0.75
+        value = 100 - value
+      else
+        value *= 3.33
+      
+      @kit.editor.setFilter contrast: "#{value}%"

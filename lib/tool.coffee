@@ -14,10 +14,18 @@ module.exports = class Tool extends EventEmitter
     
     @id ?= uuid()
   
-  toJSON: ->
+  deactivate: ->
     
-    return {
-      id: @id
-      key: @key
-      data: @data
-    }
+    @kit.editor.filters = @['previous:filters']
+    
+    @kit.editor.setFilter {}
+  
+  cache: ->
+    @['previous:filters'] ?=
+      brightness: '0'
+      saturate: '100%'
+      'hue-rotate': '0deg'
+      contrast: '100%'
+    
+    for key, value of @kit.editor.filters
+      @['previous:filters'][key] = value
