@@ -20,6 +20,8 @@ module.exports = class Editor extends EventEmitter
     """
     handle.appendTo document.body
     
+    @zIndex = 100
+    
     @on 'image', (image) =>
       
       image.id ?= uuid()
@@ -41,12 +43,27 @@ module.exports = class Editor extends EventEmitter
         minHeight: 100
       ).parent('.ui-wrapper').draggable()
       
-      # $image.resizable 'disable'
-      # $image.parent('.ui-wrapper').removeClass 'ui-state-disabled'
+      $image.parent('.ui-wrapper').css zIndex: @zIndex
       
-      (jQuery '.ui-wrapper').css overflow: 'visible'
+      (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
       
-      (jQuery '#stage').selectable()
+      $image.parent('.ui-wrapper').css overflow: 'visible'
+      
+      $image.parent('.ui-wrapper').find('.ui-resizable-handle').fadeOut 'fast'
+      
+      $image.parent('.ui-wrapper').mousedown (event) =>
+        event.stopPropagation()
+        (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
+        console.log 'fading in image handles'
+        $image.parent('.ui-wrapper').find('.ui-resizable-handle').fadeIn 'fast'
+        @zIndex++
+        $image.parent('.ui-wrapper').css zIndex: @zIndex
+      
+      # (jQuery '#stage').selectable()
+    
+    (jQuery '#stage').mousedown ->
+      console.log 'fading out all handles'
+      (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
   
   activateTool: (key) ->
     console.log arguments...
