@@ -16,4 +16,11 @@ module.exports = class Brightness extends Tool
     
     @on 'slide', (value) =>
       
-      @kit.editor.setFilter brightness: value / 100
+      if value < 0
+        value /= 100
+        value *= 0.5
+      else
+        value /= 100
+        value *= 0.75
+      
+      @kit.editor.setFilter brightness: value
