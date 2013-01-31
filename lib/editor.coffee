@@ -138,6 +138,9 @@ module.exports = class Editor extends EventEmitter
   sepia: ->
     @activate 'sepia'
   
+  greyscale: ->
+    @activate 'greyscale'
+  
   pushFilters: =>
     for key, graphic of @graphics.objects then do (key, graphic) =>
       graphic.pushFilters()
