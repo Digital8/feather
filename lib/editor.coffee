@@ -38,9 +38,9 @@ module.exports = class Editor extends EventEmitter
     
     @proxies.new args
   
-  @proxy 'commit', to: 'repo', audit: on
   @proxy 'cancel', to: 'repo', audit: on, hook: (object) => object.deactivate()
   
+  @proxy 'commit', to: 'kit', audit: on
   @proxy 'activate', to: 'kit', audit: on
   @proxy 'deactivate', to: 'kit', audit: on # , hook: (object) => object.cancel()
   @proxy 'reset', to: 'kit', audit: on, hook: (object) => object.deactivate()
@@ -114,7 +114,9 @@ module.exports = class Editor extends EventEmitter
       
       @ui.stage.append graphic.dom
       
-      @pushFilters {}
+      setTimeout =>
+        @setFilter()
+      , 333
     
     mixins =
       select: Mixins.select
@@ -133,6 +135,9 @@ module.exports = class Editor extends EventEmitter
     @on 'setFilter', =>
       @pushFilters()
   
+  sepia: ->
+    @activate 'sepia'
+  
   pushFilters: =>
     for key, graphic of @graphics.objects then do (key, graphic) =>
       graphic.pushFilters()
@@ -148,7 +153,12 @@ module.exports = class Editor extends EventEmitter
     image.src = src
   
   setFilter: (map = {}) ->
-    @filters ?= {}
+    @filters ?=
+      brightness: '0'
+      saturate: '100%'
+      'hue-rotate': '0deg'
+      contrast: '100%'
+      sepia: '0%'
     
     for key, value of map
       @filters[key] = value

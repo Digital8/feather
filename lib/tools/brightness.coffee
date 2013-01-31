@@ -4,11 +4,9 @@ module.exports = class Brightness extends Tool
   
   constructor: (args = {}) ->
     
-    super
+    @ui = 'brightness'
     
-    @kit.editor.on 'slider', (id, value) =>
-      return unless id is 'brightness'
-      @emit 'slide', value
+    super
   
   activate: ->
     

@@ -18,6 +18,17 @@ module.exports = class Kit extends EventEmitter
   
   toJSON: -> @tools.toJSON()
   
+  commit: ->
+    return unless @active
+    
+    @active.commit? null
+    
+    for key, filter of @active.filters
+      @editor.filters[key] = filter
+      @editor.setFilter()
+    
+    @active = null
+  
   include: (type) ->
     
     instance = new type

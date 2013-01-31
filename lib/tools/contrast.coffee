@@ -4,11 +4,9 @@ module.exports = class Contrast extends Tool
   
   constructor: (args = {}) ->
     
-    super
+    @ui = 'contrast'
     
-    @kit.editor.on 'slider', (id, value) =>
-      return unless id is 'contrast'
-      @emit 'slide', value
+    super
   
   activate: ->
     

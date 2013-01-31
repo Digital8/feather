@@ -4,11 +4,9 @@ module.exports = class Temperature extends Tool
   
   constructor: (args = {}) ->
     
-    super
+    @ui = 'temperature'
     
-    @kit.editor.on 'slider', (id, value) =>
-      return unless id is 'temperature'
-      @emit 'slide', value
+    super
   
   activate: ->
     

@@ -13,19 +13,23 @@ module.exports = class Tool extends EventEmitter
       @[key] = value
     
     @id ?= uuid()
+    
+    @ui ?= args.ui
+    
+    @kit.editor.on 'slider', (id, value) =>
+      return unless id is @ui
+      
+      @emit 'slide', value
+  
+  commit: ->
   
   deactivate: ->
     
-    @kit.editor.filters = @['previous:filters']
-    
-    @kit.editor.setFilter {}
+    @kit.editor.filters = {}
+    @kit.editor.setFilter @['previous:filters']
   
   cache: ->
-    @['previous:filters'] ?=
-      brightness: '0'
-      saturate: '100%'
-      'hue-rotate': '0deg'
-      contrast: '100%'
+    @['previous:filters'] = {}
     
     for key, value of @kit.editor.filters
       @['previous:filters'][key] = value

@@ -4,11 +4,9 @@ module.exports = class Saturation extends Tool
   
   constructor: (args = {}) ->
     
-    super
+    @ui = 'saturation'
     
-    @kit.editor.on 'slider', (id, value) =>
-      return unless id is 'saturation'
-      @emit 'slide', value
+    super
   
   activate: ->
     
