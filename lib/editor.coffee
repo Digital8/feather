@@ -14,6 +14,7 @@ mixins =
   scale: require './mixins/scale'
   select: require './mixins/select'
   delete: require './mixins/delete'
+  crop: require './mixins/crop'
 
 module.exports = class Editor extends EventEmitter
   
@@ -47,13 +48,15 @@ module.exports = class Editor extends EventEmitter
       
       @ui.stage.append graphic.dom
     
-    for mixin in [mixins.select, mixins.scale, mixins.move, mixins.delete]
+    for mixin in [mixins.select, mixins.scale, mixins.move, mixins.delete, mixins.crop]
       augmentation = mixin.augment this
       augmentation ?= {}
       @augmentations.add augmentation
     
     @kit = new Kit editor: this
     @kit.addTool require './tools/scale'
+    @kit.addTool require './tools/crop'
+    @kit.addTool require './tools/orientate'
     
     @kit.on 'activate', (tool) =>
       @emit 'tool', tool

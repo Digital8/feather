@@ -29,10 +29,13 @@ Scale.augment = (editor) ->
       minWidth: 100
       minHeight: 100
     
-    graphic.handles = graphic.dom.find '.ui-resizable-handle'
+    graphic.handles = graphic.dom.find '> .ui-resizable-handle'
     
     graphic.handles.addClass 'ui-handle'
     
-    graphic.hideHandles()
+    if editor.kit.active?.key is 'scale'
+      console.log 'keeping handles since scale is active'
+    else
+      graphic.hideHandles()
     
     graphic.dom.css overflow: 'visible'

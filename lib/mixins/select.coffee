@@ -25,5 +25,7 @@ Select.augment = (editor) ->
     graphic.dom.mousedown (event) ->
     
       graphic.dom.css zIndex: ++augmentation.zIndex
+    
+    graphic.dom.css zIndex: ++augmentation.zIndex
   
   return augmentation

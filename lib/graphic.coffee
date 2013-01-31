@@ -24,3 +24,5 @@ module.exports = class Graphic extends EventEmitter
     @element.css
       width: '100%'
       height: '100%'
+    
+    @element.addClass 'feather-graphic'
