@@ -8,7 +8,6 @@ if jQuery.fx.speeds?
 Library = require './library'
 Graphic = require './graphic'
 Kit = require './kit'
-# Tool = require './tool'
 
 mixins =
   move: require './mixins/move'
@@ -47,7 +46,6 @@ module.exports = class Editor extends EventEmitter
       
       @ui.stage.append graphic.dom
     
-    # for key, mixin of mixins
     for mixin in [mixins.select, mixins.scale, mixins.move]
       augmentation = mixin.augment this
       augmentation ?= {}
@@ -75,8 +73,6 @@ module.exports = class Editor extends EventEmitter
     console.log arguments...
     
     @kit.activate key
-    
-    # @emit 'tool', arguments...
   
   spawnImage: (url) ->
     
