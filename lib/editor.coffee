@@ -2,73 +2,81 @@
 
 uuid = require 'node-uuid'
 
+if jQuery.fx.speeds?
+  jQuery.fx.speeds.swift = 75
+
+Library = require './library'
+Graphic = require './graphic'
+Kit = require './kit'
+# Tool = require './tool'
+
+mixins =
+  move: require './mixins/move'
+  scale: require './mixins/scale'
+  select: require './mixins/select'
+
 module.exports = class Editor extends EventEmitter
   
   constructor: (args = {}) ->
     
     super
     
+    @id = args.id or uuid()
+    
     @dom = args.dom
     
-    @width = (jQuery '#tools').width()
-    @height = (jQuery '#tools').height()
+    @ui = {}
+    # @ui.tools = jQuery '#tools'
+    @ui.stage = jQuery '#stage'
     
-    @images = {}
+    @width = @ui.stage.width()
+    @height = @ui.stage.height()
     
-    handle = jQuery """
-      <div id="handle" class="ui-resizable-handle" style="display: none; width: 100%; height: 22px; background: red;"></div>
-    """
-    handle.appendTo document.body
-    
-    @zIndex = 100
+    @graphics = new Library type: Graphic
+    @graphics.on 'add', (graphic) =>
+      
+      @emit 'graphic', graphic
     
     @on 'image', (image) =>
       
-      image.id ?= uuid()
-      
-      @images[image.id] = image
-      
-      @dom.append image
-      
-      $image = jQuery image
-      $image.css
-        width: @width
-        height: @height
-        position: 'absolute'
-        top: 0
-        left: 0
-      $image.resizable(
-        handles: 'all'
-        minWidth: 100
-        minHeight: 100
-      ).parent('.ui-wrapper').draggable()
-      
-      $image.parent('.ui-wrapper').css zIndex: @zIndex
-      
-      (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
-      
-      $image.parent('.ui-wrapper').css overflow: 'visible'
-      
-      $image.parent('.ui-wrapper').find('.ui-resizable-handle').fadeOut 'fast'
-      
-      $image.parent('.ui-wrapper').mousedown (event) =>
-        event.stopPropagation()
-        (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
-        console.log 'fading in image handles'
-        $image.parent('.ui-wrapper').find('.ui-resizable-handle').fadeIn 'fast'
-        @zIndex++
-        $image.parent('.ui-wrapper').css zIndex: @zIndex
-      
-      # (jQuery '#stage').selectable()
+      @graphics.new dom: jQuery image
     
-    (jQuery '#stage').mousedown ->
-      console.log 'fading out all handles'
-      (jQuery '#stage').find('.ui-resizable-handle').fadeOut 'fast'
+    @augmentations = new Library
+    
+    @on 'graphic', (graphic) =>
+      
+      @ui.stage.append graphic.dom
+    
+    # for key, mixin of mixins
+    for mixin in [mixins.select, mixins.scale, mixins.move]
+      augmentation = mixin.augment this
+      augmentation ?= {}
+      @augmentations.add augmentation
+    
+    @kit = new Kit editor: this
+    @kit.addTool require './tools/scale'
+    
+    @kit.on 'activate', (tool) =>
+      @emit 'tool', tool
+    
+    @on 'tool:request', (key, ui) =>
+      
+      @activateTool arguments...
+    
+    @on 'cancel:request', =>
+      
+      @activateTool null
+    
+    @on 'apply:request', =>
+      
+      @activateTool null
   
   activateTool: (key) ->
     console.log arguments...
     
-    @emit 'tool', arguments...
+    @kit.activate key
+    
+    # @emit 'tool', arguments...
   
   spawnImage: (url) ->
     
