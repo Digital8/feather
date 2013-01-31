@@ -71,7 +71,16 @@ module.exports = class Editor extends EventEmitter
     
     @on 'apply:request', =>
       
-      @activateTool null
+      @apply (error) =>
+        
+        @activateTool null
+  
+  apply: (callback) ->
+    console.log 'applying'
+    
+    @kit.apply =>
+    
+    callback null
   
   activateTool: (key) ->
     console.log arguments...
