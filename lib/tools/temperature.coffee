@@ -1,13 +1,13 @@
 Tool = require '../tool'
 
-module.exports = class Saturation extends Tool
+module.exports = class Temperature extends Tool
   
   constructor: (args = {}) ->
     
     super
     
     @kit.editor.on 'slider', (id, value) =>
-      return unless id is 'saturation'
+      return unless id is 'temperature'
       @emit 'slide', value
   
   activate: ->
@@ -23,7 +23,7 @@ module.exports = class Saturation extends Tool
     listener = @on 'slide', (value) =>
       
       for key, graphic of @kit.editor.graphics.objects then do (key, graphic) =>
-        graphic.setFilter saturate: "#{value + 100}%"
+        graphic.setFilter 'hue-rotate': "#{value * 2}deg"
         graphic.pushFilters()
   
   deactivate: ->

@@ -31,6 +31,9 @@ Scale.augment = (editor) ->
     
     graphic.handles = graphic.dom.find '> .ui-resizable-handle'
     
+    graphic.dom.hide()
+    graphic.dom.fadeIn()
+    
     graphic.handles.addClass 'ui-handle'
     
     if editor.kit.active?.key is 'scale'

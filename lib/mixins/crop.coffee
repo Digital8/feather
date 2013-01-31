@@ -22,6 +22,7 @@ Crop.augment = (editor) ->
       position: 'absolute'
       left: 0
       top: 0
+      display: 'none'
     graphic.dom.append $crop
     
     $crop.addClass 'crop'

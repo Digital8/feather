@@ -33,8 +33,8 @@ module.exports = class Editor extends EventEmitter
   @proxy = (key, args = {}) =>
     args.key ?= key
     
-    args.hook ?= (object) ->
-      console.log 'hook', @key, @to, "#{object.constructor.name} -> #{object[@to].constructor.name}"
+    args.hook ?= (object, args...) ->
+      console.log 'hook', @key, @to, "#{object.constructor.name} -> #{object[@to].constructor.name}", args...
     
     @proxies.new args
   
@@ -42,8 +42,8 @@ module.exports = class Editor extends EventEmitter
   @proxy 'cancel', to: 'repo', audit: on, hook: (object) => object.deactivate()
   
   @proxy 'activate', to: 'kit', audit: on
-  @proxy 'deactivate', to: 'kit', audit: on
-  @proxy 'reset', to: 'kit', audit: on
+  @proxy 'deactivate', to: 'kit', audit: on # , hook: (object) => object.cancel()
+  @proxy 'reset', to: 'kit', audit: on, hook: (object) => object.deactivate()
   
   @property 'id', default: uuid, audit: on
   
@@ -60,9 +60,9 @@ module.exports = class Editor extends EventEmitter
       
       @[proxy.key] = ->
         
-        proxy.hook? this
-        
         @[proxy.to][proxy.key] arguments...
+        
+        proxy.hook? this, arguments...
         
         if proxy.audit
           
@@ -96,6 +96,9 @@ module.exports = class Editor extends EventEmitter
     @width = @ui.stage.width()
     @height = @ui.stage.height()
     
+    @ui.stage.css width: @width
+    @ui.stage.css height: @height
+    
     @graphics = new Library type: Graphic
     @graphics.on 'add', (graphic) =>
       
@@ -103,11 +106,13 @@ module.exports = class Editor extends EventEmitter
     
     @on 'image', (image) =>
       
-      @graphics.new dom: jQuery image
+      @graphics.new dom: (jQuery image), editor: this
     
     @augmentations = new Library
     
     @on 'graphic', (graphic) =>
+      
+      graphic.pushFilters()
       
       @ui.stage.append graphic.dom
     

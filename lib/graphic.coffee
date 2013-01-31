@@ -26,3 +26,25 @@ module.exports = class Graphic extends EventEmitter
       height: '100%'
     
     @element.addClass 'feather-graphic'
+    
+    @element.hide()
+    
+    @element.fadeIn()
+    
+    @editor = args.editor
+    
+    @setFilter()
+  
+  setFilter: (map = {}) ->
+    @editor.filters ?= {}
+    
+    for key, value of map
+      @editor.filters[key] = value
+  
+  pushFilters: ->
+    val = ''
+    
+    for key, value of @editor.filters
+      val += "#{key}(#{value}) "
+    
+    @element.css '-webkit-filter': val

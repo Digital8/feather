@@ -39,7 +39,10 @@ module.exports = class Kit extends EventEmitter
     @emit 'reset'
   
   activate: (key) ->
-    do @reset
+    return if key is @active?.key
+    
+    # do @reset
+    @deactivate @active
     
     tool = @tools.get key
     
