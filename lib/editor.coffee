@@ -1,6 +1,7 @@
 {EventEmitter} = require 'events'
 
 uuid = require 'node-uuid'
+async = require 'async'
 
 if jQuery.fx.speeds?
   jQuery.fx.speeds.swift = 75
@@ -8,27 +9,89 @@ if jQuery.fx.speeds?
 Library = require './library'
 Graphic = require './graphic'
 Kit = require './kit'
+Repo = require './repo'
 
-mixins =
-  move: require './mixins/move'
-  scale: require './mixins/scale'
-  select: require './mixins/select'
-  delete: require './mixins/delete'
-  crop: require './mixins/crop'
+Base = require './base'
+
+Property = require './property'
+
+Mixins = require './mixins'
+
+Tools = require './tools'
 
 module.exports = class Editor extends EventEmitter
   
+  @properties = new Library type: Property, key: 'key'
+  @proxies = new Library type: Property, key: 'key'
+  
+  @property = (key, args = {}) ->
+    args.key ?= key
+    args.default ?= ->
+    
+    @properties.new args
+  
+  @proxy = (key, args = {}) =>
+    args.key ?= key
+    
+    args.hook ?= (object) ->
+      console.log 'hook', @key, @to, "#{object.constructor.name} -> #{object[@to].constructor.name}"
+    
+    @proxies.new args
+  
+  @proxy 'commit', to: 'repo', audit: on
+  @proxy 'cancel', to: 'repo', audit: on, hook: (object) => object.deactivate()
+  
+  @proxy 'activate', to: 'kit', audit: on
+  @proxy 'deactivate', to: 'kit', audit: on
+  @proxy 'reset', to: 'kit', audit: on
+  
+  @property 'id', default: uuid, audit: on
+  
+  @property 'repo', default: (-> new Repo), audit: on
+  
+  @property 'gates', default: (-> {}), audit: on
+  
   constructor: (args = {}) ->
+    for key, property of @constructor.properties.objects
+      if property.default?
+        @[property.key] = property.default()
+    
+    for key, proxy of @constructor.proxies.objects then do (key, proxy) =>
+      
+      @[proxy.key] = ->
+        
+        proxy.hook? this
+        
+        @[proxy.to][proxy.key] arguments...
+        
+        if proxy.audit
+          
+          @emit 'audit', proxy.key, arguments...
     
     super
     
-    @id = args.id or uuid()
-    
-    @dom = args.dom
+    @on 'audit', (key, args...) =>
+      console.log 'auditing', key, args...
+      
+      @emit key, args...
     
     @ui = {}
-    # @ui.tools = jQuery '#tools'
     @ui.stage = jQuery '#stage'
+    
+    args.ui ?= {}
+    
+    for key, selector of args.ui then do (key, selector) =>
+      element = jQuery selector
+      do (element) =>
+        element.click (event) =>
+          event.preventDefault()
+          
+          @emit 'ui', key
+    
+    @on 'ui', (key) ->
+      console.log 'ui', key
+      
+      @[key]()
     
     @width = @ui.stage.width()
     @height = @ui.stage.height()
@@ -48,46 +111,30 @@ module.exports = class Editor extends EventEmitter
       
       @ui.stage.append graphic.dom
     
-    for mixin in [mixins.select, mixins.scale, mixins.move, mixins.delete, mixins.crop]
-      augmentation = mixin.augment this
-      augmentation ?= {}
-      @augmentations.add augmentation
+    mixins =
+      select: Mixins.select
+      scale: Mixins.scale
+      move: Mixins.move
+      delete: Mixins.delete
+      crop: Mixins.crop
+    
+    for key, mixin of mixins
+      @augmentations.add (mixin.augment this) or {}
     
     @kit = new Kit editor: this
-    @kit.addTool require './tools/scale'
-    @kit.addTool require './tools/crop'
-    @kit.addTool require './tools/orientate'
+    for key, tool of Tools
+      @kit.include tool
     
-    @kit.on 'activate', (tool) =>
-      @emit 'tool', tool
+    # @kit.on 'activate', (tool) =>
+    #   @emit 'tool', tool
     
-    @on 'tool:request', (key, ui) =>
+    # @on 'tool:request', (key, ui) =>
       
-      @activateTool arguments...
+    #   @activateTool arguments...
     
-    @on 'cancel:request', =>
-      
-      @activateTool null
-    
-    @on 'apply:request', =>
-      
-      @apply (error) =>
-        
-        @activateTool null
+    # @effects = new Library type: Effect
   
-  apply: (callback) ->
-    console.log 'applying'
-    
-    @kit.apply =>
-    
-    callback null
-  
-  activateTool: (key) ->
-    console.log arguments...
-    
-    @kit.activate key
-  
-  spawnImage: (url) ->
+  image: (src) ->
     
     image = new Image
     
@@ -95,4 +142,24 @@ module.exports = class Editor extends EventEmitter
       
       @emit 'image', image
     
-    image.src = url
+    image.src = src
+  
+  # toJSON: ->
+  #   return {
+  #     images: @images.toJSON()
+  #     kit: @kit.toJSON()
+  #     journal: @journal.toJSON()
+  #   }
+  
+  # commit: (callback = ->) ->
+  #   return unless @kit.active?
+    
+  #   @journal.commit entry
+  
+  # cancel: (callback = ->) ->
+  #   @kit.cancel callback
+  
+  # activateTool: (key) ->
+  #   return unless @gates.activateTool? key
+    
+  #   @kit.activate key

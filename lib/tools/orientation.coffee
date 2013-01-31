@@ -1,6 +1,6 @@
 Tool = require '../tool'
 
-module.exports = class Orientate extends Tool
+module.exports = class Orientation extends Tool
   
   constructor: (args = {}) ->
     
@@ -46,13 +46,5 @@ module.exports = class Orientate extends Tool
       mirror 0
   
   activate: ->
-    
-    # for key, graphic of @kit.editor.graphics.objects
-    
-    # graphic.showCrop()
-    
-    (jQuery '#tool-orientation').fadeIn()
   
   deactivate: ->
-    
-   (jQuery '#tool-orientation').fadeOut()

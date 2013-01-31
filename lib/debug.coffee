@@ -1,14 +1,16 @@
 module.exports = (editor) ->
   
+  editor.debug = on
+  
   # apply on [enter]
   (jQuery document).keyup ({keyCode}) ->
     if keyCode is 13
-      editor.emit 'apply:request'
+      editor.commit()
   
   # cancel on [esc]
   (jQuery document).keyup ({keyCode}) ->
     if keyCode is 27
-      editor.emit 'cancel:request'
+      editor.reset()
   
   # bind [1][2][3][4][5][6][7][8][9][0] to tools
   (jQuery document).keydown (event) ->
@@ -23,3 +25,14 @@ module.exports = (editor) ->
       $el = jQuery el
       
       $el.click()
+  
+  # editor.gates.activateTool = -> yes
+  
+  # insert a test image on [`]
+  (jQuery document).keydown (event) ->
+    
+    if event.which is 192
+      
+      event.preventDefault()
+      
+      app.image '/css/images/home-01-small.jpg'

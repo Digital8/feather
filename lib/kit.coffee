@@ -16,7 +16,9 @@ module.exports = class Kit extends EventEmitter
     @tools.on 'add', (tool) =>
       tool.editor = @editor
   
-  addTool: (type) ->
+  toJSON: -> @tools.toJSON()
+  
+  include: (type) ->
     
     instance = new type
       key: type.name.toLowerCase()
@@ -33,6 +35,7 @@ module.exports = class Kit extends EventEmitter
   
   reset: ->
     @deactivate @active
+    
     @emit 'reset'
   
   activate: (key) ->

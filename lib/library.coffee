@@ -28,6 +28,8 @@ module.exports = class Library extends EventEmitter
   
   add: (object) ->
     
+    return unless object?
+    
     object[@key] ?= uuid()
     
     return if @has object
