@@ -141,6 +141,10 @@ module.exports = class Editor extends EventEmitter
   greyscale: ->
     @activate 'greyscale'
   
+  sharpness: ->
+    console.log 'sharpness'
+    @activate 'sharpness'
+  
   pushFilters: =>
     for key, graphic of @graphics.objects then do (key, graphic) =>
       graphic.pushFilters()
@@ -162,6 +166,7 @@ module.exports = class Editor extends EventEmitter
       'hue-rotate': '0deg'
       contrast: '100%'
       sepia: '0%'
+      blur: '0px'
     
     for key, value of map
       @filters[key] = value

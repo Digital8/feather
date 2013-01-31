@@ -17,6 +17,8 @@ module.exports = class Tool extends EventEmitter
     @ui ?= args.ui
     
     @kit.editor.on 'slider', (id, value) =>
+      # console.log 'slider', arguments...
+      
       return unless id is @ui
       
       @emit 'slide', value

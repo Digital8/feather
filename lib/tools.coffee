@@ -9,3 +9,4 @@ module.exports =
   contrast: require './tools/contrast'
   sepia: require './tools/sepia'
   greyscale: require './tools/greyscale'
+  sharpness: require './tools/sharpness'
