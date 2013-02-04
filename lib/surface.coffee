@@ -8,7 +8,12 @@ module.exports = class Surface extends EventEmitter
     
     @editor = args.editor
     
+    @width = 750
+    @height = 500
+    @aspect = @width / @height
+    
     @element = jQuery """<div>"""
+    @element.attr id: 'surface'
     @element.css
       position: 'absolute'
       left: 0

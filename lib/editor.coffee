@@ -115,7 +115,11 @@ module.exports = class Editor extends EventEmitter
     
     @on 'image', (image) =>
       
-      stage = @stage
+      stage =
+        width: @surface.data.width
+        height: @surface.data.height
+      
+      stage.aspect = stage.width / stage.height
       
       image.aspect = image.width / image.height
       
@@ -133,15 +137,20 @@ module.exports = class Editor extends EventEmitter
         
         graphic.dom.css
           top: -((image.height - stage.height) / 2)
+      
+      if image.width > stage.width
+        graphic.dom.css
+          left: -((image.width - stage.width) / 2)
     
     @augmentations = new Library
     
     @on 'graphic', (graphic) =>
       
-      @ui.stage.append graphic.dom
+      @surface.element.append graphic.dom
       
       setTimeout =>
         @setFilter()
+        Feather.quality()
       , 333
     
     mixins =
