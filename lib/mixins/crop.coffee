@@ -7,7 +7,6 @@ module.exports = class Crop extends EventEmitter
     super
   
   augment: (node) ->
-    
 
 Crop.augment = (editor) ->
   
@@ -32,8 +31,16 @@ Crop.augment = (editor) ->
       minWidth: 100
       minHeight: 100
     
-    $crop.draggable
+    graphic.crop = $crop.draggable
       containment: 'parent'
+    
+    # graphic.original =
+    #   width: graphic.dom.width()
+    #   height: graphic.dom.height()
+    
+    graphic.element.css
+      width: graphic.dom.width()
+      height: graphic.dom.height()
     
     $crop.find('.ui-resizable-handle').addClass 'ui-handle'
     
@@ -49,3 +56,19 @@ Crop.augment = (editor) ->
       console.log 'keeping crop since crop is active'
     else
       graphic.hideCrop()
+    
+    graphic.crop.on 'resizestop', (event, ui) =>
+      
+      graphic.size = ui.size
+      
+      graphic.position = ui.position
+      
+      console.log
+        top: graphic.position.top
+        left: graphic.position.left
+        width: graphic.size.width
+        height: graphic.size.height
+      
+      console.log
+        position_left: graphic.dom.position().left
+        position_top: graphic.dom.position().top
