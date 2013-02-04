@@ -21,6 +21,8 @@ Tools = require './tools'
 
 Operations = require './operations'
 
+Surface = require './surface'
+
 module.exports = class Editor extends EventEmitter
   
   @properties = new Library type: Property, key: 'key'
@@ -101,6 +103,11 @@ module.exports = class Editor extends EventEmitter
     @ui.stage.css width: @width
     @ui.stage.css height: @height
     
+    @stage =
+      width: (jQuery '#tools').width()
+      height: (jQuery '#tools').height()
+    @stage.aspect = @stage.width / @stage.height
+    
     @graphics = new Library type: Graphic
     @graphics.on 'add', (graphic) =>
       
@@ -108,11 +115,7 @@ module.exports = class Editor extends EventEmitter
     
     @on 'image', (image) =>
       
-      stage =
-        width: (jQuery '#stage').width()
-        height: (jQuery '#stage').height()
-      
-      stage.aspect = stage.width / stage.height
+      stage = @stage
       
       image.aspect = image.width / image.height
       
@@ -124,7 +127,12 @@ module.exports = class Editor extends EventEmitter
       image.width *= scale
       image.height *= scale
       
-      @graphics.new image: image, editor: this
+      graphic = @graphics.new image: image, editor: this
+      
+      if image.height > stage.height
+        
+        graphic.dom.css
+          top: -((image.height - stage.height) / 2)
     
     @augmentations = new Library
     
@@ -155,6 +163,8 @@ module.exports = class Editor extends EventEmitter
     
     @operations = new Library
     @operations.add new Operations.crop
+    
+    @surface = new Surface editor: this
   
   soft: ->
     @activate 'soft'
