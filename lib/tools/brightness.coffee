@@ -10,7 +10,7 @@ module.exports = class Brightness extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     @on 'slide', (value) =>
       

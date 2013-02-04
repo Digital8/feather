@@ -10,7 +10,7 @@ module.exports = class Contrast extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     listener = @on 'slide', (value) =>
       

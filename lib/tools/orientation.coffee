@@ -46,5 +46,7 @@ module.exports = class Orientation extends Tool
       mirror 0
   
   activate: ->
+    
+    super
   
   deactivate: ->

@@ -10,7 +10,7 @@ module.exports = class Singe extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     @kit.editor.setFilter
       blur: '0px'

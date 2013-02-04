@@ -8,6 +8,8 @@ module.exports = class Crop extends Tool
   
   activate: ->
     
+    super
+    
     for key, graphic of @kit.editor.graphics.objects
       
       graphic.showCrop()

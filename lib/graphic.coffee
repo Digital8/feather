@@ -46,3 +46,16 @@ module.exports = class Graphic extends EventEmitter
       val += "#{key}(#{value}) "
     
     @element.css '-webkit-filter': val
+  
+  save: ->
+    
+    return {
+      width: @dom.width()
+      height: @dom.height()
+      left: @dom.position().left
+      top: @dom.position().top
+    }
+  
+  restore: (save) ->
+    
+    @dom.css save

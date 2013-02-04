@@ -19,7 +19,7 @@ module.exports = class Text extends Tool
   
   activate: ->
     
-    console.log 'activating text'
+    super
     
     @text = jQuery """<span>"""
     

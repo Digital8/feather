@@ -10,7 +10,7 @@ module.exports = class Temperature extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     listener = @on 'slide', (value) =>
       @kit.editor.setFilter 'hue-rotate': "#{value * 2}deg"

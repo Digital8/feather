@@ -10,7 +10,7 @@ module.exports = class Soft extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     @kit.editor.setFilter
       blur: '1.5px'

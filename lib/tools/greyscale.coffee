@@ -10,7 +10,7 @@ module.exports = class Greyscale extends Tool
   
   activate: ->
     
-    @cache()
+    super
     
     @kit.editor.setFilter
       saturate: '12.5%'

@@ -24,14 +24,36 @@ module.exports = class Tool extends EventEmitter
       @emit 'slide', value
   
   commit: ->
+    
+    
   
   deactivate: ->
     
     @kit.editor.filters = {}
     @kit.editor.setFilter @['previous:filters']
+    
+    # console.log @['previous_graphics']
+    
+    for key, save of @['previous_graphics']
+      
+      image = @kit.editor.graphics.get key
+      
+      image.restore save
+    
+    @['previous_graphics'] = {}
   
-  cache: ->
+  activate: ->
     @['previous:filters'] = {}
     
     for key, value of @kit.editor.filters
       @['previous:filters'][key] = value
+    
+    @['previous_graphics'] ?= {}
+    
+    for key, graphic of @kit.editor.graphics.objects
+      
+      save = graphic.save()
+      
+      @['previous_graphics'][key] = save
+      
+      console.log save
