@@ -18,12 +18,14 @@ module.exports = class Graphic extends EventEmitter
       width: '100%'
       height: '100%'
     
-    @element = args.dom
+    @element = jQuery args.image
     @element.appendTo @dom
     
-    # @element.css
-    #   width: '100%'
-    #   height: '100%'
+    @image = args.image
+    
+    @element.css
+      width: '100%'
+      height: '100%'
     
     @element.addClass 'feather-graphic'
     

@@ -19,6 +19,8 @@ Mixins = require './mixins'
 
 Tools = require './tools'
 
+Operations = require './operations'
+
 module.exports = class Editor extends EventEmitter
   
   @properties = new Library type: Property, key: 'key'
@@ -106,7 +108,9 @@ module.exports = class Editor extends EventEmitter
     
     @on 'image', (image) =>
       
-      @graphics.new dom: (jQuery image), editor: this
+      # console.log 'image'
+      
+      @graphics.new image: image, editor: this
     
     @augmentations = new Library
     
@@ -134,6 +138,9 @@ module.exports = class Editor extends EventEmitter
     
     @on 'setFilter', =>
       @pushFilters()
+    
+    @operations = new Library
+    @operations.add new Operations.crop
   
   soft: ->
     @activate 'soft'
@@ -160,6 +167,10 @@ module.exports = class Editor extends EventEmitter
     image = new Image
     
     image.onload = =>
+      
+      return if image._loaded
+      
+      image._loaded = true
       
       @emit 'image', image
     

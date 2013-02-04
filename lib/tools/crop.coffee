@@ -20,27 +20,33 @@ module.exports = class Crop extends Tool
   
   commit: ->
     
-    console.log 'commit crop'
-    
     for key, graphic of @kit.editor.graphics.objects
       
-      {width, height} = graphic.size
+      url = @kit.editor.operations.get('crop').operate
+        width: graphic.crop.width
+        height: graphic.crop.height
+        
+        left: graphic.crop.left
+        top: graphic.crop.top
+        
+        image: graphic.image
       
-      # graphic.element.css
-      #   # width: width
-      #   # height: height
-      #   # 'background-position'
-      #   top: -graphic.position.top
-      #   left: -graphic.position.left
-      #   position: 'absolute'
-      #   width: graphic.original.width
-      #   height: graphic.original.height
+      graphic.image.src = url
+      
+      {top, left} = graphic.dom.position()
       
       graphic.dom.css
-        left: graphic.dom.position().left + graphic.position.left
-        top: graphic.dom.position().top + graphic.position.top
-        # overflow: 'hidden'
-        width: graphic.size.width
-        height: graphic.size.height
+        left: graphic.crop.left + left
+        top: graphic.crop.top + top
+        
+        width: graphic.crop.width
+        height: graphic.crop.height
+      
+      graphic.$crop.css
+        left: 0
+        top: 0
+        
+        width: graphic.crop.width
+        height: graphic.crop.height
       
       graphic.hideCrop()

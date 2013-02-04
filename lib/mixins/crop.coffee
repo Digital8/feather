@@ -24,23 +24,26 @@ Crop.augment = (editor) ->
       display: 'none'
     graphic.dom.append $crop
     
+    graphic.$crop = $crop
+    
     $crop.addClass 'crop'
     
-    $crop.resizable
+    resizable = $crop.resizable
       handles: 'all'
       minWidth: 100
       minHeight: 100
+      containment: graphic.dom
     
-    graphic.crop = $crop.draggable
+    draggable = $crop.draggable
       containment: 'parent'
     
     # graphic.original =
     #   width: graphic.dom.width()
     #   height: graphic.dom.height()
     
-    graphic.element.css
-      width: graphic.dom.width()
-      height: graphic.dom.height()
+    # graphic.element.css
+    #   width: graphic.dom.width()
+    #   height: graphic.dom.height()
     
     $crop.find('.ui-resizable-handle').addClass 'ui-handle'
     
@@ -57,18 +60,31 @@ Crop.augment = (editor) ->
     else
       graphic.hideCrop()
     
-    graphic.crop.on 'resizestop', (event, ui) =>
+    graphic.crop ?= {}
+    
+    resizable.on 'resize', (event, ui) =>
       
-      graphic.size = ui.size
+      graphic.crop.width = ui.size.width
+      graphic.crop.height = ui.size.height
       
-      graphic.position = ui.position
+      graphic.crop.left = $crop.position().left
+      graphic.crop.top = $crop.position().top
       
-      console.log
-        top: graphic.position.top
-        left: graphic.position.left
-        width: graphic.size.width
-        height: graphic.size.height
+      # console.log 'resize', graphic.crop
+    
+    draggable.on 'drag', (event, ui) =>
       
-      console.log
-        position_left: graphic.dom.position().left
-        position_top: graphic.dom.position().top
+      graphic.crop.left = $crop.position().left
+      graphic.crop.top = $crop.position().top
+      
+      # console.log 'drag', (JSON.stringify graphic.crop)
+      
+      # console.log
+      #   top: graphic.position.top
+      #   left: graphic.position.left
+      #   width: graphic.size.width
+      #   height: graphic.size.height
+      
+      # console.log
+      #   position_left: graphic.dom.position().left
+      #   position_top: graphic.dom.position().top
