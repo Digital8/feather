@@ -12,4 +12,4 @@ module.exports = class Sepia extends Tool
     
     @cache()
     
-    @kit.editor.setFilter sepia: '75%'
+    @kit.editor.setFilter sepia: '100%'

@@ -15,8 +15,8 @@ module.exports = class Graphic extends EventEmitter
       position: 'absolute'
       left: 0
       right: 0
-      width: '100%'
-      height: '100%'
+      # width: '100%'
+      # height: '100%'
     
     @element = jQuery args.image
     @element.appendTo @dom
@@ -26,6 +26,10 @@ module.exports = class Graphic extends EventEmitter
     @element.css
       width: '100%'
       height: '100%'
+    
+    @dom.css
+      width: @image.width
+      height: @image.height
     
     @element.addClass 'feather-graphic'
     

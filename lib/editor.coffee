@@ -90,7 +90,7 @@ module.exports = class Editor extends EventEmitter
           
           @emit 'ui', key
     
-    @on 'ui', (key) ->
+    @on 'ui', (key) =>
       console.log 'ui', key
       
       @[key]()
@@ -108,7 +108,21 @@ module.exports = class Editor extends EventEmitter
     
     @on 'image', (image) =>
       
-      # console.log 'image'
+      stage =
+        width: (jQuery '#stage').width()
+        height: (jQuery '#stage').height()
+      
+      stage.aspect = stage.width / stage.height
+      
+      image.aspect = image.width / image.height
+      
+      if image.aspect < stage.aspect
+        scale = stage.width / image.width
+      else if image.aspect >= stage.aspect
+        scale = stage.height / image.height
+      
+      image.width *= scale
+      image.height *= scale
       
       @graphics.new image: image, editor: this
     
