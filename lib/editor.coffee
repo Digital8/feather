@@ -10,6 +10,7 @@ Library = require './library'
 Graphic = require './graphic'
 Kit = require './kit'
 Repo = require './repo'
+Reader = require './reader'
 
 Base = require './base'
 
@@ -174,6 +175,10 @@ module.exports = class Editor extends EventEmitter
     @operations.add new Operations.crop
     
     @surface = new Surface editor: this
+    
+    @reader = new Reader
+    @reader.on 'read', (dataURL) =>
+      @image dataURL
   
   soft: ->
     @activate 'soft'
