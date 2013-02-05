@@ -75,3 +75,6 @@ module.exports = class Orientation extends Tool
     super
   
   deactivate: ->
+    
+    for key, graphic of @kit.editor.graphics.objects
+      graphic.dom.css border: 'none'
