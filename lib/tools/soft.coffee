@@ -13,7 +13,7 @@ module.exports = class Soft extends Tool
     super
     
     @kit.editor.setFilter
-      blur: '1.5px'
+      blur: '1px'
       brightness: '25%'
       contrast: '75%'
       saturate: '75%'
