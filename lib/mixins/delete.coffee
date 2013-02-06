@@ -25,7 +25,7 @@ Delete.augment = (editor) ->
       'font-size': 20
     graphic.dom.append $deleteButton
     
-    $deleteButton.addClass 'ui-handle'
+    # $deleteButton.addClass 'ui-handle'
     $deleteButton.addClass 'ui-handle-delete'
     
     $deleteButton.mousedown (event) ->

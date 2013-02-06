@@ -27,5 +27,7 @@ Select.augment = (editor) ->
       graphic.dom.css zIndex: ++augmentation.zIndex
     
     graphic.dom.css zIndex: ++augmentation.zIndex
+    
+    # editor.surface.
   
   return augmentation

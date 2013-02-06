@@ -12,6 +12,27 @@ module.exports = class Surface extends EventEmitter
     @height = 500
     @aspect = @width / @height
     
+    @wrapper = jQuery """<div>"""
+    @wrapper.css
+      position: 'absolute'
+      left: 0
+      top: 0
+      width: '100%'
+      height: '100%'
+      # background: 'black'
+    (jQuery '#stage').append @wrapper
+    
+    @elementsElement = jQuery """<div>"""
+    @elementsElement.css
+      position: 'absolute'
+      left: 0
+      top: 0
+      width: '100%'
+      height: '100%'
+      opacity: 0.2
+      # background: 'black'
+    @wrapper.append @elementsElement
+    
     @element = jQuery """<div>"""
     @element.attr id: 'surface'
     @element.css
@@ -24,18 +45,7 @@ module.exports = class Surface extends EventEmitter
       # background: 'red'
       border: '3px dashed'
       'border-color': 'rgb(180, 235, 250)'
-    (jQuery '#stage').append @element
-    
-    @elementsElement = jQuery """<div>"""
-    @elementsElement.css
-      position: 'absolute'
-      left: 0
-      top: 0
-      width: '100%'
-      height: '100%'
-      opacity: 0.2
-      # background: 'black'
-    (jQuery '#stage').append @elementsElement
+    @wrapper.append @element
     
     spawn = (key) =>
       element = jQuery """<div>"""

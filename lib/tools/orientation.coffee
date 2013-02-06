@@ -52,6 +52,8 @@ module.exports = class Orientation extends Tool
     @kit.editor.ui.stage.click =>
       for key, graphic of @kit.editor.graphics.objects
         graphic.dom.css border: 'none'
+        
+        (jQuery '#tool-orientation').find('.icon').css opacity: 0.5
       
       @selected = null
     
@@ -66,13 +68,17 @@ module.exports = class Orientation extends Tool
         for key, _graphic of @kit.editor.graphics.objects
           _graphic.dom.css border: 'none'
         
-        graphic.dom.css border: '3px solid #BADA55'
+        graphic.dom.css border: '3px solid #8ac53f'
+        
+        (jQuery '#tool-orientation').find('.icon').css opacity: 1
         
         @selected = graphic
   
   activate: ->
     
     super
+    
+    (jQuery '#tool-orientation').find('.icon').css opacity: 0.5
   
   deactivate: ->
     
