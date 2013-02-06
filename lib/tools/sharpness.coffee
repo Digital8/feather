@@ -19,8 +19,6 @@ module.exports = class Sharpness extends Tool
       
       value *= 5
       
-      # value = Math.round value
-      
       value = Math.max 0, value
       
       @kit.editor.setFilter blur: "#{value}px"

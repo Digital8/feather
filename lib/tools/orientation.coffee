@@ -11,18 +11,11 @@ module.exports = class Orientation extends Tool
       
       graphic = @selected
       
-      console.log delta
-      
       delta *= 100000
       delta = Math.round delta
       delta /= 100000
       
-      console.log delta
-      
       graphic.theta += delta
-      
-      # graphic.dom.css
-      #   '-webkit-transform': "rotate(#{graphic.rotation}deg)"
       
       graphic.pushTransform()
       
@@ -80,14 +73,8 @@ module.exports = class Orientation extends Tool
             '-webkit-box-shadow': ''
         
         graphic.dom.css
-          # border: '3px solid #8ac53f'
-          
           'box-shadow':         '0px 0px 0px 3px #8ac53f'
           '-webkit-box-shadow': '0px 0px 0px 3px #8ac53f'
-          
-          # -moz-box-shadow: inset 0px 0px 1px #8ac53f;
-          # -webkit-box-shadow: inset 0px 0px 1px #8ac53f;
-          # behavior: url("path/to/js/libs/pie/PIE.htc");
         
         (jQuery '#tool-orientation').find('.icon').css opacity: 1
         
@@ -110,8 +97,6 @@ module.exports = class Orientation extends Tool
           '-moz-transform':    "matrix(#{matrix})"
           '-webkit-transform': "matrix(#{matrix})"
           '-o-transform':      "matrix(#{matrix})"
-    
-    # cos(a) sin(a) -sin(a) cos(a) 0 0
   
   activate: ->
     

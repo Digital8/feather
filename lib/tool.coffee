@@ -17,22 +17,17 @@ module.exports = class Tool extends EventEmitter
     @ui ?= args.ui
     
     @kit.editor.on 'slider', (id, value) =>
-      # console.log 'slider', arguments...
       
       return unless id is @ui
       
       @emit 'slide', value
   
   commit: ->
-    
-    
   
   deactivate: ->
     
     @kit.editor.filters = {}
     @kit.editor.setFilter @['previous:filters']
-    
-    # console.log @['previous_graphics']
     
     for key, save of @['previous_graphics']
       
@@ -46,6 +41,7 @@ module.exports = class Tool extends EventEmitter
     @['previous:filters'] = {}
     
     for key, value of @kit.editor.filters
+      
       @['previous:filters'][key] = value
     
     @['previous_graphics'] ?= {}
@@ -55,5 +51,3 @@ module.exports = class Tool extends EventEmitter
       save = graphic.save()
       
       @['previous_graphics'][key] = save
-      
-      console.log save

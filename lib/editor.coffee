@@ -11,6 +11,8 @@ Graphic = require './graphic'
 Kit = require './kit'
 Repo = require './repo'
 Reader = require './reader'
+Template = require './template'
+Slot = require './slot'
 
 Base = require './base'
 
@@ -23,6 +25,8 @@ Tools = require './tools'
 Operations = require './operations'
 
 Surface = require './surface'
+
+Templates = require './templates'
 
 module.exports = class Editor extends EventEmitter
   
@@ -176,9 +180,78 @@ module.exports = class Editor extends EventEmitter
     
     @surface = new Surface editor: this
     
+    # reader ###
     @reader = new Reader
     @reader.on 'read', (dataURL) =>
       @image dataURL
+    
+    ### templates ###
+    @templates = new Library type: Template, key: 'key'
+    
+    @templates.on 'add', (template) =>
+      $a = jQuery """<a>#{template.key}</a>"""
+      $a.appendTo document.body
+      $a.click =>
+        # alert template.key
+        @layouts.new template: template
+    
+    for key, data of Templates
+      # console.log data
+      data.key = key
+      @templates.new data
+    
+    class Layout extends EventEmitter
+      constructor: (args = {}) ->
+        super
+        
+        @[key] = value for key, value of args
+        
+        @dom = jQuery """<div>"""
+        @dom.css background: 'red'
+        @dom.draggable()
+        
+        zoom = 1
+        @dom.on 'mousewheel', (event) =>
+          {originalEvent} = event
+          
+          val = originalEvent.wheelDelta
+          if 0 < val
+            zoom *= 1.1
+          else if val < 0
+            zoom *= 0.9
+          
+          event.preventDefault()
+          
+          @dom.css zoom: zoom
+        
+        # @dom.text JSON.stringify @template
+        for key, slot of @template.slots.objects
+          
+          # console.log key
+          
+          dom = jQuery """<div>"""
+          dom.css
+            position: 'absolute'
+            background: 'black'
+            # opacity: 0.5
+            overflow: 'hidden'
+            border: '5px solid black'
+            'box-shadow': 'inset 0px 0px 0px 5px white'
+            'background-image': 'url(/css/images/icons/plus-transparent.png)'
+            'background-size': '50%'
+            'background-repeat': 'no-repeat'
+            # 'background-attachment': 'fixed'
+            'background-position': 'center'
+          
+          dom.css left: slot.x, top: slot.y, width: slot.width, height: slot.height
+          dom.appendTo @dom
+          
+          dom.resizable()
+          dom.draggable()
+    
+    @layouts = new Library type: Layout
+    @layouts.on 'add', (layout) =>
+      layout.dom.appendTo @surface.element
   
   soft: ->
     @activate 'soft'
