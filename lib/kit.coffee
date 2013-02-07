@@ -12,9 +12,6 @@ module.exports = class Kit extends EventEmitter
     @editor = args.editor
     
     @tools = new Library type: Tool, key: 'key'
-    
-    @tools.on 'add', (tool) =>
-      tool.editor = @editor
   
   toJSON: -> @tools.toJSON()
   
@@ -34,6 +31,7 @@ module.exports = class Kit extends EventEmitter
     instance = new type
       key: type.name.toLowerCase()
       kit: this
+      editor: @editor
     
     @tools.add instance
   

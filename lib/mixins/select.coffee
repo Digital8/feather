@@ -11,9 +11,12 @@ module.exports = class Select extends EventEmitter
 
 Select.augment = (editor) ->
   
-  augmentation =
-    zIndex: 0
-    selected: null
+  augmentation = new class extends EventEmitter
+    constructor: (args = {}) ->
+      super
+      @key = 'select'
+      @zIndex = 0
+      @selected = null
   
   augmentation.deselect = (graphic) ->
     
@@ -26,6 +29,8 @@ Select.augment = (editor) ->
     selected.hideSelection()
     
     selected.emit 'deselect'
+    
+    @emit 'deselect', graphic
   
   augmentation.select = (graphic) ->
     
@@ -36,6 +41,8 @@ Select.augment = (editor) ->
     graphic.showSelection()
     
     graphic.emit 'select'
+    
+    @emit 'select', graphic
   
   editor.ui.stage.click =>
     augmentation.deselect()
@@ -59,10 +66,13 @@ Select.augment = (editor) ->
     graphic.deselect = ->
       augmentation.deselect graphic
     
+    graphic.dom.click (event) ->
+      event.stopPropagation()
+    
     graphic.dom.mousedown (event) ->
       graphic.select()
     
-    graphic.on 'select', ->
-      graphic.bringToTop()
+    # graphic.on 'select', ->
+    #   graphic.bringToTop()
   
   return augmentation

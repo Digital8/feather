@@ -8,22 +8,13 @@ module.exports = class Scale extends Tool
     
     (jQuery '#zoom-out').click =>
     
-    @kit.editor.ui.stage.click =>
-      
-      for key, graphic of @kit.editor.graphics.objects
-        graphic.hideHandles()
-    
     @kit.editor.on 'graphic', (graphic) =>
       
-      graphic.dom.click (event) =>
-        
+      graphic.on 'deselect', ->
+        graphic.hideHandles()
+      
+      graphic.on 'select', =>
         return unless @kit.active is this
-        
-        event.stopPropagation()
-        
-        for key, _graphic of @kit.editor.graphics.objects
-          _graphic.hideHandles()
-        
         graphic.showHandles()
   
   activate: ->
@@ -31,12 +22,16 @@ module.exports = class Scale extends Tool
     super
     
     (jQuery '#options-resize').fadeIn()
+    
+    @editor.augmentations.get('select')?.selected?.showHandles()
   
   deactivate: ->
     
     super
     
     (jQuery '#options-resize').fadeOut()
+    
+    @editor.augmentations.get('select')?.selected?.hideHandles()
   
   commit: ->
     

@@ -11,7 +11,7 @@ module.exports = class Delete extends EventEmitter
 
 Delete.augment = (editor) ->
   
-  editor.on 'graphic', (graphic) =>
+  editor.on 'graphic', (graphic) ->
     
     $deleteButton = jQuery """<div>"""
     
@@ -37,6 +37,13 @@ Delete.augment = (editor) ->
     graphic.showDeleteButton = ->
       $deleteButton.show()
     
-    graphic.on 'delete', =>
-      
+    graphic.on 'delete', ->
       graphic.dom.remove()
+    
+    graphic.on 'select', ->
+      graphic.showDeleteButton()
+    
+    graphic.on 'deselect', ->
+      graphic.hideDeleteButton()
+    
+    graphic.hideDeleteButton()

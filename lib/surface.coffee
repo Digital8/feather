@@ -66,14 +66,9 @@ module.exports = class Surface extends EventEmitter
     #   setTimeout update, Math.random() * 333
     # update()
     
-    (jQuery '#canvas-width').change (event) =>
-      @width = parseInt event.target.value
+    @editor.on 'size', (key, value) =>
+      @[key] = value
       @editor.emit 'resize'
-      # @update()
-    (jQuery '#canvas-height').change (event) =>
-      @height = parseInt event.target.value
-      @editor.emit 'resize'
-      # @update()
     
     @on 'update', => @push()
     

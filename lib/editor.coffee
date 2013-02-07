@@ -143,7 +143,7 @@ module.exports = class Editor extends EventEmitter
         graphic.dom.css
           left: -((image.width - stage.width) / 2)
     
-    @augmentations = new Library
+    @augmentations = new Library key: 'key'
     
     @on 'graphic', (graphic) =>
       
@@ -152,6 +152,8 @@ module.exports = class Editor extends EventEmitter
       setTimeout =>
         @setFilter()
         Feather.quality()
+        graphic.bringToTop()
+        @augmentations.get('select').deselect()
       , 333
     
     mixins =
@@ -203,6 +205,18 @@ module.exports = class Editor extends EventEmitter
     for key, gate of args.gates
       library = @gates.new key: key
       library.add gate
+    
+    @augmentations.get('select').on 'select', (graphic) =>
+      
+      # clone = graphic.dom.clone()
+      # clone.hide()
+      # clone.appendTo graphic.dom.parent()
+      # clone.css 'z-index': 10000
+      # clone.fadeIn =>
+      #   clone.hide()
+      #   graphic.bringToTop()
+      
+      graphic.bringToTop()
   
   soft: ->
     @activate 'soft'

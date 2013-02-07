@@ -46,6 +46,9 @@ module.exports = class Graphic extends EventEmitter
       val += "#{key}(#{value}) "
     
     @element.css '-webkit-filter': val
+    
+    @emit 'pushFilters'
+    console.log 'pushFilters'
   
   save: ->
     
