@@ -51,7 +51,7 @@ module.exports = class Editor extends EventEmitter
   
   @proxy 'commit', to: 'kit', audit: on
   @proxy 'activate', to: 'kit', audit: on
-  @proxy 'deactivate', to: 'kit', audit: on # , hook: (object) => object.cancel()
+  @proxy 'deactivate', to: 'kit', audit: on
   @proxy 'reset', to: 'kit', audit: on, hook: (object) => object.deactivate()
   
   @property 'id', default: uuid, audit: on
@@ -192,11 +192,9 @@ module.exports = class Editor extends EventEmitter
       $a = jQuery """<a>#{template.key}</a>"""
       $a.appendTo document.body
       $a.click =>
-        # alert template.key
         @layouts.new template: template
     
     for key, data of Templates
-      # console.log data
       data.key = key
       @templates.new data
     
@@ -224,23 +222,18 @@ module.exports = class Editor extends EventEmitter
           
           @dom.css zoom: zoom
         
-        # @dom.text JSON.stringify @template
         for key, slot of @template.slots.objects
-          
-          # console.log key
           
           dom = jQuery """<div>"""
           dom.css
             position: 'absolute'
             background: 'black'
-            # opacity: 0.5
             overflow: 'hidden'
             border: '5px solid black'
             'box-shadow': 'inset 0px 0px 0px 5px white'
             'background-image': 'url(/css/images/icons/plus-transparent.png)'
             'background-size': '50%'
             'background-repeat': 'no-repeat'
-            # 'background-attachment': 'fixed'
             'background-position': 'center'
           
           dom.css left: slot.x, top: slot.y, width: slot.width, height: slot.height
