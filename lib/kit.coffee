@@ -55,6 +55,8 @@ module.exports = class Kit extends EventEmitter
     @emit 'reset'
   
   activate: (key) ->
+    @deactivate @active
+    
     tool = @tools.get key
     
     console.log
