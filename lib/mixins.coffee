@@ -3,4 +3,3 @@ module.exports =
   scale: require './mixins/scale'
   select: require './mixins/select'
   delete: require './mixins/delete'
-  crop: require './mixins/crop'

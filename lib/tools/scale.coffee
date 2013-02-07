@@ -6,8 +6,6 @@ module.exports = class Scale extends Tool
     
     super
     
-    (jQuery '#zoom-out').click =>
-    
     @kit.editor.on 'graphic', (graphic) =>
       
       graphic.on 'deselect', ->

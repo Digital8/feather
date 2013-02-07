@@ -12,3 +12,4 @@ module.exports =
   sharpness: require './tools/sharpness'
   singe: require './tools/singe'
   soft: require './tools/soft'
+  zoom: require './tools/zoom'
