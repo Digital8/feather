@@ -26,7 +26,7 @@ module.exports = (editor) ->
       
       $el.click()
   
-  # editor.gates.activateTool = -> yes
+  editor.gates.get('activate')?.empty()
   
   # insert a test image on [`]
   (jQuery document).keydown (event) ->

@@ -56,3 +56,9 @@ module.exports = class Library extends EventEmitter
     @add object
     
     return object
+  
+  empty: ->
+    
+    for key, object of @objects
+      
+      @remove object

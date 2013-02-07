@@ -3,8 +3,9 @@
 uuid = require 'node-uuid'
 async = require 'async'
 
-if jQuery.fx.speeds?
-  jQuery.fx.speeds.swift = 75
+jQuery?.fx?.speeds?.swift = 75
+
+Property = require './property'
 
 Library = require './library'
 Graphic = require './graphic'
@@ -13,19 +14,12 @@ Repo = require './repo'
 Reader = require './reader'
 Template = require './template'
 Slot = require './slot'
-
-Base = require './base'
-
-Property = require './property'
+Surface = require './surface'
+Layout = require './layout'
 
 Mixins = require './mixins'
-
 Tools = require './tools'
-
 Operations = require './operations'
-
-Surface = require './surface'
-
 Templates = require './templates'
 
 module.exports = class Editor extends EventEmitter
@@ -55,10 +49,7 @@ module.exports = class Editor extends EventEmitter
   @proxy 'reset', to: 'kit', audit: on, hook: (object) => object.deactivate()
   
   @property 'id', default: uuid, audit: on
-  
   @property 'repo', default: (-> new Repo), audit: on
-  
-  @property 'gates', default: (-> {}), audit: on
   
   constructor: (args = {}) ->
     for key, property of @constructor.properties.objects
@@ -68,6 +59,11 @@ module.exports = class Editor extends EventEmitter
     for key, proxy of @constructor.proxies.objects then do (key, proxy) =>
       
       @[proxy.key] = ->
+        
+        gates = (@gates.get proxy.key)
+        if gates?
+          for key, gate of gates.objects
+            return unless gate.call this
         
         @[proxy.to][proxy.key] arguments...
         
@@ -198,53 +194,15 @@ module.exports = class Editor extends EventEmitter
       data.key = key
       @templates.new data
     
-    class Layout extends EventEmitter
-      constructor: (args = {}) ->
-        super
-        
-        @[key] = value for key, value of args
-        
-        @dom = jQuery """<div>"""
-        @dom.css background: 'red'
-        @dom.draggable()
-        
-        zoom = 1
-        @dom.on 'mousewheel', (event) =>
-          {originalEvent} = event
-          
-          val = originalEvent.wheelDelta
-          if 0 < val
-            zoom *= 1.1
-          else if val < 0
-            zoom *= 0.9
-          
-          event.preventDefault()
-          
-          @dom.css zoom: zoom
-        
-        for key, slot of @template.slots.objects
-          
-          dom = jQuery """<div>"""
-          dom.css
-            position: 'absolute'
-            background: 'black'
-            overflow: 'hidden'
-            border: '5px solid black'
-            'box-shadow': 'inset 0px 0px 0px 5px white'
-            'background-image': 'url(/css/images/icons/plus-transparent.png)'
-            'background-size': '50%'
-            'background-repeat': 'no-repeat'
-            'background-position': 'center'
-          
-          dom.css left: slot.x, top: slot.y, width: slot.width, height: slot.height
-          dom.appendTo @dom
-          
-          dom.resizable()
-          dom.draggable()
-    
     @layouts = new Library type: Layout
     @layouts.on 'add', (layout) =>
       layout.dom.appendTo @surface.element
+    
+    ### gates ###
+    @gates = new Library type: Library, key: 'key'
+    for key, gate of args.gates
+      library = @gates.new key: key
+      library.add gate
   
   soft: ->
     @activate 'soft'
@@ -259,7 +217,6 @@ module.exports = class Editor extends EventEmitter
     @activate 'greyscale'
   
   sharpness: ->
-    console.log 'sharpness'
     @activate 'sharpness'
   
   pushFilters: =>
