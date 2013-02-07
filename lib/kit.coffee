@@ -38,11 +38,16 @@ module.exports = class Kit extends EventEmitter
     @tools.add instance
   
   deactivate: (tool) ->
+    
+    console.log 'deactivating'
+    
     tool?.deactivate? null
     
+    active = @active
     @active = null
     
-    @emit 'deactivate', tool
+    if active?
+      @emit 'deactivate', tool
   
   reset: ->
     @deactivate @active
@@ -50,11 +55,6 @@ module.exports = class Kit extends EventEmitter
     @emit 'reset'
   
   activate: (key) ->
-    return if key is @active?.key
-    
-    # do @reset
-    @deactivate @active
-    
     tool = @tools.get key
     
     console.log
