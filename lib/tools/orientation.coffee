@@ -46,39 +46,10 @@ module.exports = class Orientation extends Tool
       event.preventDefault()
       mirror 0
     
-    @kit.editor.ui.stage.click =>
-      for key, graphic of @kit.editor.graphics.objects
-        graphic.dom.css
-          'box-shadow': ''
-          '-webkit-box-shadow': ''
-        
-        (jQuery '#tool-orientation').find('.icon').css opacity: 0.5
-      
-      @selected = null
-    
     @kit.editor.on 'graphic', (graphic) =>
       
       graphic.theta ?= 0
       graphic.scale ?= [1, 1]
-      
-      graphic.dom.click (event) =>
-        
-        return unless @kit.active is this
-        
-        event.stopPropagation()
-        
-        for key, _graphic of @kit.editor.graphics.objects
-          _graphic.dom.css
-            'box-shadow': ''
-            '-webkit-box-shadow': ''
-        
-        graphic.dom.css
-          'box-shadow':         '0px 0px 0px 3px #8ac53f'
-          '-webkit-box-shadow': '0px 0px 0px 3px #8ac53f'
-        
-        (jQuery '#tool-orientation').find('.icon').css opacity: 1
-        
-        @selected = graphic
       
       graphic.pushTransform = =>
         
@@ -98,6 +69,8 @@ module.exports = class Orientation extends Tool
           '-webkit-transform': "matrix(#{matrix})"
           '-o-transform':      "matrix(#{matrix})"
   
+  # (jQuery '#tool-orientation').find('.icon').css opacity: 1
+  
   activate: ->
     
     super
@@ -106,5 +79,4 @@ module.exports = class Orientation extends Tool
   
   deactivate: ->
     
-    for key, graphic of @kit.editor.graphics.objects
-      graphic.dom.css border: 'none'
+    super

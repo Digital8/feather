@@ -14,7 +14,6 @@ Crop.augment = (editor) ->
     
     $crop = jQuery """<div>"""
     $crop.css
-      # background: 'white'
       opacity: 0.33
       width: '100%'
       height: '100%'
@@ -36,14 +35,6 @@ Crop.augment = (editor) ->
     
     draggable = $crop.draggable
       containment: 'parent'
-    
-    # graphic.original =
-    #   width: graphic.dom.width()
-    #   height: graphic.dom.height()
-    
-    # graphic.element.css
-    #   width: graphic.dom.width()
-    #   height: graphic.dom.height()
     
     $crop.find('.ui-resizable-handle').addClass 'ui-handle'
     
@@ -69,22 +60,8 @@ Crop.augment = (editor) ->
       
       graphic.crop.left = $crop.position().left
       graphic.crop.top = $crop.position().top
-      
-      # console.log 'resize', graphic.crop
     
     draggable.on 'drag', (event, ui) =>
       
       graphic.crop.left = $crop.position().left
       graphic.crop.top = $crop.position().top
-      
-      # console.log 'drag', (JSON.stringify graphic.crop)
-      
-      # console.log
-      #   top: graphic.position.top
-      #   left: graphic.position.left
-      #   width: graphic.size.width
-      #   height: graphic.size.height
-      
-      # console.log
-      #   position_left: graphic.dom.position().left
-      #   position_top: graphic.dom.position().top

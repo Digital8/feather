@@ -13,12 +13,11 @@ Scale.augment = (editor) ->
   
   editor.on 'graphic', (graphic) ->
     
-    console.log 'scalizing'
-    
     graphic.hideHandles = ->
       graphic.handles.fadeOut 'swift'
     
     graphic.showHandles = ->
+      # debugger
       graphic.handles.fadeIn 'swift'
     
     # save the graphic's container
@@ -31,14 +30,11 @@ Scale.augment = (editor) ->
     
     graphic.handles = graphic.dom.find '> .ui-resizable-handle'
     
+    graphic.handles.hide()
+    
     graphic.dom.hide()
     graphic.dom.fadeIn()
     
     graphic.handles.addClass 'ui-handle'
-    
-    if editor.kit.active?.key is 'scale'
-      console.log 'keeping handles since scale is active'
-    else
-      graphic.hideHandles()
     
     graphic.dom.css overflow: 'visible'
