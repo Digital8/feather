@@ -35,8 +35,8 @@ module.exports = class Layout extends EventEmitter
         overflow: 'hidden'
         border: '5px solid black'
         'box-shadow': 'inset 0px 0px 0px 5px white'
-        'background-image': 'url(/css/images/icons/plus-transparent.png)'
-        'background-size': '50%'
+        'background-image': 'url(/css/images/icons/plus-transparent-pad.png)'
+        'background-size': 'contain'
         'background-repeat': 'no-repeat'
         'background-position': 'center'
       
