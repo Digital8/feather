@@ -31,23 +31,13 @@ module.exports = class Scale extends Tool
     super
     
     (jQuery '#options-resize').fadeIn()
-    
-    # for key, graphic of @kit.editor.graphics.objects
-      
-    #   graphic.showHandles()
   
   deactivate: ->
     
     super
     
     (jQuery '#options-resize').fadeOut()
-    
-    # for key, graphic of @kit.editor.graphics.objects
-      
-    #   graphic.hideHandles()
   
   commit: ->
     
-    # for key, graphic of @kit.editor.graphics.objects
-      
-    #   graphic.hideHandles()
+    super

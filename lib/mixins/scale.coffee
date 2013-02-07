@@ -17,7 +17,6 @@ Scale.augment = (editor) ->
       graphic.handles.fadeOut 'swift'
     
     graphic.showHandles = ->
-      # debugger
       graphic.handles.fadeIn 'swift'
     
     # save the graphic's container
