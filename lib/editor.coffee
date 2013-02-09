@@ -256,19 +256,9 @@ module.exports = class Editor extends EventEmitter
             
             for key, __preset of args.presets
               dom = jQuery """#filter-#{key}"""
-              dom.find('img').css
-                'border': '0px solid rgba(200, 200, 50, 0.75)'
-                'border-radius': '0px'
-                'box-shadow': '0 0 0 rgba(100, 160, 1, 0.5)'
-                'border-top-color': 'rgba(175, 220, 1, 1)'
-                'border-left-color': 'rgba(180, 220, 1, 1)'
+              dom.find('img').css 'border': '0px solid rgba(200, 200, 50, 0.75)'
             
-            preset.dom.find('img').css
-              'border': '2px solid rgba(200, 200, 50, 0.75)'
-              'border-radius': '6px'
-              'box-shadow': '0 0 15px rgba(100, 160, 1, 0.5)'
-              'border-top-color': 'rgba(175, 220, 1, 1)'
-              'border-left-color': 'rgba(180, 220, 1, 1)'
+            preset.dom.find('img').css 'border': '5px solid rgba(200, 200, 50, 0.75)'
 
   image: (src) ->
     
