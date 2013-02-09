@@ -21,33 +21,35 @@ module.exports = class Tool extends EventEmitter
       return unless id is @ui
       
       @emit 'slide', value
+    
+    @previous =
+      filtes: {}
+      graphics: {}
   
   commit: ->
   
   deactivate: ->
     
-    @kit.editor.filters = {}
-    @kit.editor.setFilter @['previous:filters']
+    # reset filters
+    @kit.tools.get('filter').set @previous.filters
     
-    for key, save of @['previous_graphics']
+    # restore graphics
+    for key, save of @previous.graphics
       
-      image = @kit.editor.graphics.get key
+      graphic = @kit.editor.graphics.get key
       
-      image.restore save
-    
-    @['previous_graphics'] = {}
+      continue unless graphic?
+      
+      graphic.restore save
   
-  activate: ->
-    @['previous:filters'] = {}
+  activate: (tool) ->
     
-    for key, value of @kit.editor.filters
-      
-      @['previous:filters'][key] = value
+    # save filters
+    @previous.filters = {}
+    for key, value of @kit.editor.filter
+      @previous.filters[key] = value
     
-    @['previous_graphics'] ?= {}
-    
+    # save graphics
+    @previous.graphics = {}
     for key, graphic of @kit.editor.graphics.objects
-      
-      save = graphic.save()
-      
-      @['previous_graphics'][key] = save
+      @previous.graphics[key] = graphic.save()

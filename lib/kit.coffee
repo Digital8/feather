@@ -26,14 +26,22 @@ module.exports = class Kit extends EventEmitter
     
     @active = null
   
-  include: (type) ->
+  include: (type, defaults = {}) ->
     
-    instance = new type
+    args =
       key: type.name.toLowerCase()
       kit: this
       editor: @editor
     
+    if defaults?
+      for key, value of defaults
+        args[key] = value
+    
+    instance = new type args
+    
     @tools.add instance
+    
+    return instance
   
   deactivate: (tool) ->
     
@@ -52,18 +60,16 @@ module.exports = class Kit extends EventEmitter
     
     @emit 'reset'
   
-  activate: (key) ->
-    @deactivate @active
+  activate: (key, args) ->
+    
+    unless args?.silent
+      @deactivate @active
     
     tool = @tools.get key
     
-    console.log
-      event: 'active'
-      key: key
-      tool: tool
-    
     @active = tool
     
-    tool?.activate? null
+    tool?.activate? key
     
-    @emit 'activate', tool
+    unless args?.silent
+      @emit 'activate', tool

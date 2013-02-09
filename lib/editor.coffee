@@ -16,11 +16,15 @@ Template = require './template'
 Slot = require './slot'
 Surface = require './surface'
 Layout = require './layout'
+Profile = require './profile'
+Filter = require './filter'
+Preset = require './preset'
 
 Mixins = require './mixins'
 Tools = require './tools'
 Operations = require './operations'
 Templates = require './templates'
+Filters = require './filters'
 
 module.exports = class Editor extends EventEmitter
   
@@ -96,7 +100,10 @@ module.exports = class Editor extends EventEmitter
     @on 'ui', (key) =>
       console.log 'ui', key
       
-      @[key]()
+      if key in ['commit', 'reset']
+        @[key] null
+      else
+        @activate key
     
     @width = @ui.stage.width()
     @height = @ui.stage.height()
@@ -150,7 +157,6 @@ module.exports = class Editor extends EventEmitter
       @surface.element.append graphic.dom
       
       setTimeout =>
-        @setFilter()
         Feather.quality()
         graphic.bringToTop()
         @augmentations.get('select').deselect()
@@ -169,11 +175,9 @@ module.exports = class Editor extends EventEmitter
     for key, tool of Tools
       @kit.include tool
     
-    @on 'setFilter', =>
-      @pushFilters()
-    
     @operations = new Library
     @operations.add new Operations.crop
+    @operations.add new Operations.rotate
     
     @surface = new Surface editor: this
     
@@ -206,36 +210,66 @@ module.exports = class Editor extends EventEmitter
       library.add gate
     
     @augmentations.get('select').on 'select', (graphic) =>
-      
-      # clone = graphic.dom.clone()
-      # clone.hide()
-      # clone.appendTo graphic.dom.parent()
-      # clone.css 'z-index': 10000
-      # clone.fadeIn =>
-      #   clone.hide()
-      #   graphic.bringToTop()
-      
       graphic.bringToTop()
-  
-  soft: ->
-    @activate 'soft'
-  
-  singe: ->
-    @activate 'singe'
-  
-  sepia: ->
-    @activate 'sepia'
-  
-  greyscale: ->
-    @activate 'greyscale'
-  
-  sharpness: ->
-    @activate 'sharpness'
-  
-  pushFilters: =>
-    for key, graphic of @graphics.objects then do (key, graphic) =>
-      graphic.pushFilters()
-  
+    
+    @profiles = new Library type: Profile
+    for key, data of args.profiles
+      @profiles.new data
+    
+    @filters = new Library type: Filter, key: 'key'
+    for key, callback of Filters then do (key, callback) =>
+      map =
+        saturate: 'saturation'
+        blur: 'sharpness'
+        'hue-rotate': 'temperature'
+      
+      if map[key]?
+        uiKey = map[key]
+      
+      filter = new Filter key: key, callback: callback, kit: @kit, editor: this
+      @kit.tools.add filter
+      
+      do (filter) =>
+        @on "slider:#{uiKey or key}", (value) =>
+          console.log key, value
+          diff = {}
+          diff[key] = callback value
+          @kit.tools.get('filter').set diff
+    
+    @presets = new Library type: Preset, key: 'key'
+    if args.presets?
+      
+      for key, callback of args.presets then do (key, callback) =>
+        
+        overrides = callback()
+        
+        preset =  new Preset filters: overrides, editor: this, kit: @kit
+        
+        do (preset) =>
+          @kit.tools.add preset
+          
+          preset.dom = jQuery """#filter-#{key}"""
+          preset.dom.click (event) =>
+            event.preventDefault()
+            
+            @kit.tools.get('filter').filter preset.filters
+            
+            for key, __preset of args.presets
+              dom = jQuery """#filter-#{key}"""
+              dom.find('img').css
+                'border': '0px solid rgba(200, 200, 50, 0.75)'
+                'border-radius': '0px'
+                'box-shadow': '0 0 0 rgba(100, 160, 1, 0.5)'
+                'border-top-color': 'rgba(175, 220, 1, 1)'
+                'border-left-color': 'rgba(180, 220, 1, 1)'
+            
+            preset.dom.find('img').css
+              'border': '2px solid rgba(200, 200, 50, 0.75)'
+              'border-radius': '6px'
+              'box-shadow': '0 0 15px rgba(100, 160, 1, 0.5)'
+              'border-top-color': 'rgba(175, 220, 1, 1)'
+              'border-left-color': 'rgba(180, 220, 1, 1)'
+
   image: (src) ->
     
     image = new Image
@@ -249,17 +283,3 @@ module.exports = class Editor extends EventEmitter
       @emit 'image', image
     
     image.src = src
-  
-  setFilter: (map = {}) ->
-    @filters ?=
-      brightness: '0'
-      saturate: '100%'
-      'hue-rotate': '0deg'
-      contrast: '100%'
-      sepia: '0%'
-      blur: '0px'
-    
-    for key, value of map
-      @filters[key] = value
-    
-    @emit 'setFilter'

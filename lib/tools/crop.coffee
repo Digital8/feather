@@ -35,17 +35,17 @@ module.exports = class Crop extends Tool
       $crop.find('.ui-resizable-handle').addClass 'ui-handle'
       
       graphic.hideCrop = ->
-        graphic.element.css '-webkit-filter': 'brightness(0%)'
+        # graphic.element.css '-webkit-filter': 'brightness(0%)'
         $crop.fadeOut()
         graphic.emit 'hideCrop'
-        console.log 'hideCrop'
-        graphic.pushFilters()
+        # console.log 'hideCrop'
+        # graphic.pushFilters()
       
       graphic.showCrop = ->
-        graphic.element.css '-webkit-filter': 'brightness(-25%)'
+        # graphic.element.css '-webkit-filter': 'brightness(-25%)'
         $crop.fadeIn()
         graphic.emit 'showCrop'
-        console.log 'showCrop'
+        # console.log 'showCrop'
       
       graphic.hideCrop()
       
@@ -87,7 +87,7 @@ module.exports = class Crop extends Tool
     
     super
     
-    for key, graphic of @kit.editor.graphics.objects
+    for key, graphic of @editor.graphics.objects
       
       unless graphic.crop.width? and graphic.crop.height? and graphic.crop.top? and graphic.crop.left?
         
@@ -95,7 +95,7 @@ module.exports = class Crop extends Tool
       
       else
         
-        url = @kit.editor.operations.get('crop').operate
+        url = @editor.operations.get('crop').operate
           width: graphic.crop.width
           height: graphic.crop.height
           

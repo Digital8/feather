@@ -14,14 +14,15 @@ module.exports = class Graphic extends EventEmitter
     @dom.css
       position: 'absolute'
       left: 0
-      right: 0
-      # width: '100%'
-      # height: '100%'
+      top: 0
     
     @element = jQuery args.image
     @element.appendTo @dom
     
     @image = args.image
+    
+    @clone = new Image
+    @clone.src = @image.src
     
     @element.css
       width: '100%'
@@ -39,26 +40,21 @@ module.exports = class Graphic extends EventEmitter
     
     @editor = args.editor
   
-  pushFilters: ->
-    val = ''
-    
-    for key, value of @editor.filters
-      val += "#{key}(#{value}) "
-    
-    @element.css '-webkit-filter': val
-    
-    @emit 'pushFilters'
-    console.log 'pushFilters'
-  
   save: ->
     
     return {
-      width: @dom.width()
-      height: @dom.height()
-      left: @dom.position().left
-      top: @dom.position().top
+      css:
+        width: @dom.width()
+        height: @dom.height()
+        left: @dom.position().left
+        top: @dom.position().top
+      src: @image.src
     }
   
   restore: (save) ->
     
-    @dom.css save
+    @dom.css save.css
+    @image.src = save.src
+  
+  remove: ->
+    @dom.fadeOut()

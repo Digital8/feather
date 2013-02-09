@@ -9,5 +9,5 @@ module.exports = class Property extends EventEmitter
     # super
     
     for key, value of args
-      console.log 'key', value
+      # console.log 'key', value
       @[key] = value
