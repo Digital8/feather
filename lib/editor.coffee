@@ -10,7 +10,6 @@ Property = require './property'
 Library = require './library'
 Graphic = require './graphic'
 Kit = require './kit'
-Repo = require './repo'
 Reader = require './reader'
 Template = require './template'
 Slot = require './slot'
@@ -45,7 +44,7 @@ module.exports = class Editor extends EventEmitter
     
     @proxies.new args
   
-  @proxy 'cancel', to: 'repo', audit: on, hook: (object) => object.deactivate()
+  # @proxy 'cancel', to: 'repo', audit: on, hook: (object) => object.deactivate()
   
   @proxy 'commit', to: 'kit', audit: on
   @proxy 'activate', to: 'kit', audit: on
@@ -53,7 +52,7 @@ module.exports = class Editor extends EventEmitter
   @proxy 'reset', to: 'kit', audit: on, hook: (object) => object.deactivate()
   
   @property 'id', default: uuid, audit: on
-  @property 'repo', default: (-> new Repo), audit: on
+  # @property 'repo', default: (-> new Repo), audit: on
   
   constructor: (args = {}) ->
     for key, property of @constructor.properties.objects
