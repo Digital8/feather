@@ -10,7 +10,6 @@ module.exports = class Crop extends Tool
       
       $crop = jQuery """<div>"""
       $crop.css
-        opacity: 0.33
         width: '100%'
         height: '100%'
         position: 'absolute'
@@ -19,33 +18,38 @@ module.exports = class Crop extends Tool
         display: 'none'
       graphic.dom.append $crop
       
-      graphic.$crop = $crop
+      graphic.crop = crop =
+        dom: $crop
       
-      $crop.addClass 'crop'
+      $container = jQuery """<div>"""
+      $container.css
+        opacity: 0.33
+        width: '100%'
+        height: '100%'
+        position: 'absolute'
+        left: 0
+        top: 0
+      crop.dom.append $container
+      $container.addClass 'crop'
       
-      resizable = $crop.resizable
+      resizable = crop.dom.resizable
         handles: 'all'
         minWidth: 100
         minHeight: 100
         containment: graphic.dom
       
-      draggable = $crop.draggable
+      draggable = crop.dom.draggable
         containment: 'parent'
       
-      $crop.find('.ui-resizable-handle').addClass 'ui-handle'
+      crop.dom.find('.ui-resizable-handle').addClass 'ui-handle'
       
       graphic.hideCrop = ->
-        # graphic.element.css '-webkit-filter': 'brightness(0%)'
-        $crop.fadeOut()
+        crop.dom.fadeOut()
         graphic.emit 'hideCrop'
-        # console.log 'hideCrop'
-        # graphic.pushFilters()
       
       graphic.showCrop = ->
-        # graphic.element.css '-webkit-filter': 'brightness(-25%)'
-        $crop.fadeIn()
+        crop.dom.fadeIn()
         graphic.emit 'showCrop'
-        # console.log 'showCrop'
       
       graphic.hideCrop()
       
@@ -115,7 +119,7 @@ module.exports = class Crop extends Tool
           width: graphic.crop.width
           height: graphic.crop.height
         
-        graphic.$crop.css
+        graphic.crop.dom.css
           left: 0
           top: 0
           
