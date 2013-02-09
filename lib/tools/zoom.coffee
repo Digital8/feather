@@ -14,32 +14,21 @@ module.exports = class Zoom extends Tool
       
       selected.zoom ?= 1
       selected.zoom *= factor
-      selected.dom.css zoom: selected.zoom
+      
+      oldCenter = [selected.dom.position().left + (selected.dom.width() / 2), selected.dom.position().top + (selected.dom.height() / 2)]
+      
+      width = selected.clone.width * selected.zoom
+      height = selected.clone.height * selected.zoom
+      
+      selected.dom.css
+        width: width
+        height: height
+      
+      selected.dom.css
+        left: oldCenter[0] - (width / 2)
+        top: oldCenter[1] - (height / 2)
       
       @emit 'zoom'
-      
-      # original =
-      #   width: attrs.width
-      #   height: attrs.height
-      
-      # attrs.width = attrs.width * scale
-      # attrs.height = attrs.height * scale
-      
-      # delta =
-      #   x: original.width - attrs.width
-      #   y: original.height - attrs.height
-      
-      # attrs.x += delta.x / 2
-      # attrs.y += delta.y / 2
-      
-      # @selectedImage.width = attrs.width
-      # @selectedImage.height = attrs.height
-      
-      # console.log 'zoomed'
-      
-      # @selectedImage.update()
-      
-      # 
     
     (jQuery '#zoom-out').click (event) =>
       event.preventDefault()
