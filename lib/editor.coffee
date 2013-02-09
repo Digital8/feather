@@ -40,7 +40,7 @@ module.exports = class Editor extends EventEmitter
     args.key ?= key
     
     args.hook ?= (object, args...) ->
-      console.log 'hook', @key, @to, "#{object.constructor.name} -> #{object[@to].constructor.name}", args...
+    # console.log 'hook', @key, @to, "#{object.constructor.name} -> #{object[@to].constructor.name}", args...
     
     @proxies.new args
   
