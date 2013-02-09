@@ -1,4 +1,4 @@
-Tool = require './tool'
+Tool = require '../tool'
 
 module.exports = class Delete extends Tool
   
@@ -9,7 +9,7 @@ module.exports = class Delete extends Tool
     @editor.on 'graphic', (graphic) =>
       
       graphic.delete =
-        dom: = jQuery """<div>"""
+        dom: jQuery """<div>"""
       
       graphic.delete.dom.css
         width: 20

@@ -168,7 +168,6 @@ module.exports = class Editor extends EventEmitter
       select: Mixins.select
       scale: Mixins.scale
       move: Mixins.move
-      delete: Mixins.delete
     
     for key, mixin of mixins
       @augmentations.add (mixin.augment this) or {}

@@ -5,3 +5,4 @@ module.exports =
   scale: require './tools/scale'
   text: require './tools/text'
   zoom: require './tools/zoom'
+  delete: require './tools/delete'
