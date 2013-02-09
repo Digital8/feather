@@ -50,5 +50,3 @@ module.exports = class Filter extends Tool
   
   activate: ->
     super
-    
-    @

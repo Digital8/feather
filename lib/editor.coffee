@@ -155,10 +155,13 @@ module.exports = class Editor extends EventEmitter
       
       @surface.element.append graphic.dom
       
+      @kit.tools.get('filter').push()
+      
       setTimeout =>
         Feather.quality()
         graphic.bringToTop()
         @augmentations.get('select').deselect()
+        @kit.tools.get('filter').push()
       , 333
     
     mixins =
