@@ -177,6 +177,7 @@ module.exports = class Editor extends EventEmitter
     @operations = new Library
     @operations.add new Operations.crop
     @operations.add new Operations.rotate
+    @operations.add new Operations.mirror
     
     @surface = new Surface editor: this
     

@@ -52,7 +52,6 @@ module.exports = class Graphic extends EventEmitter
     }
   
   restore: (save) ->
-    
     @dom.css save.css
     @image.src = save.src
   

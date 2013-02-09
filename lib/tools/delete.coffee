@@ -1,6 +1,6 @@
-{EventEmitter} = require 'events'
+Tool = require './tool'
 
-module.exports = class Delete extends EventEmitter
+module.exports = class Delete extends Tool
   
   constructor: ->
     
@@ -28,7 +28,7 @@ module.exports = class Delete extends EventEmitter
       graphic.delete.hide = ->
         graphic.delete.dom.fadeOut()
       
-      graphic. = ->
+      graphic.delete.show = ->
         graphic.delete.dom.fadeIn()
       
       graphic.on 'select', ->

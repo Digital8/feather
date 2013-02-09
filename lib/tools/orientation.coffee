@@ -34,13 +34,17 @@ module.exports = class Orientation extends Tool
       rotate 'anticlockwise', -(Math.PI / 2)
     
     mirror = (dimension) =>
-      return unless @selected?
+      selected = @editor.augmentations.get('select').selected
       
-      graphic = @selected
+      return unless selected?
+      
+      graphic = selected
       
       graphic.scale[dimension] *= -1
       
-      graphic.pushTransform()
+      @_commit 'mirror', dimension
+      
+      return
     
     (jQuery '#orientation-vertical').click (event) =>
       event.preventDefault()
@@ -53,6 +57,7 @@ module.exports = class Orientation extends Tool
     @kit.editor.on 'graphic', (graphic) =>
       
       graphic.theta ?= 0
+      graphic.scale ?= [1, 1]
         
       graphic.on 'select', =>
         @enable()
@@ -82,25 +87,34 @@ module.exports = class Orientation extends Tool
     @disable()
   
   _commit: (op, args) ->
-    graphic = @editor.augmentations.get('select').selected
-    
-    save = graphic.save()
-    
-    operation = @editor.operations.get 'rotate'
-    
-    {url, width, height} = operation.operate graphic: graphic
-    
-    oldCenterX = save.css.left + (save.css.width / 2)
-    oldCenterY = save.css.top + (save.css.height / 2)
-    
-    graphic.image.src = url
-    graphic.dom.css
-      left: oldCenterX - (save.css.width / 2)
-      top: oldCenterY - (save.css.height / 2)
-      width: save.css.width
-      height: save.css.height
+    if op is 'mirror'
+      graphic = @editor.augmentations.get('select').selected
+      
+      operation = @editor.operations.get 'mirror'
+      
+      {url} = operation.operate graphic: graphic
+      
+      img = new Image
+      document.body.appendChild img
+      img.src = url
+      
+      graphic.image.src = url
     
     if op is 'rotate'
+      graphic = @editor.augmentations.get('select').selected
+      
+      save = graphic.save()
+      
+      operation = @editor.operations.get 'rotate'
+      
+      {url, width, height} = operation.operate graphic: graphic
+      
+      previous = [save.css.left + (save.css.width / 2), save.css.top + (save.css.height / 2)]
+      
+      graphic.image.src = url
+      
       graphic.dom.css
+        left: previous[0] - (save.css.height / 2)
+        top: previous[1] - (save.css.width / 2)
         width: save.css.height
         height: save.css.width
