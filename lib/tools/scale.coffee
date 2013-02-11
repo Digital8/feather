@@ -34,3 +34,7 @@ module.exports = class Scale extends Tool
   commit: ->
     
     super
+    
+    (jQuery '#options-resize').fadeOut()
+    
+    @editor.augmentations.get('select')?.selected?.hideHandles()
