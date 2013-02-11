@@ -30,9 +30,9 @@ module.exports = class Zoom extends Tool
         width: width
         height: height
       
-      dom.css
-        left: oldCenter[0] - (width / 2)
-        top: oldCenter[1] - (height / 2)
+      # dom.css
+      #   left: oldCenter[0] - (width / 2)
+      #   top: oldCenter[1] - (height / 2)
       
       @emit 'zoom'
     
@@ -51,17 +51,15 @@ module.exports = class Zoom extends Tool
       
       {width, height, top, left} = save.css
       
-      if image.width > @editor.surface.data.width
-        diff = [
-          image.width - @editor.surface.data.width
-          image.height - @editor.surface.data.height
-        ]
-        
-        diff[0] /= 2
-        diff[1] /= 2
-        
-        save.css.left = -diff[0]
-        save.css.top = -diff[1]
+      if width > @editor.surface.data.width
+        diff = width - @editor.surface.data.width
+        diff *= 0.5
+        save.css.left = -diff
+      
+      if height > @editor.surface.data.height
+        diff = height - @editor.surface.data.height
+        diff *= 0.5
+        save.css.top = -diff
       
       graphic.dom.css save.css
   
