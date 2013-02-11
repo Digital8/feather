@@ -31,6 +31,9 @@ module.exports = class Surface extends EventEmitter
       height: '100%'
       opacity: 0.2
       # background: 'black'
+      '-webkit-pointer-events': 'none'
+      'pointer-events': 'none'
+      zIndex: 1000000000000
     @wrapper.append @elementsElement
     
     @element = jQuery """<div>"""
