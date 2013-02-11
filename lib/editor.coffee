@@ -116,53 +116,14 @@ module.exports = class Editor extends EventEmitter
     @stage.aspect = @stage.width / @stage.height
     
     @graphics = new Library type: Graphic
-    @graphics.on 'add', (graphic) =>
-      
-      @emit 'graphic', graphic
+    # @graphics.on 'add', (graphic) =>
     
     @on 'image', (image) =>
-      
-      stage =
-        width: @surface.data.width
-        height: @surface.data.height
-      
-      stage.aspect = stage.width / stage.height
-      
-      image.aspect = image.width / image.height
-      
-      if image.aspect < stage.aspect
-        scale = stage.width / image.width
-      else if image.aspect >= stage.aspect
-        scale = stage.height / image.height
-      
-      image.width *= scale
-      image.height *= scale
-      
       graphic = @graphics.new image: image, editor: this
-      
-      if image.height > stage.height
-        
-        graphic.dom.css
-          top: -((image.height - stage.height) / 2)
-      
-      if image.width > stage.width
-        graphic.dom.css
-          left: -((image.width - stage.width) / 2)
+      @surface.element.append graphic.dom
+      @emit 'graphic', graphic
     
     @augmentations = new Library key: 'key'
-    
-    @on 'graphic', (graphic) =>
-      
-      @surface.element.append graphic.dom
-      
-      @kit.tools.get('filter').push()
-      
-      setTimeout =>
-        Feather.quality()
-        graphic.bringToTop()
-        @augmentations.get('select').deselect()
-        @kit.tools.get('filter').push()
-      , 333
     
     mixins =
       select: Mixins.select
@@ -170,11 +131,23 @@ module.exports = class Editor extends EventEmitter
       move: Mixins.move
     
     for key, mixin of mixins
+      console.log 'mixing in', key
       @augmentations.add (mixin.augment this) or {}
     
     @kit = new Kit editor: this
     for key, tool of Tools
       @kit.include tool
+    
+    @graphics.on 'add', (graphic) =>
+      
+      @kit.tools.get('filter').push()
+      
+      setTimeout =>
+        Feather.quality()
+        @kit.tools.get('zoom').fit graphic
+        @augmentations.get('select').deselect()
+        @kit.tools.get('filter').push()
+      , 111
     
     @operations = new Library
     @operations.add new Operations.crop
