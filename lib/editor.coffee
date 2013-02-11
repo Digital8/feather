@@ -22,7 +22,7 @@ Preset = require './preset'
 Mixins = require './mixins'
 Tools = require './tools'
 Operations = require './operations'
-Templates = require './templates'
+# Templates = require './templates'
 Filters = require './filters'
 
 module.exports = class Editor extends EventEmitter
@@ -170,7 +170,7 @@ module.exports = class Editor extends EventEmitter
       $a.click =>
         @layouts.new template: template
     
-    for key, data of Templates
+    for key, data of args.templates
       data.key = key
       @templates.new data
     
