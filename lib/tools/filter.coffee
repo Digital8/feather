@@ -9,14 +9,18 @@ module.exports = class Filter extends Tool
     @editor.filter = {}
   
   build: (args = {}) ->
-    args.brightness ?= '0'
-    args.saturate ?= '100%'
-    args['hue-rotate'] ?= '0deg'
-    args.contrast ?= '100%'
-    args.sepia ?= '0%'
-    args.blur ?= '0px'
+    arg =
+      sepia: '0%'
+      brightness: '0'
+      saturate: '100%'
+      'hue-rotate': '0deg'
+      contrast: '100%'
+      blur: '0px'
     
-    return args
+    for key, value of args
+      arg[key] = value
+    
+    return arg
   
   set: (map = {}) ->
     for key, value of map
