@@ -72,7 +72,7 @@ Select.augment = (editor) ->
     graphic.dom.mousedown (event) ->
       graphic.select()
     
-    # graphic.on 'select', ->
-    #   graphic.bringToTop()
+    graphic.on 'select', ->
+      graphic.bringToTop()
   
   return augmentation

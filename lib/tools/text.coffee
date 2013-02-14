@@ -40,8 +40,8 @@ module.exports = class Text extends Tool
         color: '#BADA55'
         'font-size': '32px'
         'text-align': 'center'
-        'line-height': "#{@editor.ui.stage.height()}px"
-        width: @editor.ui.stage.width()
+        # 'line-height': "#{@editor.ui.stage.height()}px"
+        # width: @editor.ui.stage.width()
         left: 0
         top: 0
         zIndex: 1000000

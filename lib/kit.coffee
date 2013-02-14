@@ -1,6 +1,6 @@
 {EventEmitter} = require 'events'
 
-Library = require './library'
+Library = require './core/library'
 Tool = require './tool'
 
 module.exports = class Kit extends EventEmitter
@@ -12,19 +12,22 @@ module.exports = class Kit extends EventEmitter
     @editor = args.editor
     
     @tools = new Library type: Tool, key: 'key'
+    
+    @tools.on 'add', (tool) ->
+      console.log 'tool', tool
   
   toJSON: -> @tools.toJSON()
   
-  commit: ->
-    return unless @active
+  # commit: ->
+  #   return unless @active
     
-    @active.commit? null
+  #   @active.commit? null
     
-    for key, filter of @active.filters
-      @editor.filters[key] = filter
-      @editor.setFilter()
+  #   for key, filter of @active.filters
+  #     @editor.filters[key] = filter
+  #     @editor.setFilter()
     
-    @active = null
+  #   @active = null
   
   include: (type, defaults = {}) ->
     
@@ -63,13 +66,18 @@ module.exports = class Kit extends EventEmitter
   activate: (key, args) ->
     
     unless args?.silent
-      @deactivate @active
+      if @active?
+        @deactivate @active
     
     tool = @tools.get key
+    
+    unless tool?
+      console.log 'no', key, 'tool'
+      return
     
     @active = tool
     
     tool?.activate? key
     
-    unless args?.silent
+    unless args?.silent? and args.silent
       @emit 'activate', tool

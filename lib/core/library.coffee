@@ -14,6 +14,10 @@ module.exports = class Library extends EventEmitter
     
     @key = args.key or 'id'
   
+  map: (callback) ->
+    for key, object of @objects
+      callback key, object
+  
   has: (object) ->
     
     key = object[@key]

@@ -75,16 +75,16 @@ module.exports = class Orientation extends Tool
     
     super
     
-    if @kit.editor.augmentations.get('select').selected?
-        @enable()
-    else
-      @disable()
+    # if @kit.editor.augmentations.get('select').selected?
+    #     @enable()
+    # else
+    #   @disable()
   
   deactivate: ->
     
     super
     
-    @disable()
+    # @disable()
   
   _commit: (op, args) ->
     if op is 'mirror'
