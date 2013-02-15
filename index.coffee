@@ -18,7 +18,10 @@ module.exports =
         $ul: jQuery selector
         events: binding.events
       
-      $ul = jQuery selector
+      $toolbar = jQuery selector
+      
+      $ul = jQuery """<ul>"""
+      $ul.appendTo $toolbar
       
       $ul.empty()
       

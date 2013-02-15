@@ -1,0 +1,129 @@
+.feather-graphic {
+  -webkit-transition: -webkit-filter 0.75s;
+  -webkit-filter: sepia(0%) brightness(0) saturate(100%) hue-rotate(0deg) contrast(100%) blur(0px);
+}
+
+.crop {
+  background-color: rgb(115, 115, 115);
+  background-size: cover;
+  background-size: 100% 100%;
+  background-image: url(/css/images/crop-grid.png);
+}
+
+/*.crop {
+  -webkit-background-size: 50px 50px;
+  -moz-background-size: 50px 50px;
+  background-size: 50px 50px;
+
+  background-color:white;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, transparent), color-stop(.5, rgba(200, 0, 0, .5)), to(rgba(200, 0, 0, .5))),
+            -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, transparent), color-stop(.5, rgba(200, 0, 0, .5)), to(rgba(200, 0, 0, .5)));
+  background-image: -webkit-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+          -webkit-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: -moz-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+          -moz-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: -ms-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+          -ms-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: -o-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+          -o-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+          linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+}*/
+
+.ui-wrapper.ui-draggable {
+  overflow: visible;
+}
+
+.ui-handle-delete {
+  background: #eeeeee url("/css/images/icons/slider-handle-red.png") no-repeat center center;
+  background-size: 100% 100%;
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  border: none;
+  -webkit-border-top-left-radius: 3000px;
+  -moz-border-radius-topleft: 3000px;
+  border-top-left-radius: 3000px;
+  -webkit-border-top-right-radius: 3000px;
+  -moz-border-radius-topright: 3000px;
+  border-top-right-radius: 3000px;
+  -webkit-border-bottom-left-radius: 3000px;
+  -moz-border-radius-bottomleft: 3000px;
+  border-bottom-left-radius: 3000px;
+  -webkit-border-bottom-right-radius: 3000px;
+  -moz-border-radius-bottomright: 3000px;
+  border-bottom-right-radius: 3000px;
+  -moz-border-radius: 3000px;
+  -webkit-border-radius: 3000px;
+  border-radius: 3000px;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  width: 1em;
+  height: 1em;
+  z-index: 20;
+}
+
+.ui-handle {
+  background: #eeeeee url("/css/images/icons/slider-handle.png") no-repeat center center;
+  background-size: 100% 100%;
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
+  border: none;
+  -webkit-border-top-left-radius: 3000px;
+  -moz-border-radius-topleft: 3000px;
+  border-top-left-radius: 3000px;
+  -webkit-border-top-right-radius: 3000px;
+  -moz-border-radius-topright: 3000px;
+  border-top-right-radius: 3000px;
+  -webkit-border-bottom-left-radius: 3000px;
+  -moz-border-radius-bottomleft: 3000px;
+  border-bottom-left-radius: 3000px;
+  -webkit-border-bottom-right-radius: 3000px;
+  -moz-border-radius-bottomright: 3000px;
+  border-bottom-right-radius: 3000px;
+  -moz-border-radius: 3000px;
+  -webkit-border-radius: 3000px;
+  border-radius: 3000px;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  width: 1em;
+  height: 1em;
+  z-index: 20;
+}
+
+.ui-resizable-nw, .ui-resizable-ne, .ui-resizable-sw, .ui-resizable-se {
+  width: 20px;
+  height: 20px;
+}
+
+.ui-resizable-nw {
+  top: -10px;
+  left: -10px;
+}
+
+.ui-resizable-ne {
+  top: -10px;
+  right: -10px;
+}
+
+.ui-resizable-sw {
+  bottom: -10px;
+  left: -10px;
+}
+
+.ui-resizable-se {
+  bottom: -10px;
+  right: -10px;
+}
+
+.ui-selecting img {
+  border: 1px solid #ccc;
+}
+.ui-selected img {
+  border: 1px solid #999;
+}

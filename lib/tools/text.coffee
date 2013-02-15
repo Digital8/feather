@@ -51,7 +51,11 @@ module.exports = class Text extends Tool
       
       @text.html 'Wall Creations'
       
-      (jQuery '#stage').append @text
+      @editor.surface.element.append @text
+      
+      @text.css
+        left: (@editor.surface.data.width / 2) - (@text.width() / 2)
+        top: (@editor.surface.data.height / 2) - (@text.height() / 2)
       
       @text.fadeIn()
   
