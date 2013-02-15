@@ -8,6 +8,8 @@ module.exports = (editor) ->
     
     for key, save of data.graphics
       
-      # graphic = editor.graphics.new()
-      
-      editor.image src: save.src
+      image = new Image
+      graphic = editor.graphics.new id: key, image: image, editor: editor
+      editor.surface.element.append graphic.dom
+      editor.emit 'graphic', graphic
+      graphic.restore save

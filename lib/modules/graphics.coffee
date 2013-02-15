@@ -12,7 +12,7 @@ module.exports = (editor) ->
   editor.on 'image', ->
     console.log arguments
   
-  editor.image = ({src}) ->
+  editor.image = ({src, id}) ->
     
     image = new Image
     
@@ -22,14 +22,14 @@ module.exports = (editor) ->
       
       image._loaded = true
       
-      editor.emit 'image', image
+      editor.emit 'image', image, id
     
     image.src = src
 
   editor.graphics = new Library type: Graphic
 
-  editor.on 'image', (image) =>
-    graphic = editor.graphics.new image: image, editor: editor
+  editor.on 'image', (image, id) =>
+    graphic = editor.graphics.new image: image, editor: editor, id: id
     editor.surface.element.append graphic.dom
     editor.emit 'graphic', graphic
 
