@@ -10,6 +10,11 @@ module.exports = (editor) ->
   stage.top = stage.position.top
   
   stage.dom.mousedown (event) ->
+    $target = jQuery event.target
+    id = $target.attr 'id'
+    
+    return unless id in ['wrapper', 'stage', 'surface']
+    
     event.stopPropagation()
     event.preventDefault()
     editor.deselect()

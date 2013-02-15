@@ -10,7 +10,10 @@ module.exports = (editor) ->
   
   editor.select = (graphic) ->
     return unless graphic
-    if editor.selected? and graphic isnt editor.selected 
+    
+    return if graphic is editor.selected
+    
+    if editor.selected?
       editor.deselect editor.selected
     
     editor.selected = graphic
@@ -27,14 +30,20 @@ module.exports = (editor) ->
       graphic.dom.css 'z-index': editor.zIndex++
     
     graphic.on 'select', ->
+      console.log 'select'
       graphic.dom.css 'box-shadow': '0px 0px 0px 3px #8ac53f'
     
     graphic.on 'deselect', ->
+      console.log 'deselect'
       graphic.dom.css 'box-shadow': ''
+    
+    # graphic.dom.find('img').bind 'mousedown', ->
+    #   editor.select graphic
+    #   false
     
     graphic.dom.mousedown (event) ->
       editor.select graphic
-      # event.stopPropagation()
+      return
     
     graphic.on 'select', ->
       graphic.bringToTop()

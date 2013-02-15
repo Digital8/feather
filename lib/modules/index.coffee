@@ -30,6 +30,10 @@ module.exports =
   
   scale: require './scale'
   
+  orientation: require './orientation'
+  
   operations: require './operations'
   
   apply: require './apply'
+  
+  cancel: require './cancel'

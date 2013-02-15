@@ -1,16 +1,11 @@
 module.exports = (editor) ->
   
-  apply = ->
-    
-    if editor.kit.active?
-      
-      editor.kit.active.apply? null
-      
-      editor.emit 'apply', editor.kit.active
+  editor.apply = ->
+    editor.kit.apply (tool) ->
+      editor.emit 'apply', tool
   
   # ui
   editor.on 'ui', (key) ->
+    return unless key is 'apply'
     
-    if key is 'apply'
-      
-      apply()
+    editor.apply()

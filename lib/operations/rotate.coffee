@@ -2,40 +2,34 @@ Operation = require '../operation'
 
 module.exports = class Rotate extends Operation
   
-  constructor: (args = {}) ->
-    
-    super
-    
-    @id = 'rotate'
-  
   operate: (args = {}) ->
     
-    {graphic} = args
+    {graphic, theta} = args
     
-    {theta, clone} = graphic
+    {image} = graphic
     
-    cw = clone.width
-    ch = clone.height
+    cw = image.width
+    ch = image.height
     
     cx = 0
     cy = 0
     
     switch theta
       when (Math.PI / 2)
-        cw = clone.height
-        ch = clone.width
-        cy = clone.height * -1
+        cw = image.height
+        ch = image.width
+        cy = image.height * -1
         break
       
       when Math.PI
-        cx = clone.width * -1
-        cy = clone.height * -1
+        cx = image.width * -1
+        cy = image.height * -1
         break
       
       when (Math.PI / 2) * 3
-        cw = clone.height
-        ch = clone.width
-        cx = clone.width * -1
+        cw = image.height
+        ch = image.width
+        cx = image.width * -1
         break
     
     canvas = document.createElement 'canvas'
@@ -46,7 +40,7 @@ module.exports = class Rotate extends Operation
     
     ctx.rotate theta
     
-    ctx.drawImage clone, cx, cy
+    ctx.drawImage image, cx, cy
     
     url = canvas.toDataURL()
     

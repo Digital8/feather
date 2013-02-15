@@ -18,16 +18,23 @@ module.exports = class Kit extends EventEmitter
   
   toJSON: -> @tools.toJSON()
   
-  # commit: ->
-  #   return unless @active
+  apply: (callback) ->
+    active = @active
     
-  #   @active.commit? null
+    active?.apply? null
     
-  #   for key, filter of @active.filters
-  #     @editor.filters[key] = filter
-  #     @editor.setFilter()
+    @deactivate()
     
-  #   @active = null
+    callback active
+  
+  cancel: (callback) ->
+    active = @active
+    
+    active?.cancel? null
+    
+    @deactivate active
+    
+    callback active
   
   include: (type, defaults = {}) ->
     
@@ -56,7 +63,7 @@ module.exports = class Kit extends EventEmitter
     @active = null
     
     if active?
-      @emit 'deactivate', tool
+      @emit 'deactivate', active
   
   reset: ->
     @deactivate @active

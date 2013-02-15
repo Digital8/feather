@@ -2,44 +2,41 @@ module.exports = (editor) ->
   
   editor.on 'graphic', (graphic) ->
     
-    graphic.hideHandles = ->
-      graphic.handles.fadeOut 'swift'
-    
-    graphic.showHandles = ->
-      graphic.handles.fadeIn 'swift'
-    
-    # # save the graphic's container
-    # graphic.container = graphic.dom
-    
-    console.log 'scale'
-    graphic.dom.resizable
-      handles: 'all'
-      minWidth: 100
-      minHeight: 100
-    
-    graphic.handles = graphic.dom.find '> .ui-resizable-handle'
-    graphic.handles.addClass 'ui-handle'
-    graphic.handles.hide()
-    
-    #   graphic.dom.hide()
-    #   graphic.dom.fadeIn()
-    #   graphic.dom.css overflow: 'visible'
+    graphic.scalable = (args) ->
+      
+      if not args?
+        
+        graphic.dom.resizable
+          handles: 'all'
+          minWidth: 100
+          minHeight: 100
+        
+        graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
+        
+        graphic._scale ?= {}
+      
+      if args is 'destroy'
+        
+        return unless graphic._scale?
+        
+        graphic.dom.resizable 'destroy'
+        
+        delete graphic._scale
     
     graphic.on 'deselect', ->
-      graphic.hideHandles()
+      graphic.scalable 'destroy'
     
     graphic.on 'select', ->
       return unless editor.kit.active?.key is 'scale'
-      graphic.showHandles()
+      
+      graphic.scalable()
   
-  # editor.kit.on 'activate', ({key}) ->
-  #   return unless key is 'scale'
-    
-  #   editor.graphics.map (key, graphic) ->
-      
-  #     graphic._save = graphic.save()
-      
-  #     console.log graphic._save
+  editor.kit.on 'activate', ({key}) ->
+    return unless key is 'scale'
+    editor.selected?.scalable()
+  
+  editor.kit.on 'deactivate', ({key}) ->
+    editor.selected?.scalable 'destroy'
   
   editor.on 'apply', ({key}) ->
     return unless key is 'scale'
@@ -50,7 +47,5 @@ module.exports = (editor) ->
         image: graphic.image
         width: graphic.dom.width()
         height: graphic.dom.height()
-      
-      window.open src
       
       graphic.image.src = src

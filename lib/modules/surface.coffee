@@ -9,6 +9,7 @@ module.exports = (editor) ->
   surface.aspect = surface.width / surface.height
   
   surface.wrapper = jQuery """<div>"""
+  surface.wrapper.attr 'id', 'wrapper'
   surface.wrapper.css
     position: 'absolute'
     left: 0
@@ -31,7 +32,7 @@ module.exports = (editor) ->
   surface.wrapper.append surface.elementsElement
   
   surface.element = jQuery """<div>"""
-  surface.element.attr id: 'surface'
+  surface.element.attr 'id', 'surface'
   surface.element.css
     position: 'absolute'
     left: 0
@@ -40,6 +41,7 @@ module.exports = (editor) ->
     height: '100%'
     border: '3px dashed'
     'border-color': 'rgb(180, 235, 250)'
+  surface.element.data 'crop', true
   surface.wrapper.append surface.element
   
   spawn = (key) =>

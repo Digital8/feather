@@ -2,12 +2,6 @@ Operation = require '../operation'
 
 module.exports = class Mirror extends Operation
   
-  constructor: (args = {}) ->
-    
-    super
-    
-    @id = 'mirror'
-  
   operate: (args = {}) ->
     
     {graphic, width, height} = args

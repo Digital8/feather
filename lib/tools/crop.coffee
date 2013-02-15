@@ -6,4 +6,4 @@ module.exports = class Crop extends Tool
     
     selected = @editor.selected
     
-    selected.crop.op()
+    @editor.crop selected

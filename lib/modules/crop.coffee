@@ -1,91 +1,122 @@
+Surface = require '../surface'
+
 module.exports = (editor) ->
+  
   editor.crop = (graphic) ->
     
-    src = editor.operations.crop.operate
-      image: image
-      
-      width: crop.data.width
-      height: crop.data.height
-      
-      left: crop.data.left
-      top: crop.data.top
+    {width, height, left, top} = graphic._crop
     
-    window.open src
-  
+    src = editor.operations.crop.operate
+      image: graphic.image
+      
+      width: width
+      height: height
+      
+      left: left
+      top: top
+    
+    # window.open src
+    graphic.image.src = src
+    
+    position = graphic.dom.position()
+    
+    graphic.dom.css width: width, height: height
+    graphic.dom.css left: position.left + left, top: position.top + top
+    
   editor.on 'graphic', (graphic) ->
     
-    buildCrop = ->
-      graphic.crop = {}
-      graphic.crop.dom = jQuery """<div class="cropper">"""
-      graphic.crop.dom.css
-        width: '50%'
-        height: '50%'
-        left: '25%'
-        top: '25%'
-        position: 'absolute'
-        background: 'rgba(0, 0, 0, 0.5)'
-        opacity: 1
-      graphic.crop.dom.appendTo graphic.dom
+    graphic.croppable = (args) ->
       
-      # graphic.crop.dom.mousedown (event) ->
-      #   event.stopPropagation()
-      
-      graphic.crop.resizable = graphic.crop.dom.resizable
-        handles: 'all'
-        minWidth: 100
-        minHeight: 100
-        containment: graphic.dom
-      
-      graphic.crop.resizable.on 'resize', (event, ui) =>
-      
-        graphic.crop.width = ui.size.width
-        graphic.crop.height = ui.size.height
+      if not args?
         
-        graphic.crop.left = graphic.crop.dom.position().left
-        graphic.crop.top = graphic.crop.dom.position().top
-      
-      graphic.crop.draggable = graphic.crop.dom.draggable
-        containment: 'parent'
-      
-      graphic.crop.draggable.on 'drag', (event, ui) =>
-        graphic.crop.left = graphic.crop.dom.position().left
-        graphic.crop.top = graphic.crop.dom.position().top
-      
-      graphic.crop.dom.find('.ui-resizable-handle').addClass 'ui-handle'
-      
-      graphic.crop.dom.find('.ui-resizable-handle').css
-        background: "#ffffff url(/css/images/ants.gif)"
-      
-      graphic.crop.mask = jQuery '<div>'
-      graphic.crop.mask.css
-        width: '100%'
-        height: '100%'
-        left: 0
-        top: 0
-        position: 'absolute'
-        background: 'black'
-        opacity: 0.25
-      graphic.crop.mask.appendTo graphic.dom
-      graphic.crop.mask.hide()
-      
-      graphic.crop.show = ->
-        graphic.crop ?= buildCrop()
+        masks = jQuery """<div>"""
+        masks.css
+          width: '100%'
+          height: '100%'
+          left: 0
+          top: 0
+          position: 'absolute'
+          opacity: 0.33
+        masks.appendTo graphic.dom
         
-        graphic.crop.dom.fadeIn()
-        graphic.crop.mask.fadeIn()
+        dom = jQuery """<div>"""
+        dom.css
+          width: '75%'
+          height: '75%'
+          left: '12.5%'
+          top: '12.5%'
+          position: 'absolute'
+        dom.appendTo graphic.dom
+        
+        updateMasks = ->
+          width = dom.width()
+          height = dom.height()
+          
+          position = dom.position()
+          
+          graphic._crop.left = position.left
+          graphic._crop.top = position.top
+          graphic._crop.width = width
+          graphic._crop.height = height
+          
+          (masks.data 'top').css height: position.top, top: 0, width: '100%'
+          (masks.data 'bottom').css height: graphic.dom.height() - (position.top + height), bottom: 0, width: '100%'
+          (masks.data 'left').css height: '100%', left: 0, top: 0, width: position.left
+          (masks.data 'right').css height: '100%', right: 0, top: 0, width: graphic.dom.width() - (position.left + width)
+        
+        resizable = dom.resizable
+          handles: 'all'
+          minWidth: 100
+          minHeight: 100
+          containment: graphic.dom
+          resize: -> updateMasks()
+        
+        draggable = dom.draggable
+          containment: graphic.dom
+          drag: -> updateMasks()
+        
+        graphic._crop ?= {}
+        graphic._crop.dom = dom
+        graphic._crop.draggable = draggable
+        graphic._crop.resizable = resizable
+        
+        graphic._crop.masks = masks
+        
+        spawn = (key) ->
+          mask = jQuery """<div>"""
+          mask.css
+            position: 'absolute'
+            background: 'black'
+          mask.appendTo masks
+          masks.data key, mask
+        
+        spawn key for key in ['top',  'left', 'right', 'bottom']
+        
+        updateMasks()
+        
+        graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
       
-      graphic.crop.hide = ->
-        graphic.crop.dom.fadeOut()
-        graphic.crop.dom.remove()
-        graphic.crop.mask.fadeOut()
-        graphic.crop = {}
-      
-      return graphic.crop
+      if args is 'destroy'
+        
+        return unless graphic._crop?
+        
+        graphic._crop.dom.resizable 'destroy'
+        graphic._crop.dom.draggable 'destroy'
+        graphic._crop.dom.remove()
+        graphic._crop.masks.remove()
+        
+        delete graphic._crop
     
-    graphic.on 'select', =>
+    graphic.on 'select', ->
       return unless editor.kit.active?.key is 'crop'
-      graphic.crop = buildCrop()
-      graphic.crop.show()
+      graphic.croppable()
     
-    graphic.on 'deselect', =>
-      graphic.crop?.hide()
+    graphic.on 'deselect', ->
+      graphic.croppable 'destroy'
+  
+  editor.kit.on 'activate', ({key}) ->
+    return unless key is 'crop'
+    editor.selected?.croppable()
+  
+  editor.kit.on 'deactivate', ({key}) ->
+    editor.selected?.croppable 'destroy'

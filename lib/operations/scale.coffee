@@ -2,12 +2,6 @@ Operation = require '../operation'
 
 module.exports = class Scale extends Operation
   
-  constructor: (args = {}) ->
-    
-    super
-    
-    @id = 'scale'
-  
   operate: (args = {}) ->
     
     {image, width, height} = args
