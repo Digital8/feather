@@ -2,6 +2,12 @@ module.exports = (editor) ->
   
   editor.filters = {}
   
+  editor.getFilters = ->
+    filters = {}
+    for key, filter of editor.filters
+      filters[key] = filter
+    return filters
+  
   editor.resetFilters = ->
     editor.filters =
       sepia: '0%'
@@ -10,6 +16,8 @@ module.exports = (editor) ->
       'hue-rotate': '0deg'
       contrast: '100%'
       blur: '0px'
+  
+  editor.resetFilters()
   
   editor.buildCSS = ->
     parts = ("#{key}(#{value})" for key, value of editor.filters)

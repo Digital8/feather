@@ -14,6 +14,8 @@ module.exports = class Editor extends Base
       
       @modules[key] = module
     
+    console.log localStorage.project
+    
     # for key, property of @constructor.properties.objects
     #   property.augment this
     

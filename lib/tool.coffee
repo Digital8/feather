@@ -31,7 +31,7 @@ module.exports = class Tool extends EventEmitter
   deactivate: ->
     
     # reset filters
-    # @kit.tools.get('filter').set @previous.filters
+    @editor.setFilters @previous.filters
     
     # restore graphics
     for key, save of @previous.graphics
@@ -45,9 +45,7 @@ module.exports = class Tool extends EventEmitter
   activate: (tool) ->
     
     # save filters
-    @previous.filters = {}
-    for key, value of @kit.editor.filter
-      @previous.filters[key] = value
+    @previous.filters = @editor.getFilters()
     
     # save graphics
     @previous.graphics = {}

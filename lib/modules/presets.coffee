@@ -30,8 +30,12 @@ module.exports = (editor, args) ->
   
   editor.on 'preset', (preset) ->
     
-    binds[preset.key].dom.find('img').css border: '5px solid #8ac53f' #rgba(200, 200, 50, 0.75)'
+    binds[preset.key].dom.find('img').css border: '5px solid #8ac53f'
   
   editor.on 'unpreset', (preset) ->
     
-    binds[preset.key].dom.find('img').css border: '0px solid #8ac53f' #rgba(200, 200, 50, 0.75)'
+    binds[preset.key].dom.find('img').css border: ''
+  
+  editor.kit.on 'activate', ({key}) ->
+    return unless key is 'filter'
+    $container.find('a img').css border: ''

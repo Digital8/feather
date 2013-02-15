@@ -13,7 +13,6 @@ module.exports = (editor) ->
     console.log arguments
   
   editor.image = ({src}) ->
-    console.log 'image'
     
     image = new Image
     
@@ -44,17 +43,3 @@ module.exports = (editor) ->
 #     @augmentations.get('select').deselect()
 #     @kit.tools.get('filter').push()
 #   , 111
-
-# image: (src) ->
-  
-#   image = new Image
-  
-#   image.onload = =>
-    
-#     return if image._loaded
-    
-#     image._loaded = true
-    
-#     @emit 'image', image
-  
-#   image.src = src
