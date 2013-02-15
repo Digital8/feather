@@ -59,17 +59,13 @@ module.exports = (editor) ->
   
   _commit = (op, args...) ->
     if op is 'mirror'
+      [dimension] = args
+      
       graphic = editor.selected
       
-      operation = editor.operations.mirror
+      {src} = editor.operations.mirror.operate graphic: graphic, dimension: dimension
       
-      {url} = operation.operate graphic: graphic
-      
-      img = new Image
-      document.body.appendChild img
-      img.src = url
-      
-      graphic.image.src = url
+      graphic.image.src = src
     
     if op is 'rotate'
       [theta] = args
