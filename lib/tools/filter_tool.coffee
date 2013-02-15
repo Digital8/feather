@@ -14,10 +14,4 @@ module.exports = class FilterTool extends Tool
         
         return unless @key is tool
         
-        map = @map value
-        
-        console.log tool, map
-        
-        # @editor.setFilter tool, (@map value)
-        
-        @editor.setFilters map
+        @editor.setFilters (@map value)
