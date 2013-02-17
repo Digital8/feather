@@ -8,6 +8,24 @@ module.exports = (editor) ->
   
   surface.aspect = surface.width / surface.height
   
+  surface.setSize = (width, height) ->
+    surface.width = width
+    surface.height = height
+    
+    surface.aspect = surface.width / surface.height
+    
+    surface.update()
+    
+    surface.push()
+  
+  (jQuery '#canvas-width').change (event) ->
+    width = (jQuery '#canvas-width').val()
+    surface.setSize width, surface.height
+  
+  (jQuery '#canvas-height').change (event) ->
+    height = (jQuery '#canvas-height').val()
+    surface.setSize surface.width, height
+  
   surface.wrapper = jQuery """<div>"""
   surface.wrapper.attr 'id', 'wrapper'
   surface.wrapper.css
@@ -56,8 +74,8 @@ module.exports = (editor) ->
   
   for key in ['top', 'left', 'right', 'bottom']
     spawn key
-
-  surface.update = (x, y) ->
+  
+  surface.update = ->
     
     baseMargin = 20
     
