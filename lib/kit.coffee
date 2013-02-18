@@ -72,6 +72,8 @@ module.exports = class Kit extends EventEmitter
   
   activate: (key, args) ->
     
+    return if @active?
+    
     unless args?.silent
       if @active?
         @deactivate @active
