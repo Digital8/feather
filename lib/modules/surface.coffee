@@ -111,6 +111,8 @@ module.exports = (editor) ->
       x: margin.x
       y: margin.y
     
+    editor.emit 'resize', surface.width, surface.height
+    
     surface.push()
   
   surface.push = ->

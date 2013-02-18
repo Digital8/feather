@@ -14,7 +14,7 @@ module.exports =
   
   presets: require './presets'
   
-  # reader: require './reader'
+  reader: require './reader'
   
   # layouts: require './layouts'
   
@@ -42,3 +42,5 @@ module.exports =
   
   export: require './export'
   load: require './load'
+  
+  fetch: require './fetch'

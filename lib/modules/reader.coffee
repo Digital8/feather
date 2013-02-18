@@ -1,14 +1,10 @@
-# Reader = require './reader'
-
-# reader ###
-
-@reader = new Reader
-@reader.on 'read', (dataURL) =>
-  @image dataURL
-
-# @reader = new FileReader
-
-# @reader.addEventListener 'load', =>
-#   @emit 'read', @reader.result
-
-# @reader.readAsDataURL event.target.files[0]
+module.exports = (editor) ->
+  
+  editor.handle = (event) ->
+    
+    reader = new FileReader
+    
+    reader.addEventListener 'load', =>
+      editor.image src: reader.result
+    
+    reader.readAsDataURL event.target.files[0]
