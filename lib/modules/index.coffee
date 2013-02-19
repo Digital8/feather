@@ -46,3 +46,5 @@ module.exports =
   fetch: require './fetch'
   
   pricing: require './pricing'
+  
+  templating: require './templating'

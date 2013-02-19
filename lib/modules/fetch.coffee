@@ -4,7 +4,7 @@ module.exports = (editor) ->
     
     query = JSON.stringify args
     
-    jQuery.get "http://wallcreations.digital8.com.au:8080/fetch?args=#{query}", args, (url) ->
+    jQuery.get "http://10.2.0.71:8080/fetch?args=#{query}", args, (url) ->
       
       # console.log 'GET', '/fetch', arguments
       

@@ -8,3 +8,7 @@ module.exports = class Slot extends EventEmitter
     
     for key, value of args
       @[key] = value
+    
+    SlotView = require './views/slot'
+    
+    @view = new SlotView slot: this

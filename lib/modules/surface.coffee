@@ -1,7 +1,7 @@
 module.exports = (editor) ->
   
   editor.surface = surface =
-    width: 750
+    width: 1000
     height: 500
     dom: (jQuery '#stage')
     editor: editor

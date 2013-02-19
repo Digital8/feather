@@ -1,5 +1,7 @@
 {EventEmitter} = require 'events'
 
+Slot = require './slot'
+
 module.exports = class Layout extends EventEmitter
   
   constructor: (args = {}) ->
@@ -9,39 +11,47 @@ module.exports = class Layout extends EventEmitter
     @[key] = value for key, value of args
     
     @dom = jQuery """<div>"""
-    @dom.css background: 'red'
+    
+    @dom.appendTo @editor.surface.element
+    
+    @dom.css
+      width: @template.width / 5
+      height: @template.height / 5
+      background: "url(/css/images/masks/#{@template.mask})"
+      'background-size': 'contain'
+      # 'background: 
     @dom.draggable()
     
-    zoom = 1
-    @dom.on 'mousewheel', (event) =>
-      {originalEvent} = event
-      
-      val = originalEvent.wheelDelta
-      if 0 < val
-        zoom *= 1.1
-      else if val < 0
-        zoom *= 0.9
-      
-      event.preventDefault()
-      
-      @dom.css zoom: zoom
+    # zoom = 1
+    # @dom.on 'mousewheel', (event) =>
+    #   {originalEvent} = event
     
-    for key, slot of @template.slots.objects
+    #   val = originalEvent.wheelDelta
+    #   if 0 < val
+    #     zoom *= 1.1
+    #   else if val < 0
+    #     zoom *= 0.9
+    
+    #   event.preventDefault()
+    
+    #   @dom.css zoom: zoom
+    
+    for _slot in @template.data
       
-      dom = jQuery """<div>"""
-      dom.css
-        position: 'absolute'
-        background: 'black'
-        overflow: 'hidden'
-        border: '5px solid black'
-        'box-shadow': 'inset 0px 0px 0px 5px white'
-        'background-image': 'url(/css/images/icons/plus-transparent-pad.png)'
-        'background-size': 'contain'
-        'background-repeat': 'no-repeat'
-        'background-position': 'center'
-      
-      dom.css left: slot.x, top: slot.y, width: slot.width, height: slot.height
-      dom.appendTo @dom
-      
-      dom.resizable()
-      dom.draggable()
+      slot = new Slot
+        x: _slot.x
+        y: _slot.y
+        width: _slot.width
+        height: _slot.height
+        dom: @dom
+        editor: @editor
+        template: @template
+      # slot.dom.appendTo editor.surface.element
+    
+    clone = @dom.clone()
+    clone.appendTo (jQuery '#stage')
+    clone.css
+      right: 0
+      top: 0
+      position: 'absolute'
+      zoom: 0.25
