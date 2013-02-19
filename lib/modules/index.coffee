@@ -44,3 +44,5 @@ module.exports =
   load: require './load'
   
   fetch: require './fetch'
+  
+  pricing: require './pricing'
