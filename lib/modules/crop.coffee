@@ -1,5 +1,3 @@
-Surface = require '../surface'
-
 module.exports = (editor) ->
   
   editor.crop = (graphic) ->
