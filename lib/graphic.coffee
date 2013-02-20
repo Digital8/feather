@@ -39,6 +39,15 @@ module.exports = class Graphic extends EventEmitter
     @element.fadeIn()
     
     @editor = args.editor
+    
+    @remember()
+  
+  remember: ->
+    
+    @initial ?= {}
+    
+    @initial.width = @image.width
+    @initial.height = @image.height
   
   save: ->
     

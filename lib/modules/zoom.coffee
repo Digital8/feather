@@ -24,6 +24,8 @@ module.exports = (editor) ->
       dom.css
         left: center[0] - (width / 2)
         top: center[1] - (height / 2)
+      
+      graphic.emit 'zoom'
   
   zoom = (factor) ->
     editor.selected?.zoom factor

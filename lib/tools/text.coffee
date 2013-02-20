@@ -57,6 +57,14 @@ module.exports = class Text extends Tool
         left: (@editor.surface.data.width / 2) - (@text.width() / 2)
         top: (@editor.surface.data.height / 2) - (@text.height() / 2)
       
+      @text.resizable
+        handles: 'all'
+        resize: =>
+          height = @text.height()
+          @text.css 'font-size': height / 1.5
+      
+      @text.find('.ui-resizable-handle').addClass 'ui-handle'
+      
       @text.fadeIn()
   
   deactivate: ->

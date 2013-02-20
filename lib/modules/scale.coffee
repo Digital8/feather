@@ -11,7 +11,8 @@ module.exports = (editor) ->
           minWidth: 100
           minHeight: 100
           resize: ->
-            Feather.quality 'average'
+            # Feather.quality 'average'
+            graphic.emit 'resize'
         
         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
         

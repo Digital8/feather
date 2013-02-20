@@ -22,8 +22,8 @@ module.exports = (editor) ->
   
   editor.on 'graphic', (graphic) ->
     
-    graphic.dom.css
-      'webkit-transition': 'box-shadow 0.33s'
+    # graphic.dom.css
+    #   'webkit-transition': 'box-shadow 0.33s'
     
     editor.zIndex ?= 666
     graphic.bringToTop = ->
