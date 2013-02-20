@@ -16,6 +16,8 @@ module.exports = (editor) ->
         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
         
         graphic._scale ?= {}
+        
+        (jQuery '#options-resize').css opacity: 1
       
       if args is 'destroy'
         
@@ -24,6 +26,8 @@ module.exports = (editor) ->
         graphic.dom.resizable 'destroy'
         
         delete graphic._scale
+        
+        (jQuery '#options-resize').css opacity: 0.5
     
     graphic.on 'deselect', ->
       graphic.scalable 'destroy'
@@ -33,11 +37,15 @@ module.exports = (editor) ->
       
       graphic.scalable()
   
+  (jQuery '#options-resize').css opacity: 0.5
+  
   editor.kit.on 'activate', ({key}) ->
     return unless key is 'scale'
+    (jQuery '#options-resize').fadeIn()
     editor.selected?.scalable()
   
   editor.kit.on 'deactivate', ({key}) ->
+    (jQuery '#options-resize').fadeOut()
     editor.selected?.scalable 'destroy'
   
   editor.on 'apply', ({key}) ->

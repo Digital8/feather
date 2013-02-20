@@ -32,6 +32,8 @@ module.exports =
   
   scale: require './scale'
   
+  zoom: require './zoom'
+  
   orientation: require './orientation'
   
   operations: require './operations'
