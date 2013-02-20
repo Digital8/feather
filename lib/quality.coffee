@@ -1,4 +1,4 @@
-module.exports = ->
+module.exports = (rating) ->
   
   toolIndicator = jQuery '#indicator'
   
@@ -8,8 +8,12 @@ module.exports = ->
   
   toolIndicatorAlert = jQuery '#indicator-alert'
   
-  toolIndicator.removeClass('poor average').addClass 'perfect'
+  toolIndicator.removeClass 'poor average perfect'
+  toolIndicator.addClass rating or 'perfect'
+  
   captionHeading.html 'Perfect!'
+  
   captionParagraph.html 'Your image is perfect for printing.'
+  
   if box? && box != false then toolIndicatorAlert.fadeIn 150
   else toolIndicatorAlert.fadeOut 150

@@ -1,5 +1,7 @@
 {EventEmitter} = require 'events'
 
+uuid = require 'node-uuid'
+
 Slot = require './slot'
 
 module.exports = class Layout extends EventEmitter
@@ -39,6 +41,7 @@ module.exports = class Layout extends EventEmitter
     for _slot in @template.data
       
       slot = new Slot
+        id: uuid()
         x: _slot.x
         y: _slot.y
         width: _slot.width
@@ -46,12 +49,14 @@ module.exports = class Layout extends EventEmitter
         dom: @dom
         editor: @editor
         template: @template
+        layout: this
       # slot.dom.appendTo editor.surface.element
     
-    clone = @dom.clone()
-    clone.appendTo (jQuery '#stage')
-    clone.css
+    @clone = @dom.clone()
+    @clone.appendTo (jQuery '#stage')
+    @clone.css
       right: 0
       top: 0
       position: 'absolute'
       zoom: 0.25
+    @clone.hide()

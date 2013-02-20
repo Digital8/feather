@@ -11,4 +11,6 @@ module.exports = (editor, args) ->
     $a.click =>
       
       layout = new Layout template: template, editor: editor
-      layout.dom.appendTo editor.surface.element
+      layout.dom.appendTo (jQuery '#stage') # editor.surface.element
+      
+      editor.surface.wrapper.fadeOut()

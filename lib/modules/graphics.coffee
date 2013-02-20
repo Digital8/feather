@@ -31,6 +31,7 @@ module.exports = (editor) ->
   editor.on 'image', (image, id) =>
     graphic = editor.graphics.new image: image, editor: editor, id: id
     editor.surface.element.append graphic.dom
+    graphic.dom.find('img').css '-webkit-transition': 'all 0.75s'
     editor.emit 'graphic', graphic
 
 # @graphics.on 'add', (graphic) =>
