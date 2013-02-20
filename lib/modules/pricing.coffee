@@ -34,6 +34,6 @@ module.exports = (editor) ->
     else
       price = sqm * supply_rate * 1.1
     
-    price = price.split('.')[0]
-    editor.pricing.price = parseInt price
-    jQuery("#price").html price.toString()
+    price = parseInt price.toString().split('.')[0]
+    editor.pricing.price = price
+    jQuery("#price").html price
