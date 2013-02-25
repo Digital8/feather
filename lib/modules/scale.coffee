@@ -6,13 +6,25 @@ module.exports = (editor) ->
       
       if not args?
         
+        graphic.data.scale =
+          before: graphic.save().css
+        
+        graphic.handleScale = ->
+          
+          now = graphic.save().css
+          {before} = graphic.data.scale
+          
+          graphic.data.scale.x = now.width / before.width
+          graphic.data.scale.y = now.height / before.height
+          
+          graphic.emit 'resize'
+        
         graphic.dom.resizable
           handles: 'all'
           minWidth: 100
           minHeight: 100
           resize: ->
-            # Feather.quality 'average'
-            graphic.emit 'resize'
+            graphic.handleScale()
         
         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
         
@@ -54,9 +66,12 @@ module.exports = (editor) ->
     
     editor.graphics.map (key, graphic) ->
       
-      src = editor.operations.scale.operate
-        image: graphic.image
-        width: graphic.dom.width()
-        height: graphic.dom.height()
+      graphic.scale[0] *= graphic.data.scale.x
+      graphic.scale[1] *= graphic.data.scale.y
       
-      graphic.image.src = src
+      # src = editor.operations.scale.operate
+      #   image: graphic.image
+      #   width: graphic.dom.width()
+      #   height: graphic.dom.height()
+      
+      # graphic.image.src = src

@@ -1,27 +1,58 @@
 module.exports = (editor) ->
   
-  editor.crop = (graphic) ->
-    
-    {width, height, left, top} = graphic._crop
-    
-    src = editor.operations.crop.operate
-      image: graphic.image
-      
-      width: width
-      height: height
-      
-      left: left
-      top: top
-    
-    # window.open src
-    graphic.image.src = src
-    
-    position = graphic.dom.position()
-    
-    graphic.dom.css width: width, height: height
-    graphic.dom.css left: position.left + left, top: position.top + top
-    
   editor.on 'graphic', (graphic) ->
+    
+    graphic.crop = ({viewport, bounds}) ->
+      
+      graphic.data.crop = viewport: viewport
+      
+      left = viewport.left * graphic.initial.width
+      top = viewport.top * graphic.initial.height
+      width = viewport.width * graphic.initial.width
+      height = viewport.height * graphic.initial.height
+      
+      src = editor.operations.crop.operate
+        image: graphic.clone
+        
+        left: left
+        top: top
+        width: width
+        height: height
+      
+      graphic.dom.css
+        left: graphic.dom.position().left + (viewport.left * graphic.initial.width * graphic.scale[0])
+        top: graphic.dom.position().top + (viewport.top * graphic.initial.height * graphic.scale[1])
+        width: graphic.scale[0] * width
+        height: graphic.scale[1] * height
+      
+      # graphic.image.onload = ->
+      
+      #   src = editor.operations.scale.operate
+      #     image: graphic.image
+          
+      #     width: graphic.scale[0] * graphic.initial.width
+      #     height: graphic.scale[1] * graphic.initial.height
+        
+      #   # window.open src
+        
+      #   # graphic.before = graphic.save()
+      #   # graphic.before.crop = bounds
+        
+      #   graphic.image.onload = ->
+          
+      #     position = graphic.dom.position()
+          
+      #     graphic.dom.css
+      #       width: graphic.scale[0] * width
+      #       height: graphic.scale[1] * height
+          
+      #     graphic.dom.css
+      #       left: position.left + (viewport.left * graphic.initial.width * graphic.scale[0])
+      #       top: position.top + (viewport.top * graphic.initial.height * graphic.scale[1])
+        
+      #   graphic.image.src = src
+      
+      graphic.image.src = src
     
     graphic.croppable = (args) ->
       
@@ -62,21 +93,52 @@ module.exports = (editor) ->
           (masks.data 'left').css height: '100%', left: 0, top: 0, width: position.left
           (masks.data 'right').css height: '100%', right: 0, top: 0, width: graphic.dom.width() - (position.left + width)
         
+        handleCrop = ->
+          
+          editor.kit.active.data =
+            bounds: graphic._crop.getBounds()
+            viewport: graphic._crop.getViewport()
+          
+          updateMasks()
+        
         resizable = dom.resizable
           handles: 'all'
           minWidth: 100
           minHeight: 100
           containment: graphic.dom
-          resize: -> updateMasks()
+          resize: -> handleCrop()
         
         draggable = dom.draggable
           containment: graphic.dom
-          drag: -> updateMasks()
+          drag: -> handleCrop()
         
         graphic._crop ?= {}
         graphic._crop.dom = dom
         graphic._crop.draggable = draggable
         graphic._crop.resizable = resizable
+        
+        graphic._crop.restore = (save) ->
+          dom.css save
+        
+        graphic._crop.getBounds = ->
+          return {
+            left: dom.position().left
+            top: dom.position().top
+            width: dom.width()
+            height: dom.height()
+          }
+        
+        graphic._crop.getViewport = ->
+          
+          absolute = graphic._crop.getBounds()
+          
+          relative =
+            left: absolute.left / graphic.dom.width()
+            top: absolute.top / graphic.dom.height()
+            width: absolute.width / graphic.dom.width()
+            height: absolute.height / graphic.dom.height()
+          
+          return relative
         
         graphic._crop.masks = masks
         
@@ -90,9 +152,37 @@ module.exports = (editor) ->
         
         spawn key for key in ['top',  'left', 'right', 'bottom']
         
-        updateMasks()
-        
         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
+        
+        # if graphic.before?
+        #   graphic.restore graphic.before
+        #   graphic._crop.restore graphic.before.crop
+        
+        if graphic.data.crop?
+          
+          console.log 'restoring crop'
+          
+          {viewport} = graphic.data.crop
+          
+          image =
+            width: graphic.initial.width * graphic.scale[0]
+            height: graphic.initial.height * graphic.scale[1]
+            left: graphic.dom.position().left - (viewport.left * graphic.initial.width * graphic.scale[0])
+            top: graphic.dom.position().top - (viewport.top * graphic.initial.height * graphic.scale[1])
+          
+          graphic.dom.css image
+          
+          graphic.image.src = graphic.clone.src
+          
+          crop =
+            left: viewport.left * image.width
+            top: viewport.top * image.height
+            width: viewport.width * image.width
+            height: viewport.height * image.height
+          
+          graphic._crop.dom.css crop
+        
+        handleCrop()
       
       if args is 'destroy'
         
@@ -118,3 +208,8 @@ module.exports = (editor) ->
   
   editor.kit.on 'deactivate', ({key}) ->
     editor.selected?.croppable 'destroy'
+  
+  editor.on 'apply', ({key, data}) ->
+    return unless key is 'crop'
+    
+    editor.selected?.crop data

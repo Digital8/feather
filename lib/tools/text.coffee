@@ -59,9 +59,10 @@ module.exports = class Text extends Tool
       
       @text.resizable
         handles: 'all'
+        aspectRatio: on
         resize: =>
           height = @text.height()
-          @text.css 'font-size': height / 1.5
+          @text.css 'font-size': height * 0.5
       
       @text.find('.ui-resizable-handle').addClass 'ui-handle'
       

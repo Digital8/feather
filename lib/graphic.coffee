@@ -32,6 +32,11 @@ module.exports = class Graphic extends EventEmitter
       width: @image.width
       height: @image.height
     
+    @dom._css = @dom.css
+    @dom.css = =>
+      console.log 'css', arguments
+      @dom._css arguments...
+    
     @element.addClass 'feather-graphic'
     
     @element.hide()
@@ -40,14 +45,23 @@ module.exports = class Graphic extends EventEmitter
     
     @editor = args.editor
     
+    @data = {}
+    
     @remember()
   
   remember: ->
     
     @initial ?= {}
-    
     @initial.width = @image.width
     @initial.height = @image.height
+    
+    @viewport ?= {}
+    @viewport.left = 0
+    @viewport.top = 0
+    @viewport.width = 1
+    @viewport.height = 1
+    
+    @scale = [1, 1]
   
   save: ->
     
@@ -61,8 +75,11 @@ module.exports = class Graphic extends EventEmitter
     }
   
   restore: (save) ->
+    
     @dom.css save.css
-    @image.src = save.src
+    
+    if save.src?
+      @image.src = save.src
   
   remove: ->
     @dom.fadeOut()
