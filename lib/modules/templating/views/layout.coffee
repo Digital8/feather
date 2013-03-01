@@ -22,6 +22,6 @@ module.exports = class LayoutView extends EventEmitter
     
     for key, slot of @layout.template.slots
       
-      view = new SlotView slot: slot, layoutView: this, layout: @layout
+      view = new SlotView slot: slot, layoutView: this, layout: @layout, editor: @editor
       
       @dom.append view.dom

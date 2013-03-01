@@ -18,6 +18,7 @@ module.exports = (editor, args) ->
     
     editor.templates.new templateData
   
-  # editor.editSlot = (slot) ->
+  editor.editSlot = (slot) ->
     
-  #   
+    editor.hideLayouts()
+    editor.showTools()

@@ -21,6 +21,7 @@ module.exports = class Layout extends EventEmitter
       layout: this
       width: @width
       height: @height
+      editor: @editor
     
     @view.dom.appendTo (jQuery '#stage')
     @view.dom.hide().fadeIn()
@@ -38,6 +39,7 @@ module.exports = class Layout extends EventEmitter
       layout: this
       width: 175 * @template.aspect
       height: 175
+      editor: @editor
     
     @map.dom.appendTo (jQuery '#map')
     
