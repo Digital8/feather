@@ -1,8 +1,8 @@
 {EventEmitter} = require 'events'
 
-uuid = require 'node-uuid'
-
 Slot = require './slot'
+
+LayoutView = require './views/layout'
 
 module.exports = class Layout extends EventEmitter
   
@@ -12,51 +12,53 @@ module.exports = class Layout extends EventEmitter
     
     @[key] = value for key, value of args
     
-    @dom = jQuery """<div>"""
+    @scale = (jQuery '#stage').height() * 0.9
     
-    @dom.appendTo @editor.surface.element
+    @width = @scale * @template.aspect
+    @height = @scale
     
-    @dom.css
-      width: @template.width / 5
-      height: @template.height / 5
-      background: "url(/css/images/masks/#{@template.mask})"
-      'background-size': 'contain'
-      # 'background: 
-    @dom.draggable()
+    @view = new LayoutView
+      layout: this
+      width: @width
+      height: @height
     
-    # zoom = 1
-    # @dom.on 'mousewheel', (event) =>
-    #   {originalEvent} = event
+    @view.dom.appendTo (jQuery '#stage')
+    @view.dom.hide().fadeIn()
     
-    #   val = originalEvent.wheelDelta
-    #   if 0 < val
-    #     zoom *= 1.1
-    #   else if val < 0
-    #     zoom *= 0.9
+    delta =
+      width: @view.dom.width() - (jQuery '#stage').width()
+      height: @view.dom.height() - (jQuery '#stage').height()
     
-    #   event.preventDefault()
-    
-    #   @dom.css zoom: zoom
-    
-    for _slot in @template.data
-      
-      slot = new Slot
-        id: uuid()
-        x: _slot.x
-        y: _slot.y
-        width: _slot.width
-        height: _slot.height
-        dom: @dom
-        editor: @editor
-        template: @template
-        layout: this
-      # slot.dom.appendTo editor.surface.element
-    
-    @clone = @dom.clone()
-    @clone.appendTo (jQuery '#stage')
-    @clone.css
-      right: 0
-      top: 0
+    @view.dom.css
       position: 'absolute'
-      zoom: 0.25
-    @clone.hide()
+      left: -(delta.width / 2)
+      top: -(delta.height / 2)
+    
+    @map = new LayoutView
+      layout: this
+      width: 175 * @template.aspect
+      height: 175
+    
+    @map.dom.appendTo (jQuery '#map')
+    
+    # for _slot in @template.data
+      
+    #   slot = new Slot
+    #     id: uuid()
+    #     x: _slot.x
+    #     y: _slot.y
+    #     width: _slot.width
+    #     height: _slot.height
+    #     dom: @dom
+    #     editor: @editor
+    #     template: @template
+    #     layout: this
+    
+    # @clone = @dom.clone()
+    # @clone.appendTo (jQuery '#stage')
+    # @clone.css
+    #   right: 0
+    #   top: 0
+    #   position: 'absolute'
+    #   zoom: 0.25
+    # @clone.hide()

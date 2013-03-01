@@ -52,3 +52,5 @@ module.exports =
   pricing: require './pricing'
   
   templating: require './templating'
+  
+  reset: require './reset'

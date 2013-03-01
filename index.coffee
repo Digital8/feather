@@ -4,11 +4,11 @@ module.exports =
   quality: require './lib/quality'
   Tools: require './lib/tools'
   
-  bind: (app, bindings) ->
+  bind: (editor, bindings) ->
     
     bound = {}
     
-    binds = {}
+    editor.binds = binds = {}
     
     for selector, binding of bindings
       
@@ -33,7 +33,7 @@ module.exports =
         
         $el.click (event) ->
           event.preventDefault()
-          app.emit 'ui', binding.key, key, event
+          editor.emit 'ui', binding.key, key, event
         
         $a = $el.find 'a'
         
@@ -45,22 +45,22 @@ module.exports =
           args: value
         
         (jQuery "input[name=#{value.ui or value.key}]").change (event) ->
-          app.emit 'ui', "slider", (value.key), event.target.value
+          editor.emit 'ui', "slider", (value.key), event.target.value
       
-      app.kit.on 'activate', ({key}) ->
+      editor.kit.on 'activate', ({key}) ->
         binds[key].a.addClass 'active'
-      app.kit.on 'deactivate', ({key}) ->
+      editor.kit.on 'deactivate', ({key}) ->
         binds[key].a.removeClass 'active'
       
-      app.kit.on 'activate', ({key}) ->
+      editor.kit.on 'activate', ({key}) ->
         key = binds[key].args.ui or key
         (jQuery "#tool-#{key}").fadeIn()
-      app.kit.on 'deactivate', ({key}) ->
+      editor.kit.on 'deactivate', ({key}) ->
         key = binds[key].args.ui or key
         (jQuery "#tool-#{key}").fadeOut()
       
       for key, value of binding.events then do (key, value) =>
         
-        app.on key, ->
+        editor.on key, ->
           
           value key

@@ -9,9 +9,6 @@ module.exports = (editor) ->
       console.log 'ui', 'image'
       editor.image args
   
-  editor.on 'image', ->
-    console.log arguments
-  
   editor.image = ({src, id}) ->
     
     image = new Image
@@ -34,6 +31,10 @@ module.exports = (editor) ->
     graphic.dom.find('img').css '-webkit-transition': 'all 0.75s'
     # graphic.dom.css '-webkit-transition': 'width 0.125s, height 0.125s, box-shadow 0.33s, left 0.125s, top 0.125s'
     editor.emit 'graphic', graphic
+  
+  editor.graphics.on 'remove', (graphic) ->
+    
+    console.log 'remove', graphic
 
 # @graphics.on 'add', (graphic) =>
   

@@ -1,7 +1,6 @@
 {EventEmitter} = require 'events'
 
-Library = require './library'
-Slot = require './slot'
+Layout = require './layout'
 
 module.exports = class Template extends EventEmitter
   
@@ -11,12 +10,7 @@ module.exports = class Template extends EventEmitter
     
     for key, value of args
       @[key] = value
+  
+  spawn: ->
     
-    @slots = new Library type: Slot
-    
-    @slots.on 'add', (slot) =>
-      console.log 'slot', slot
-    
-    for datum in @data
-      # console.log datum
-      @slots.new datum
+    layout = @editor.layouts.new template: this, editor: @editor

@@ -52,7 +52,7 @@ module.exports = class Library extends EventEmitter
     
     delete @objects[key]
     
-    @emit 'delete', object
+    @emit 'remove', object
   
   new: ->
     object = new @type arguments...
@@ -61,8 +61,10 @@ module.exports = class Library extends EventEmitter
     
     return object
   
-  empty: ->
+  clear: ->
     
     for key, object of @objects
       
       @remove object
+    
+    return

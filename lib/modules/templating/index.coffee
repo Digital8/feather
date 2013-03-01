@@ -1,16 +1,23 @@
+Library = require '../../core/library'
+
+Template = require './template'
+Layout = require './layout'
+
 module.exports = (editor, args) ->
   
-  editor.templates = args.templates
+  editor._templatesData = args.templates
   
-  Layout = require './layout'
+  editor.templates = new Library type: Template, key: 'key'
+  editor.layouts = new Library type: Layout, key: 'key'
   
-  for key, template of args.templates then do (key, template) =>
+  for key, templateData of args.templates then do (key, templateData) =>
     
-    $a = jQuery """<a>#{key}</a>"""
-    $a.appendTo document.body
-    $a.click =>
-      
-      layout = new Layout template: template, editor: editor
-      layout.dom.appendTo (jQuery '#stage') # editor.surface.element
-      
-      editor.surface.wrapper.fadeOut()
+    templateData.key = key
+    
+    templateData.editor = editor
+    
+    editor.templates.new templateData
+  
+  # editor.editSlot = (slot) ->
+    
+  #   
