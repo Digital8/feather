@@ -25,3 +25,14 @@ module.exports = (editor, args) ->
     editor.showSurface()
     
     editor.surface.setSize slot.width * layout.width, slot.height * layout.height
+  
+  editor.editTemplate = ->
+    
+    editor.showLayouts()
+    editor.hideTools()
+    editor.hideSurface()
+  
+  (jQuery '#go_back').click (event) ->
+    event.preventDefault()
+    
+    editor.editTemplate()

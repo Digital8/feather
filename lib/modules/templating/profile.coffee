@@ -43,9 +43,11 @@ module.exports = (editor) ->
     
     (jQuery '#controls .map').fadeOut()
   
-  editor.hideLayouts = ->
+  editor.mapLayouts = (fn) ->
     editor.layouts.map (key, layout) =>
-      layout.view.dom.fadeOut()
+      layout.view.dom[fn] null
+  editor.showLayouts = -> editor.mapLayouts 'fadeIn'
+  editor.hideLayouts = -> editor.mapLayouts 'fadeOut'
   
   return {
     
