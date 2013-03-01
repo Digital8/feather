@@ -18,7 +18,10 @@ module.exports = (editor, args) ->
     
     editor.templates.new templateData
   
-  editor.editSlot = (slot) ->
+  editor.editSlot = ({slot, layout}) ->
     
     editor.hideLayouts()
     editor.showTools()
+    editor.showSurface()
+    
+    editor.surface.setSize slot.width * layout.width, slot.height * layout.height

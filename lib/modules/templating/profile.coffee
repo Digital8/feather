@@ -1,5 +1,9 @@
 module.exports = (editor) ->
   
+  editor.mapSurface = (key) -> editor.surface.wrapper[key] null
+  editor.showSurface = -> editor.mapSurface 'fadeIn'
+  editor.hideSurface = -> editor.mapSurface 'fadeOut'
+  
   editor.mapTools = (key) ->
     (jQuery '#toolbar ul li').each (index) ->
       (jQuery this).delay(50 * index)[key] null
@@ -9,7 +13,7 @@ module.exports = (editor) ->
   
   editor.showTemplate = () ->
     
-    editor.surface.wrapper.fadeOut()
+    editor.hideSurface()
     
     (jQuery '#tool-picture-wall').fadeIn()
     
@@ -30,7 +34,7 @@ module.exports = (editor) ->
     
     (jQuery '#tool-picture-wall').fadeOut()
     
-    editor.surface.wrapper.fadeIn()
+    editor.showSurface()
     
     editor.showTools()
     
