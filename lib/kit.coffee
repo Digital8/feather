@@ -12,9 +12,6 @@ module.exports = class Kit extends EventEmitter
     @editor = args.editor
     
     @tools = new Library type: Tool, key: 'key'
-    
-    @tools.on 'add', (tool) ->
-      console.log 'tool', tool
   
   toJSON: -> @tools.toJSON()
   

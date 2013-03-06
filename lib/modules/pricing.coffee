@@ -32,7 +32,7 @@ module.exports = (editor) ->
     if (width*height) < 0.5
       price = supply_rate * 1.1
     else
-      price = sqm * supply_rate * 1.1
+      price = sqm * (supply_rate + 31) * 1.1
     
     price = parseInt price.toString().split('.')[0]
     editor.pricing.price = price

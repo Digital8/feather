@@ -1,33 +1,42 @@
-module.exports = (editor) ->
+Library = require '../core/library'
+
+Profile = require '../profile'
+
+module.exports = (editor, args) ->
   
-  profiles =
-    'Picture Wall': (require './templating/profile') editor
-    'Wall Art':
-      activate: -> (jQuery '#tool-wall-art').fadeIn()
-      deactivate: -> (jQuery '#tool-wall-art').fadeOut()
+  editor.profiles = new Library type: Profile, key: 'key'
   
-  for key in ['Wall Mural', 'Occasional Banner']
-    profiles[key] =
-      key: key
-      activate: ->
-      deactivate: ->
+  for key, prototype of args.profiles
+    instance = new prototype editor: editor
+    editor.profiles.add instance
   
-  active =
-    key: 'master'
-    activate: ->
-    deactivate: ->
+  editor.profiles.active = null
   
-  select = jQuery '#profile'
-  
-  select.change ->
-    
-    key = select.val()
-    
+  editor.profiles.activate = (key) ->
     # if the profile is being switched...
-    unless key is active.key
+    
+    active = editor.profiles.active
+    
+    unless key is active?.key
       
-      active?.deactivate()
+      active?.deactivate? null
       
-      active = profiles[key]
+      editor.profiles.active = active = editor.profiles.get key
       
-      active.activate()
+      active.activate? null
+      
+    editor.profiles.emit 'activate'
+  
+  editor.profiles.deactivate = ->
+    
+    active = editor.profiles.active
+    active?.deactivate? null
+    editor.profiles.active = null
+    
+    editor.profiles.emit 'deactivate'
+  
+  # profiles =
+  #   'Picture Wall': (require './templating/profile') editor
+  #   'Wall Art':
+  #     activate: -> (jQuery '#tool-wall-art').fadeIn()
+  #     deactivate: -> (jQuery '#tool-wall-art').fadeOut()

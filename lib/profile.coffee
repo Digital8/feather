@@ -13,3 +13,13 @@ module.exports = class Profile extends EventEmitter
       @[key] = value
     
     @id ?= uuid()
+  
+  activate: ->
+    @editor.projects.active = @editor.projects.new
+      profile: this
+      editor: @editor
+    
+    @emit 'activate'
+  
+  deactivate: ->
+    @emit 'deactivate'

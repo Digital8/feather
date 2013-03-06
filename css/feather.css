@@ -150,3 +150,7 @@
 .ui-selected img {
   border: 1px solid #999;
 }
+
+.ui-draggable {
+  cursor: move;
+}

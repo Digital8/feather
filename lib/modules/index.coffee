@@ -1,5 +1,7 @@
 module.exports =
   
+  projects: require './projects'
+  
   graphics: require './graphics'
   
   filters: require './filters'
@@ -7,8 +9,9 @@ module.exports =
   kit: require './kit'
   
   ui: require './ui'
+  stage: require './stage' # deps: [ui]
   
-  surface: require './surface'
+  surfaces: require './surfaces'
   
   delete: require './delete'
   
@@ -51,6 +54,6 @@ module.exports =
   
   pricing: require './pricing'
   
-  templating: require './templating'
+  # templating: require './templating'
   
   reset: require './reset'
