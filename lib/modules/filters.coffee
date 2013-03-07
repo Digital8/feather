@@ -1,6 +1,8 @@
 module.exports = (editor) ->
   
-  supportsCanvas = !!window.HTMLCanvasElement
+  supportsCanvas = !!window.HTMLCanvasElement && !nocanvas
+  
+  console.log 'supportscanvas', supportsCanvas
   
   editor.filters = {}
   
