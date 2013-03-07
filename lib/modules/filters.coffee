@@ -1,5 +1,7 @@
 module.exports = (editor) ->
   
+  supportsCanvas = !!window.HTMLCanvasElement
+  
   editor.filters = {}
   
   editor.getFilters = ->
@@ -22,11 +24,18 @@ module.exports = (editor) ->
   editor.buildCSS = ->
     parts = ("#{key}(#{value})" for key, value of editor.filters)
     return parts.join ' '
+    
+  editor.buildQueryString = ->
+    parts = ("#{key}=#{value}" for key, value of editor.filters)
+    return parts.join '&'
   
   editor.pushFilters = ->
     editor.graphics.map (key, graphic) ->
-      graphic.dom.find('img').css
-        '-webkit-filter': editor.buildCSS()
+      if supportsCanvas
+        graphic.dom.find('img').css
+          '-webkit-filter': editor.buildCSS()
+      else
+        graphic.dom.find('img').attr 'src', "http://localhost:8080/uploads/17118395?#{editor.buildQueryString()}"
   
   editor.pushFilters()
   
