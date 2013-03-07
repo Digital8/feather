@@ -124,3 +124,11 @@ module.exports = class Surface extends EventEmitter
     @masks.right.css width: @margin.x, right: 0, height: '100%'
     
     @element.css @data
+  
+  hide: ->
+    
+    @dom.fadeOut()
+  
+  show: ->
+    
+    @dom.fadeIn()
