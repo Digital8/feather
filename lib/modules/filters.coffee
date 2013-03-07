@@ -35,7 +35,7 @@ module.exports = (editor) ->
         graphic.dom.find('img').css
           '-webkit-filter': editor.buildCSS()
       else
-        graphic.dom.find('img').attr 'src', "http://localhost:8080/uploads/17118395?#{editor.buildQueryString()}"
+        graphic.dom.find('img').attr 'src', "http://#{window.location.hostname}:8080/uploads/17118395?#{editor.buildQueryString()}"
   
   editor.pushFilters()
   
