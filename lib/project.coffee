@@ -24,6 +24,8 @@ module.exports = class Project extends EventEmitter
   
   deactivate: ->
     
+    debugger
+    
     @surface.hide()
     
     @emit 'deactivate'

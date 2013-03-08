@@ -17,3 +17,13 @@ module.exports = (editor) ->
     active?.activate? null
     
     @emit 'activate', project
+  
+  editor.projects.deactivate = (project) ->
+    
+    active = editor.projects.active
+    
+    active?.deactivate? null
+    
+    editor.projects.active = null
+    
+    @emit 'deactivate'

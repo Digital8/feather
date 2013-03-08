@@ -22,35 +22,19 @@ module.exports = (editor) ->
       editor.emit 'image', image, id
     
     image.src = src
-
+  
   editor.graphics = new Library type: Graphic
   
   editor.on 'image', (image, id) =>
+    
     graphic = editor.graphics.new image: image, editor: editor, id: id
     
-    # editor.surface.element.append graphic.dom
+    editor.projects.active.surface.element.append graphic.dom
     
-    editor.surfaces.map (key, surface) =>
-      
-      surface.element.append graphic.dom
-    
-    graphic.dom.find('img').css '-webkit-transition': 'all 0.75s'
-    
-    # graphic.dom.css '-webkit-transition': 'width 0.125s, height 0.125s, box-shadow 0.33s, left 0.125s, top 0.125s'
+    # graphic.dom.find('img').css '-webkit-transition': 'all 0.75s'
     
     editor.emit 'graphic', graphic
   
-  editor.graphics.on 'remove', (graphic) ->
-    
-    console.log 'remove', graphic
-
-# @graphics.on 'add', (graphic) =>
+  # editor.graphics.on 'remove', (graphic) ->
   
-#   @kit.tools.get('filter').push()
-  
-#   setTimeout =>
-#     Feather.quality()
-#     @kit.tools.get('zoom').fit graphic
-#     @augmentations.get('select').deselect()
-#     @kit.tools.get('filter').push()
-#   , 111
+  #   console.log 'remove', graphic

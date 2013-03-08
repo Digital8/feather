@@ -15,6 +15,7 @@ module.exports = class Profile extends EventEmitter
     @id ?= uuid()
   
   activate: ->
+    
     project = @editor.projects.new
       profile: this
       editor: @editor
@@ -24,4 +25,7 @@ module.exports = class Profile extends EventEmitter
     @emit 'activate'
   
   deactivate: ->
+    
+    @editor.projects.deactivate()
+    
     @emit 'deactivate'

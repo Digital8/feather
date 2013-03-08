@@ -25,33 +25,6 @@ module.exports = (editor) ->
         width: graphic.scale[0] * width
         height: graphic.scale[1] * height
       
-      # graphic.image.onload = ->
-      
-      #   src = editor.operations.scale.operate
-      #     image: graphic.image
-          
-      #     width: graphic.scale[0] * graphic.initial.width
-      #     height: graphic.scale[1] * graphic.initial.height
-        
-      #   # window.open src
-        
-      #   # graphic.before = graphic.save()
-      #   # graphic.before.crop = bounds
-        
-      #   graphic.image.onload = ->
-          
-      #     position = graphic.dom.position()
-          
-      #     graphic.dom.css
-      #       width: graphic.scale[0] * width
-      #       height: graphic.scale[1] * height
-          
-      #     graphic.dom.css
-      #       left: position.left + (viewport.left * graphic.initial.width * graphic.scale[0])
-      #       top: position.top + (viewport.top * graphic.initial.height * graphic.scale[1])
-        
-      #   graphic.image.src = src
-      
       graphic.image.src = src
     
     graphic.croppable = (args) ->
@@ -153,10 +126,6 @@ module.exports = (editor) ->
         spawn key for key in ['top',  'left', 'right', 'bottom']
         
         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
-        
-        # if graphic.before?
-        #   graphic.restore graphic.before
-        #   graphic._crop.restore graphic.before.crop
         
         if graphic.data.crop?
           
