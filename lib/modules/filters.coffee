@@ -13,22 +13,30 @@ module.exports = (editor) ->
     return filters
   
   editor.resetFilters = ->
+    # editor.filters =
+    #   sepia: '0%'
+    #   brightness: '0'
+    #   saturate: '100%'
+    #   'hue-rotate': '0deg'
+    #   contrast: '100%'
+    #   blur: '0px'
+    
     editor.filters =
-      sepia: '0%'
-      brightness: '0'
-      saturate: '100%'
-      'hue-rotate': '0deg'
-      contrast: '100%'
-      blur: '0px'
+      sepia: 0
+      brightness: 0
+      saturate: 0
+      'hue-rotate': 0
+      contrast: 0
+      blur: 0
   
   editor.resetFilters()
   
   editor.buildCSS = ->
-    parts = ("#{key}(#{value})" for key, value of editor.filters)
+    parts = ("#{key}(#{value})" for own key, value of editor.filters)
     return parts.join ' '
     
   editor.buildQueryString = ->
-    parts = ("#{key}=#{value}" for key, value of editor.filters)
+    parts = ("#{key}=#{value}" for own key, value of editor.filters)
     return parts.join '&'
   
   editor.pushFilters = ->
