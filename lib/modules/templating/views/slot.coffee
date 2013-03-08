@@ -41,8 +41,6 @@ module.exports = class SlotView extends EventEmitter
       
     #   @slot.editor.surface.setSize @slot.view.width(), @slot.view.height()
       
-    #   # debugger
-      
     #   key = @slot.id
       
     #   @slot.layout.clone.find("[data-key=#{key}]").css
