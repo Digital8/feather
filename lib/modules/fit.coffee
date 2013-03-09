@@ -32,7 +32,6 @@ module.exports = (editor) ->
         height: height
       
       src = editor.operations.scale.operate image: image, width: width, height: height
-      # console.log src
       image.src = src
       
       editor.center graphic

@@ -1,5 +1,7 @@
 module.exports =
   
+  debug: require './debug'
+  
   projects: require './projects'
   
   graphics: require './graphics'

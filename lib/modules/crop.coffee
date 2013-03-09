@@ -129,8 +129,6 @@ module.exports = (editor) ->
         
         if graphic.data.crop?
           
-          console.log 'restoring crop'
-          
           {viewport} = graphic.data.crop
           
           image =

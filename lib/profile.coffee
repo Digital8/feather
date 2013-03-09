@@ -16,9 +16,11 @@ module.exports = class Profile extends EventEmitter
   
   activate: ->
     
-    project = @editor.projects.new
+    project = new @projectPrototype
       profile: this
       editor: @editor
+    
+    @editor.projects.add project
     
     @editor.projects.activate project
     

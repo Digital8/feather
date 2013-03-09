@@ -12,8 +12,6 @@ module.exports = class FilterTool extends Tool
         
         [key, tool, value] = arguments
         
-        return unless @key is tool
+        if tool is @key
         
-        console.log 'setting', tool, value
-        
-        @editor.setFilter tool, value
+          @editor.setFilter tool, value

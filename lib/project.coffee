@@ -13,17 +13,13 @@ module.exports = class Project extends EventEmitter
       @[key] = value
     
     @id ?= uuid()
-    
-    @surface = @editor.surfaces.new
-      editor: @editor
-      width: @profile.width.default
-      height: @profile.height.default
   
   activate: ->
+    
     @emit 'activate'
   
   deactivate: ->
     
-    @surface.hide()
+    # @surface.hide()
     
     @emit 'deactivate'

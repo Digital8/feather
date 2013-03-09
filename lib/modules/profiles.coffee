@@ -4,11 +4,16 @@ Profile = require '../profile'
 
 module.exports = (editor, args) ->
   
+  {config} = args
+  
   editor.profiles = new Library type: Profile, key: 'key'
   
-  for key, prototype of args.profiles
-    instance = new prototype editor: editor
-    editor.profiles.add instance
+  for key, _profile of config.profiles
+    _profile.entry? editor, args
+  
+  for key, _profile of config.profiles
+    profile = new _profile.Profile editor: editor, projectPrototype: _profile.Project
+    editor.profiles.add profile
   
   editor.profiles.active = null
   

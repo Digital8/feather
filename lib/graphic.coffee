@@ -32,11 +32,6 @@ module.exports = class Graphic extends EventEmitter
       width: @image.width
       height: @image.height
     
-    @dom._css = @dom.css
-    @dom.css = =>
-      console.log 'css', arguments
-      @dom._css arguments...
-    
     @element.addClass 'feather-graphic'
     
     @element.hide()

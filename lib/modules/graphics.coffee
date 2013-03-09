@@ -4,9 +4,7 @@ Library = require '../core/library'
 module.exports = (editor) ->
   
   editor.on 'ui', (key, args) ->
-    
     if key is 'image'
-      console.log 'ui', 'image'
       editor.image args
   
   editor.image = ({src, id}) ->
@@ -32,10 +30,4 @@ module.exports = (editor) ->
     
     editor.projects.active.surface.element.append graphic.dom
     
-    # graphic.dom.find('img').css '-webkit-transition': 'all 0.75s'
-    
     editor.emit 'graphic', graphic
-  
-  # editor.graphics.on 'remove', (graphic) ->
-  
-  #   console.log 'remove', graphic

@@ -30,11 +30,9 @@ module.exports = (editor) ->
       graphic.dom.css 'z-index': editor.zIndex++
     
     graphic.on 'select', ->
-      console.log 'select'
       graphic.dom.css 'box-shadow': '0px 0px 0px 3px #8ac53f'
     
     graphic.on 'deselect', ->
-      console.log 'deselect'
       graphic.dom.css 'box-shadow': ''
     
     # graphic.dom.find('img').bind 'mousedown', ->

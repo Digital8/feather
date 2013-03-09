@@ -1,3 +1,3 @@
 module.exports = (editor) ->
   
-  editor.render = (project) ->
+  editor.debug = ->
