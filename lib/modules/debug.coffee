@@ -11,6 +11,14 @@ module.exports = (editor) ->
     
       editor.config.debug editor
     
-    editor.on 'module', (key) ->
+    editor.on 'module', (module) ->
       
-      editor.debug 'module', key
+      groupMethod = if module.context.journal.length
+        'group'
+      else
+        'groupCollapsed'
+      
+      console?[groupMethod]? "#{module.key} [#{module.context.journal.length}]"
+      for entry in module.context.journal
+        console.log entry...
+      console?.groupEnd()

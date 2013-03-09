@@ -4,4 +4,4 @@ module.exports = (editor) ->
     
     editor.modules[key] = _module editor
     
-    editor.emit 'module', key
+    # editor.emit 'module', key
