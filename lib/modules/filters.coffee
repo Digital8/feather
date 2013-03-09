@@ -52,11 +52,11 @@ module.exports = (editor) ->
       id = graphic.dom.find('img').attr 'id'
       graphic.dom.find('img').attr 'src', "http://#{window.location.hostname}:8080/uploads/#{id}?#{editor.buildQueryString()}"
   , 1000
-      
+  
   editor.normalPushFilters = ->
-    editor.graphics.map (key, graphic) ->
-      graphic.dom.find('img').css
-        '-webkit-filter': editor.buildCSS()
+    # editor.graphics.map (key, graphic) ->
+    #   graphic.dom.find('img').css
+    #     '-webkit-filter': editor.buildCSS()
   
   editor.pushFilters()
   
