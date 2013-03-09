@@ -6,6 +6,8 @@ module.exports = class Editor extends Base
     
     super
     
+    @setMaxListeners 0
+    
     @modules = {}
     
     for key, _module of (require './modules')
@@ -13,3 +15,5 @@ module.exports = class Editor extends Base
       module = _module this, args
       
       @modules[key] = module
+      
+      @emit 'module', key

@@ -26,14 +26,3 @@ module.exports = (editor) ->
         top: center[1] - (height / 2)
       
       graphic.emit 'zoom'
-  
-  zoom = (factor) ->
-    editor.selected?.zoom factor
-  
-  (jQuery '#zoom-out').click (event) =>
-    event.preventDefault()
-    zoom 0.9
-  
-  (jQuery '#zoom-in').click =>
-    event.preventDefault()
-    zoom 1.1

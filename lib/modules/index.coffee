@@ -1,5 +1,7 @@
 module.exports =
   
+  environment: require './environment'
+  
   debug: require './debug'
   
   projects: require './projects'
@@ -50,12 +52,12 @@ module.exports =
   export: require './export'
   load: require './load'
   
-  fetch: require './fetch'
-  
   quality: require './quality'
-  
-  pricing: require './pricing'
   
   # templating: require './templating'
   
   reset: require './reset'
+  
+  ready: require './ready'
+  
+  modules: require './modules'

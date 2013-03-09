@@ -75,6 +75,3 @@ module.exports = class Graphic extends EventEmitter
     
     if save.src?
       @image.src = save.src
-  
-  remove: ->
-    @dom.fadeOut()

@@ -39,9 +39,3 @@ module.exports = (editor, args) ->
     editor.profiles.active = null
     
     editor.profiles.emit 'deactivate'
-  
-  # profiles =
-  #   'Picture Wall': (require './templating/profile') editor
-  #   'Wall Art':
-  #     activate: -> (jQuery '#tool-wall-art').fadeIn()
-  #     deactivate: -> (jQuery '#tool-wall-art').fadeOut()
