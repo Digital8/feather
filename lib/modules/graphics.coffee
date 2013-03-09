@@ -22,6 +22,7 @@ module.exports = (editor) ->
       editor.emit 'image', image, id
     
     image.src = src
+    image.setAttribute 'id', id
   
   editor.graphics = new Library type: Graphic
   

@@ -1,3 +1,5 @@
+_ = require 'underscore'
+
 module.exports = (editor) ->
   
   supportsCanvas = !!window.HTMLCanvasElement && !nocanvas
@@ -40,12 +42,21 @@ module.exports = (editor) ->
     return parts.join '&'
   
   editor.pushFilters = ->
+    if supportsCanvas
+      editor.normalPushFilters()
+    else
+      editor.throttlePushFilters()
+  
+  editor.throttlePushFilters = _.throttle ->
     editor.graphics.map (key, graphic) ->
-      if supportsCanvas
-        graphic.dom.find('img').css
-          '-webkit-filter': editor.buildCSS()
-      else
-        graphic.dom.find('img').attr 'src', "http://#{window.location.hostname}:8080/uploads/17118395?#{editor.buildQueryString()}"
+      id = graphic.dom.find('img').attr 'id'
+      graphic.dom.find('img').attr 'src', "http://#{window.location.hostname}:8080/uploads/#{id}?#{editor.buildQueryString()}"
+  , 1000
+      
+  editor.normalPushFilters = ->
+    editor.graphics.map (key, graphic) ->
+      graphic.dom.find('img').css
+        '-webkit-filter': editor.buildCSS()
   
   editor.pushFilters()
   
