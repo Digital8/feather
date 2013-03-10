@@ -30,6 +30,9 @@ module.exports =
   select: require './select'
   
   fit: require './fit'
+  contain: require './contain'
+  margin: require './margin'
+  measure: require './measure'
   
   center: require './center'
   

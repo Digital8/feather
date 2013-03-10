@@ -4,17 +4,14 @@ module.exports = (editor) ->
     
     graphic.fit = ->
       
-      {image} = graphic
+      {image, slot} = graphic
       
-      surface = editor.surface.data
-      surface.aspect = surface.width / surface.height
+      if image.aspect < slot.aspect
+        scale = slot.width / image.width
+      if image.aspect > slot.aspect
+        scale = slot.height / image.height
       
-      image.aspect = image.width / image.height
-      
-      if image.aspect < surface.aspect
-        scale = surface.width / image.width
-      if image.aspect > surface.aspect
-        scale = surface.height / image.height
+      # debugger
       
       graphic.scale = scale
       
@@ -31,9 +28,9 @@ module.exports = (editor) ->
         width: width
         height: height
       
-      src = editor.operations.scale.operate image: image, width: width, height: height
-      image.src = src
+      console.log width, height
       
-      editor.center graphic
-    
-    # graphic.fit()
+      # src = editor.operations.scale.operate image: image, width: width, height: height
+      # image.src = src
+      
+      # editor.center graphic

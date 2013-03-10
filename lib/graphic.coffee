@@ -20,6 +20,7 @@ module.exports = class Graphic extends EventEmitter
     @element.appendTo @dom
     
     @image = args.image
+    @image.aspect = @image.width / @image.height
     
     @clone = new Image
     @clone.src = @image.src
