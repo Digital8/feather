@@ -34,6 +34,8 @@ module.exports = (editor, args, context) ->
       'hue-rotate': 0
       contrast: 0
       blur: 0
+      lightness: 0
+      temperature: 0
   
   editor.resetFilters()
   
@@ -54,13 +56,26 @@ module.exports = (editor, args, context) ->
   editor.throttlePushFilters = _.throttle ->
     editor.graphics.map (key, graphic) ->
       id = graphic.dom.find('img').attr 'id'
-      graphic.dom.find('img').attr 'src', "http://#{window.location.hostname}:8080/uploads/#{id}?#{editor.buildQueryString()}"
-  , 1000
+      graphic.image.src = "http://#{window.location.hostname}:8080/uploads/#{id}?#{editor.buildQueryString()}"
+  , 1000 #1000ms for postback
   
-  editor.normalPushFilters = ->
-    # editor.graphics.map (key, graphic) ->
-    #   graphic.dom.find('img').css
-    #     '-webkit-filter': editor.buildCSS()
+  editor.normalPushFilters = _.throttle ->    
+    editor.graphics.map (key, graphic) ->
+      running = false #dirty hack
+      graphic.clone.onload = ->
+        if !running #dirty hack
+          running = true
+          (require './phantom') graphic.clone, editor.filters, (err, el) ->
+            if !err?
+              if el.nodeName.toLowerCase() is 'img'
+                graphic.image = el
+              else if el.nodeName.toLowerCase() is 'canvas'
+                graphic.dom.find('img').attr 'src', el.toDataURL()
+            else
+              console.log 'phantom failed for', el.nodeName.toLowerCase(), id, editor.filters
+      id = graphic.dom.find('img').attr 'id'
+      graphic.clone.src = "/uploads/#{id}"
+  , 100 #100ms for local
   
   editor.pushFilters()
   
