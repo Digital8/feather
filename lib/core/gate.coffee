@@ -8,8 +8,7 @@ module.exports = class Gate extends EventEmitter
     
     return unless args?
     
-    for key, value of args
-      @[key] = value
+    @[key] = value for key, value of args
     
     @default ?= ->
   

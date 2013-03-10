@@ -4,12 +4,11 @@ module.exports = class Property extends EventEmitter
   
   constructor: (args) ->
     
-    # super
+    super
     
-    return unless args?
+    # return unless args?
     
-    for key, value of args
-      @[key] = value
+    @[key] = value for key, value of args
     
     @default ?= ->
   

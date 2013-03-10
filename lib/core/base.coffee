@@ -31,7 +31,6 @@ module.exports = class Base extends EventEmitter
     
     super
     
-    for key, value of args
-      @[key] = value
+    @[key] = value for key, value of args
     
     @id ?= uuid()

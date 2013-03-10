@@ -2,17 +2,17 @@
 
 module.exports = class Property extends EventEmitter
   
-  constructor: (args) ->
+  # constructor: (args) ->
     
-    # super
+  #   # super
     
-    return unless args?
+  #   return unless args?
     
-    for key, value of args
-      @[key] = value
+  #   for key, value of args
+  #     @[key] = value
     
-    @hook ?= (object, args...) ->
+  #   @hook ?= (object, args...) ->
   
-  augment: (instance) ->
+  # augment: (instance) ->
     
-    
+  #   
