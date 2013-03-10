@@ -74,8 +74,9 @@ module.exports = (editor, args, context) ->
             else
               console.log 'phantom failed for', el.nodeName.toLowerCase(), id, editor.filters
       id = graphic.dom.find('img').attr 'id'
-      graphic.clone.src = "/uploads/#{id}"
-  , 100 #100ms for local
+      url = id.replace /_/g, '/'
+      graphic.clone.src = "/uploads/#{url}"
+  , 250 #100ms for local
   
   editor.pushFilters()
   
