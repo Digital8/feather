@@ -54,7 +54,7 @@ module.exports = (editor) ->
   
   editor.kit.on 'activate', ({key}) ->
     return unless key is 'scale'
-    (jQuery '#options-resize').fadeIn()
+    (jQuery '#options-resize').delay(666).fadeIn()
     editor.selected?.scalable()
   
   editor.kit.on 'deactivate', ({key}) ->
