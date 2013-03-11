@@ -61,8 +61,8 @@ module.exports =
   
   reset: require './reset'
   
+  phantom: require './phantom'
+  
   ready: require './ready'
   
   modules: require './modules'
-  
-  phantom: require './phantom'

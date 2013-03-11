@@ -13,12 +13,12 @@ module.exports = (editor) ->
     
     editor.on 'module', (module) ->
       
-      groupMethod = if module.context.journal.length
+      groupMethod = if module.context.console.journal.length
         'group'
       else
         'groupCollapsed'
       
-      console?[groupMethod]? "#{module.key} [#{module.context.journal.length}]"
-      for entry in module.context.journal
+      console?[groupMethod]? "#{module.key} [#{module.context.console.journal.length}]"
+      for entry in module.context.console.journal
         console.log entry...
       console?.groupEnd()

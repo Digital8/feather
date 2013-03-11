@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-module.exports = (editor, args, context) ->
+module.exports = (editor, args, {console}) ->
   
   window.nocanvas = false
   if window.location.search.indexOf('nocanvas') != -1
@@ -8,7 +8,7 @@ module.exports = (editor, args, context) ->
   
   supportsCanvas = !!window.HTMLCanvasElement && !nocanvas
   
-  context.log 'HTMLCanvasElement', supportsCanvas
+  console.log 'HTMLCanvasElement', supportsCanvas
   
   editor.filters = {}
   

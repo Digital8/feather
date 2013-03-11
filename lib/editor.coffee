@@ -13,8 +13,9 @@ module.exports = class Editor extends Base
     for key, _module of (require './modules')
       
       context =
-        journal: []
-        log: -> @journal.push arguments
+        console:
+          journal: []
+          log: -> @journal.push arguments
       
       __module =
         key: key
