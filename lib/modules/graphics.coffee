@@ -28,6 +28,4 @@ module.exports = (editor) ->
     
     graphic = editor.graphics.new image: image, editor: editor, id: id
     
-    # editor.projects.active.surface.element.append graphic.dom
-    
     editor.emit 'graphic', graphic
