@@ -64,3 +64,5 @@ module.exports =
   ready: require './ready'
   
   modules: require './modules'
+  
+  phantom: require './phantom'
