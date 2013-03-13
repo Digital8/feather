@@ -2,6 +2,8 @@
 
 uuid = require 'node-uuid'
 
+GraphicView = require '../views/graphic'
+
 module.exports = class Graphic extends EventEmitter
   
   constructor: (args = {}) ->
@@ -12,9 +14,15 @@ module.exports = class Graphic extends EventEmitter
     
     @id ?= uuid()
     
-    @width = @image.width
-    @height = @image.height
-    
-    @aspect = @width / @height
-    
-    @config = {}
+    @view = new GraphicView
+      graphic: @graphic
+      editor: @editor
+      parent: @parent
+  
+  show: ->
+    @view.show()
+    @emit 'show'
+  
+  hide: ->
+    @view.hide()
+    @emit 'hide'

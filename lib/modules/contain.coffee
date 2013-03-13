@@ -1,17 +1,5 @@
 module.exports = (editor) ->
   
-  editor.cover = ({parent, child}) ->
-    
-    if child.aspect < parent.aspect
-      scale = parent.width / child.width
-    if child.aspect > parent.aspect
-      scale = parent.height / child.height
-    
-    return {
-      width: child.width * scale
-      height: child.height * scale
-    }
-  
   # editor.contain2 = ({parent, child}) ->
     
   #   child =

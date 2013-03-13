@@ -4,6 +4,8 @@ module.exports =
   
   debug: require './debug'
   
+  config: require './config'
+  
   projects: require './projects'
   
   graphics: require './graphics'
@@ -15,13 +17,13 @@ module.exports =
   ui: require './ui'
   stage: require './stage' # deps: [ui]
   
-  surfaces: require './surfaces'
+  # surfaces: require './surfaces'
   
   delete: require './delete'
   
   presets: require './presets'
   
-  reader: require './reader'
+  # reader: require './reader'
   
   # layouts: require './layouts'
   
@@ -33,6 +35,7 @@ module.exports =
   contain: require './contain'
   margin: require './margin'
   measure: require './measure'
+  cover: require './cover'
   
   center: require './center'
   
@@ -61,7 +64,7 @@ module.exports =
   
   reset: require './reset'
   
-  phantom: require './phantom'
+  kit_projects: require './kit_projects'
   
   ready: require './ready'
   
