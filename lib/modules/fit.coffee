@@ -11,8 +11,6 @@ module.exports = (editor) ->
       if image.aspect > slot.aspect
         scale = slot.height / image.height
       
-      # debugger
-      
       graphic.scale = scale
       
       width = image.width * scale
@@ -27,10 +25,3 @@ module.exports = (editor) ->
       graphic.dom.css
         width: width
         height: height
-      
-      console.log width, height
-      
-      # src = editor.operations.scale.operate image: image, width: width, height: height
-      # image.src = src
-      
-      # editor.center graphic

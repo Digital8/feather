@@ -2,26 +2,25 @@ module.exports = (editor) ->
   
   editor.margin = ({parent, child, margin}) ->
     
-    size =
-      width: child.width
-      height: child.height
+    out = margin: {x: null, y: null}
     
-    initial =
-      x: parent.width - child.width
-      y: parent.height - child.height
+    if child.aspect > parent.aspect
+      out.margin.x = Math.floor margin.x * parent.aspect
+      scale = child.width / (parent.width - 2 * margin.x)
+      height = child.height / scale
+      out.margin.y = Math.floor (parent.height - height) / 2
+    else
+      out.margin.y = margin.y
+      scale = child.height / (parent.height - 2 * margin.y)
+      width = child.width / scale
+      out.margin.x = Math.floor (parent.width - width) / 2
     
-    # if initial.x < margin
+    out =
+      top: out.margin.y
+      left: out.margin.x
+      width: parent.width - (2 * out.margin.x)
+      height: parent.height - (2 * out.margin.y)
     
-    if initial.x < (margin.x * 2) then size.width -= margin.x * 2
-    if initial.y < (margin.y * 2) then size.height -= margin.y * 2
+    delete out.margin
     
-    # debugger
-    
-    return size
-    
-    # return {
-    #   x: Math.max initial.x, margin
-    #   y: Math.max initial.y, margin
-    # }
-    
-    # console.log initial.x, initial.y
+    return out

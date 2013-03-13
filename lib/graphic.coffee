@@ -8,71 +8,80 @@ module.exports = class Graphic extends EventEmitter
     
     super
     
-    @id = args.id or uuid()
+    @[key] = value for key, value of args
     
-    @dom = jQuery """<div>"""
-    @dom.css
-      position: 'absolute'
-      left: 0
-      top: 0
+    @id ?= uuid()
     
-    @element = jQuery args.image
-    @element.appendTo @dom
+    @width = @image.width
+    @height = @image.height
     
-    @image = args.image
-    @image.aspect = @image.width / @image.height
+    @aspect = @width / @height
     
-    @clone = new Image
-    @clone.src = @image.src
+    @config = {}
     
-    @element.css
-      width: '100%'
-      height: '100%'
+    # @dom = jQuery """<div>"""
+    # @dom.css
+    #   position: 'absolute'
+    #   left: 0
+    #   top: 0
     
-    @dom.css
-      width: @image.width
-      height: @image.height
+    # @element = jQuery args.image
+    # @element.appendTo @dom
     
-    @element.addClass 'feather-graphic'
+    # @image = args.image
+    # @image.aspect = @image.width / @image.height
     
-    @element.hide()
+    # @clone = new Image
+    # @clone.src = @image.src
     
-    @element.fadeIn()
+    # @element.css
+    #   width: '100%'
+    #   height: '100%'
     
-    @editor = args.editor
+    # @dom.css
+    #   width: @image.width
+    #   height: @image.height
     
-    @data = {}
+    # @element.addClass 'feather-graphic'
     
-    @remember()
+    # @element.hide()
+    
+    # @element.fadeIn()
+    
+    # @editor = args.editor
+    
+    # @data = {}
+    
+    # @remember()
   
-  remember: ->
+  # remember: ->
     
-    @initial ?= {}
-    @initial.width = @image.width
-    @initial.height = @image.height
+  #   @initial ?= {}
+  #   @initial.width = @image.width
+  #   @initial.height = @image.height
     
-    @viewport ?= {}
-    @viewport.left = 0
-    @viewport.top = 0
-    @viewport.width = 1
-    @viewport.height = 1
+  #   @viewport ?= {}
+  #   @viewport.left = 0
+  #   @viewport.top = 0
+  #   @viewport.width = 1
+  #   @viewport.height = 1
     
-    @scale = [1, 1]
+  #   @scale = [1, 1]
   
-  save: ->
+  # save: ->
     
-    return {
-      css:
-        width: @dom.width()
-        height: @dom.height()
-        left: @dom.position().left
-        top: @dom.position().top
-      src: @image.src
-    }
+  #   return {
+  #     css:
+  #       width: @dom.width()
+  #       height: @dom.height()
+  #       left: @dom.position().left
+  #       top: @dom.position().top
+  #     src: @image.src
+  #   }
   
-  restore: (save) ->
+  # restore: (save) ->
     
-    @dom.css save.css
+  #   @dom.css save.css
     
-    if save.src?
-      @image.src = save.src
+  #   if save.src?
+  #     @image.src = save.src

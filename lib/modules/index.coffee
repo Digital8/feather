@@ -4,6 +4,8 @@ module.exports =
   
   debug: require './debug'
   
+  config: require './config'
+  
   projects: require './projects'
   
   graphics: require './graphics'
@@ -21,7 +23,7 @@ module.exports =
   
   presets: require './presets'
   
-  reader: require './reader'
+  # reader: require './reader'
   
   # layouts: require './layouts'
   
@@ -33,6 +35,7 @@ module.exports =
   contain: require './contain'
   margin: require './margin'
   measure: require './measure'
+  cover: require './cover'
   
   center: require './center'
   
@@ -60,6 +63,8 @@ module.exports =
   # templating: require './templating'
   
   reset: require './reset'
+  
+  kit_projects: require './kit_projects'
   
   ready: require './ready'
   
