@@ -8,7 +8,17 @@ module.exports = class Library extends EventEmitter
     
     super
     
-    @objects = args.objects or Object.create null
+    @objects = args.objects
+    
+    unless @objects?
+      
+      if Object.create?
+        @objects = Object.create null
+      else
+        @objects = {}
+        
+        for key, value of @objects
+          delete @objects[key]
     
     @type = args.type or Object
     
