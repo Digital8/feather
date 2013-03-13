@@ -19,9 +19,11 @@ module.exports = (editor) ->
         width: width
         height: height
       
+      [x, y] = graphic.scale
+      
       graphic.dom.css
-        left: graphic.dom.position().left + (viewport.left * graphic.initial.width * graphic.scale[0])
-        top: graphic.dom.position().top + (viewport.top * graphic.initial.height * graphic.scale[1])
+        left: graphic.dom.position().left + (viewport.left * graphic.initial.width * x)
+        top: graphic.dom.position().top + (viewport.top * graphic.initial.height * y)
         width: graphic.scale[0] * width
         height: graphic.scale[1] * height
       

@@ -1,5 +1,7 @@
 module.exports = (editor, args) ->
   
+  editor.presets ?= args.presets
+  
   # editor.presets = args.presets or {}
   
   # $container = jQuery '#tool-filters .tool-container'
@@ -8,7 +10,10 @@ module.exports = (editor, args) ->
   
   # _template = (key) ->
   #   return jQuery """
-  #     <a href="#" id="filter-#{key}" class="icon"><img src="/css/images/icons/filter-#{key}.png" alt="#{key}">#{key}</a>
+  #     <a href="#" id="filter-#{key}" class="icon">
+  #       <img src="/css/images/icons/filter-#{key}.png" alt="#{key}">
+  #       #{key}
+  #     </a>
   #   """
   
   # binds = {}

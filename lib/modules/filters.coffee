@@ -19,13 +19,6 @@ module.exports = (editor, args, context) ->
     return filters
   
   editor.resetFilters = ->
-    # editor.filters =
-    #   sepia: '0%'
-    #   brightness: '0'
-    #   saturate: '100%'
-    #   'hue-rotate': '0deg'
-    #   contrast: '100%'
-    #   blur: '0px'
     
     editor.filters =
       sepia: 0
@@ -56,10 +49,11 @@ module.exports = (editor, args, context) ->
   editor.throttlePushFilters = _.throttle ->
     editor.graphics.map (key, graphic) ->
       id = graphic.dom.find('img').attr 'id'
-      graphic.image.src = "http://#{window.location.hostname}:8080/uploads/#{id}?#{editor.buildQueryString()}"
-  , 1000 #1000ms for postback
+      host = "http://#{window.location.hostname}:8080"
+      graphic.image.src = "#{host}/uploads/#{id}?#{editor.buildQueryString()}"
+  , 1000
   
-  editor.normalPushFilters = _.throttle ->    
+  editor.normalPushFilters = _.throttle ->
     editor.graphics.map (key, graphic) ->
       running = false #dirty hack
       graphic.clone.onload = ->
@@ -72,7 +66,7 @@ module.exports = (editor, args, context) ->
               else if el.nodeName.toLowerCase() is 'canvas'
                 graphic.dom.find('img').attr 'src', el.toDataURL()
             else
-              console.log 'phantom failed for', el.nodeName.toLowerCase(), id, editor.filters
+              console.log 'phantom failed for', id, editor.filters
       id = graphic.dom.find('img').attr 'id'
       url = id.replace /_/g, '/'
       graphic.clone.src = "/uploads/#{url}"
