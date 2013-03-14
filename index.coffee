@@ -8,6 +8,7 @@ module.exports =
   clamp: require './lib/clamp'
   Behaviour:
     Population: require './lib/core/behaviours/population'
+    Activation: require './lib/core/behaviours/activation'
   Controller:
     Graphic: require './lib/controllers/graphic'
   View:

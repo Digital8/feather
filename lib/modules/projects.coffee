@@ -1,29 +1,10 @@
-Project = require '../project'
-
 Library = require '../core/library'
+
+Behaviour = Activation: require '../core/behaviours/activation'
+
+Project = require '../project'
 
 module.exports = (editor) ->
   
   editor.projects = new Library type: Project
-  
-  editor.projects.activate = (project) ->
-    
-    active = editor.projects.active
-    
-    active?.deactivate? null
-    
-    active = editor.projects.active = project
-    
-    active?.activate? null
-    
-    @emit 'activate', project
-  
-  editor.projects.deactivate = (project) ->
-    
-    active = editor.projects.active
-    
-    active?.deactivate? null
-    
-    editor.projects.active = null
-    
-    @emit 'deactivate'
+  Behaviour.Activation editor.projects
