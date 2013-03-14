@@ -12,9 +12,9 @@ module.exports = class Graphic extends EventEmitter
     
     @id ?= uuid()
     
-    @width = @image.width
-    @height = @image.height
+    @width ?= @image.width
+    @height ?= @image.height
     
-    @aspect = @width / @height
+    @aspect ?= @width / @height
     
     @config = {}

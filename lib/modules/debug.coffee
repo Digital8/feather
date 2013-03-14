@@ -2,7 +2,7 @@ module.exports = (editor) ->
   
   editor.debug = ->
   
-  if editor.config.search.debug?
+  if 'debug' of editor.ENV
     
     editor.debug = ->
       console?.log arguments...

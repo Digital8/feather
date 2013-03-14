@@ -64,6 +64,9 @@ module.exports = class Graphic extends EventEmitter
     @position()
     
     # @debug()
+    
+    @graphic.on 'src', (src) =>
+      @image.attr src: src
   
   position: ->
     @dom.css

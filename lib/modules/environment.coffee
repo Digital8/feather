@@ -6,12 +6,10 @@ module.exports = (editor) ->
   
   {search, hash} = window.location
   
-  editor.config.search = {}
+  editor.ENV ?= {}
   
   if search.length
     
-    editor.config.search = querystring.parse search[1..]
-    
-    for key, value of editor.config.search
+    for key, value of (querystring.parse search[1..])
       
-      editor.config.search[key] = parse value
+      editor.ENV[key] = parse value

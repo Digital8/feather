@@ -10,12 +10,12 @@ module.exports =
   
   graphics: require './graphics'
   
-  filters: require './filters'
-  
   kit: require './kit'
   
   ui: require './ui'
   stage: require './stage' # deps: [ui]
+  
+  filters: require './filters'
   
   # surfaces: require './surfaces'
   

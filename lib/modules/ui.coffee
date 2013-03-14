@@ -1,6 +1,8 @@
+{EventEmitter} = require 'events'
+
 module.exports = (editor) ->
   
-  editor.ui = {}
+  editor.ui = new EventEmitter
   
   editor.on 'ready', =>
     
