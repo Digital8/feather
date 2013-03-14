@@ -55,7 +55,7 @@ module.exports =
   
   cancel: require './cancel'
   
-  export: require './export'
+  save: require './save'
   load: require './load'
   
   quality: require './quality'
