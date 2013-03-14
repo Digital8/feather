@@ -26,3 +26,9 @@ module.exports = class Project extends EventEmitter
   deactivate: ->
     
     @emit 'deactivate'
+  
+  save: ->
+    @emit 'save'
+  
+  load: ->
+    @emit 'load'
