@@ -6,7 +6,7 @@ module.exports =
   
   config: require './config'
   
-  projects: require './projects'
+  # projects: require './projects'
   
   graphics: require './graphics'
   
@@ -15,19 +15,11 @@ module.exports =
   ui: require './ui'
   stage: require './stage' # deps: [ui]
   
-  filters: require './filters'
-  
-  # surfaces: require './surfaces'
-  
   delete: require './delete'
   
-  presets: require './presets'
-  
-  # reader: require './reader'
-  
-  # layouts: require './layouts'
-  
   profiles: require './profiles'
+  
+  filters: require './filters'  # deps: [profiles]
   
   select: require './select'
   
@@ -60,11 +52,7 @@ module.exports =
   
   quality: require './quality'
   
-  # templating: require './templating'
-  
   reset: require './reset'
-  
-  kit_projects: require './kit_projects'
   
   ready: require './ready'
   
