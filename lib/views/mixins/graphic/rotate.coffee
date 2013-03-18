@@ -10,12 +10,12 @@ module.exports = (graphicController) ->
   
   editor.ui.on 'orientate', (key) ->
     if key is 'horizontal'
-      graphic.filters.fliph = not graphic.filters.fliph
+      if graphic is graphic.slot.graphics.active
+        graphic.filters.fliph = not graphic.filters.fliph
     
     if key is 'vertical'
-      graphic.filters.flipv = not graphic.filters.flipv
-    
-    console.log JSON.stringify graphic.filters
+      if graphic is graphic.slot.graphics.active
+        graphic.filters.flipv = not graphic.filters.flipv
     
     slot.filters.emit 'change'
     
