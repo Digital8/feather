@@ -1,77 +1,77 @@
-module.exports = (editor) ->
+# module.exports = (editor) ->
   
-  editor.on 'graphic', (graphic) ->
+#   editor.on 'graphic', (graphic) ->
     
-    graphic.scalable = (args) ->
+#     graphic.scalable = (args) ->
       
-      if not args?
+#       if not args?
         
-        graphic.data.scale =
-          before: graphic.save().css
+#         graphic.data.scale =
+#           before: graphic.save().css
         
-        graphic.handleScale = ->
+#         graphic.handleScale = ->
           
-          now = graphic.save().css
-          {before} = graphic.data.scale
+#           now = graphic.save().css
+#           {before} = graphic.data.scale
           
-          graphic.data.scale.x = now.width / before.width
-          graphic.data.scale.y = now.height / before.height
+#           graphic.data.scale.x = now.width / before.width
+#           graphic.data.scale.y = now.height / before.height
           
-          graphic.emit 'resize'
+#           graphic.emit 'resize'
         
-        graphic.dom.resizable
-          handles: 'all'
-          minWidth: 100
-          minHeight: 100
-          resize: ->
-            graphic.handleScale()
+#         graphic.dom.resizable
+#           handles: 'all'
+#           minWidth: 100
+#           minHeight: 100
+#           resize: ->
+#             graphic.handleScale()
         
-        graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
+#         graphic.dom.find('.ui-resizable-handle').addClass 'ui-handle'
         
-        graphic._scale ?= {}
+#         graphic._scale ?= {}
         
-        (jQuery '#options-resize').css opacity: 1
+#         (jQuery '#options-resize').css opacity: 1
       
-      if args is 'destroy'
+#       if args is 'destroy'
         
-        return unless graphic._scale?
+#         return unless graphic._scale?
         
-        graphic.dom.resizable 'destroy'
+#         graphic.dom.resizable 'destroy'
         
-        delete graphic._scale
+#         delete graphic._scale
         
-        (jQuery '#options-resize').css opacity: 0.5
+#         (jQuery '#options-resize').css opacity: 0.5
     
-    graphic.on 'deselect', ->
-      graphic.scalable 'destroy'
+#     graphic.on 'deselect', ->
+#       graphic.scalable 'destroy'
     
-    graphic.on 'select', ->
-      return unless editor.kit.active?.key is 'scale'
+#     graphic.on 'select', ->
+#       return unless editor.kit.active?.key is 'scale'
       
-      graphic.scalable()
+#       graphic.scalable()
   
-  (jQuery '#options-resize').css opacity: 0.5
+#   (jQuery '#options-resize').css opacity: 0.5
   
-  editor.kit.on 'activate', ({key}) ->
-    return unless key is 'scale'
-    (jQuery '#options-resize').show()
-    editor.selected?.scalable()
+#   editor.kit.on 'activate', ({key}) ->
+#     return unless key is 'scale'
+#     (jQuery '#options-resize').show()
+#     editor.selected?.scalable()
   
-  editor.kit.on 'deactivate', ({key}) ->
-    (jQuery '#options-resize').hide()
-    editor.selected?.scalable 'destroy'
+#   editor.kit.on 'deactivate', ({key}) ->
+#     (jQuery '#options-resize').hide()
+#     editor.selected?.scalable 'destroy'
   
-  editor.on 'apply', ({key}) ->
-    return unless key is 'scale'
+#   editor.on 'apply', ({key}) ->
+#     return unless key is 'scale'
     
-    editor.graphics.map (key, graphic) ->
+#     editor.graphics.map (key, graphic) ->
       
-      graphic.scale[0] *= graphic.data.scale.x
-      graphic.scale[1] *= graphic.data.scale.y
+#       graphic.scale[0] *= graphic.data.scale.x
+#       graphic.scale[1] *= graphic.data.scale.y
       
-      # src = editor.operations.scale.operate
-      #   image: graphic.image
-      #   width: graphic.dom.width()
-      #   height: graphic.dom.height()
+#       # src = editor.operations.scale.operate
+#       #   image: graphic.image
+#       #   width: graphic.dom.width()
+#       #   height: graphic.dom.height()
       
-      # graphic.image.src = src
+#       # graphic.image.src = src

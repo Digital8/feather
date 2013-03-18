@@ -50,3 +50,9 @@ module.exports = class Store extends EventEmitter
       @map[key] = value
     
     @emit 'change'
+  
+  all: ->
+    map = {}
+    for key, value of @map
+      map[key] = value
+    return map

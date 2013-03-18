@@ -14,9 +14,11 @@ module.exports = (editor) ->
     $target = jQuery event.target
     id = $target.attr 'id'
     
-    return unless id in ['wrapper', 'stage', 'surface']
+    # return unless id in ['wrapper', 'stage', 'surface']
     
     event.stopPropagation()
     event.preventDefault()
     
-    editor.deselect()
+    # editor.deselect()
+    
+    editor.ui.emit 'deselect', event

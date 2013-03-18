@@ -18,6 +18,15 @@ module.exports = class Graphic extends EventEmitter
       graphic: @graphic
       editor: @editor
       parent: @parent
+    
+    if @mode is 'write'
+      (require '../views/mixins/graphic/select') this
+      (require '../views/mixins/graphic/translate') this
+      (require '../views/mixins/graphic/scale') this
+      (require '../views/mixins/graphic/rotate') this
+    
+    @view.on 'mousedown', =>
+      @emit 'interact'
   
   show: ->
     @view.show()

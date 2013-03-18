@@ -67,6 +67,14 @@ module.exports = class Graphic extends EventEmitter
     
     @graphic.on 'src', (src) =>
       @image.attr src: src
+    
+    @dom.on 'click', (event) =>
+      @emit 'click'
+      return
+    
+    @dom.on 'mousedown', (event) =>
+      @emit 'mousedown'
+      return
   
   position: ->
     @dom.css

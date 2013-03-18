@@ -16,9 +16,8 @@ module.exports = class Mask extends EventEmitter
     @push()
     
     @dom.append @child
-    @child.css
-      border: '3px dashed'
-      'border-color': 'rgb(180, 235, 250)'
+    # @child.css
+    #   border: '3px dashed rgb(180, 235, 250)'
     
     @controller.on 'hide', =>
       @hide()
@@ -69,9 +68,35 @@ module.exports = class Mask extends EventEmitter
     
     for key in ['top', 'left', 'right', 'bottom']
       spawn key
+    
+    @border = jQuery '<div>'
+    @border.css
+      position: 'absolute'
+      left: 0
+      top: 0
+      width: '100%'
+      height: '100%'
+      border: '3px dashed rgb(180, 235, 250)'
+      'z-index': 1000
+    @border.appendTo @mask
+    
+    @border2 = @border.clone().css('z-index': '')
+    @border2.appendTo @dom
   
   push: ->
     @masks.top.css height: @margin.y, top: 0, width: '100%'
     @masks.bottom.css height: @margin.y, bottom: 0, width: '100%'
     @masks.left.css width: @margin.x, left: 0, height: '100%'
     @masks.right.css width: @margin.x, right: 0, height: '100%'
+    
+    @border.css
+      left: @child.position().left
+      top: @child.position().top
+      width: @child.width()
+      height: @child.height()
+    
+    @border2.css
+      left: @child.position().left
+      top: @child.position().top
+      width: @child.width()
+      height: @child.height()

@@ -21,30 +21,20 @@ module.exports =
   
   filters: require './filters'  # deps: [profiles]
   
-  select: require './select'
-  
   fit: require './fit'
   contain: require './contain'
   margin: require './margin'
   measure: require './measure'
   cover: require './cover'
-  
   center: require './center'
   
-  crop: require './crop'
-  
-  move: require './move'
-  
-  scale: require './scale'
-  
-  zoom: require './zoom'
-  
-  orientation: require './orientation'
-  
-  operations: require './operations'
+  # crop: require './crop'
+  # scale: require './scale'
+  # zoom: require './zoom'
+  # orientation: require './orientation'
+  # operations: require './operations'
   
   apply: require './apply'
-  
   cancel: require './cancel'
   
   save: require './save'

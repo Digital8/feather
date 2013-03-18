@@ -10,7 +10,10 @@ module.exports = (subject) ->
       
       @active = object
       
-      @active.activate? null
+      if @active?.activate?
+        @active.activate? null
+      else if @active?.emit?
+        @active.emit 'activate'
       
       @emit 'activate', object
   
@@ -18,7 +21,10 @@ module.exports = (subject) ->
     
     previous = @active
     
-    @active?.deactivate? null
+    if @active?.deactivate?
+      @active?.deactivate? null
+    else if @active?.emit?
+      @active.emit 'deactivate'
     
     @active = null
     

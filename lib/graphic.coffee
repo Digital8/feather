@@ -18,3 +18,5 @@ module.exports = class Graphic extends EventEmitter
     @aspect ?= @width / @height
     
     @config = {}
+    
+    @fit ?= yes

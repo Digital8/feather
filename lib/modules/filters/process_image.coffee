@@ -9,12 +9,22 @@ module.exports = ({image, filters}) ->
   canvas = util.scaleImageToCanvas image, 0.5
   ctx = canvas.getContext '2d'
   
-  {image, width} = canvas
+  {width, height} = canvas
   
   inData = ctx.getImageData 0, 0, width, height
   outData = util.createImageData ctx, width, height
   
   [inData, outData] = [outData, inData]
+  
+  # flipv
+  if filters.flipv
+    [inData, outData] = [outData, inData]
+    processors.fliph inData.data, outData.data, width, height
+  
+  # fliph
+  if filters.fliph
+    [inData, outData] = [outData, inData]
+    processors.flipv inData.data, outData.data, width, height
   
   if filters.saturation isnt 0
     [inData, outData] = [outData, inData]

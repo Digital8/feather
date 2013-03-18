@@ -24,11 +24,11 @@ module.exports = (editor, args, context) ->
             
             slot.graphics.map (key, graphic) ->
               
-              (require './process_graphic') graphic: graphic, filters: slot.filters.map
+              (require './process_graphic') graphic: graphic, filters: slot.filters.all()
           
           slot.graphics.on 'add', (graphic) ->
             
-            (require './process_graphic') graphic: graphic, filters: slot.filters.map
+            (require './process_graphic') graphic: graphic, filters: slot.filters.all()
   
   editor.ui.on 'filter', (key, value) ->
     
