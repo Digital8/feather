@@ -107,17 +107,17 @@ module.exports = (graphicController) ->
       
       if graphic.filters.flipv
         data.top = bottom
-        console.log 'flipv'
+        #console.log 'flipv'
       
       if graphic.filters.fliph
         data.left = right
-        console.log 'fliph'
+        #console.log 'fliph'
       
       if graphic.filters.rotate is 0
-        console.log 'quadrant 1'
+        #console.log 'quadrant 1'
       
       if graphic.filters.rotate is (Math.PI / 2)
-        console.log 'quadrant 2'
+        #console.log 'quadrant 2'
         realRight = right
         realTop = top
         if graphic.filters.fliph
@@ -128,7 +128,7 @@ module.exports = (graphicController) ->
         [data.top, data.left, data.width, data.height] = [realRight, realTop, height, width]
         
       if graphic.filters.rotate is (Math.PI)
-        console.log 'quadrant 3'
+        #console.log 'quadrant 3'
         realBottom = bottom
         realRight = right
         if graphic.filters.fliph
@@ -138,7 +138,7 @@ module.exports = (graphicController) ->
         [data.top, data.left] = [realBottom, realRight]
         
       if graphic.filters.rotate is (3 * Math.PI / 2)
-        console.log 'quadrant 4'
+        #console.log 'quadrant 4'
         realBottom = bottom
         realLeft = left
         if graphic.filters.fliph
