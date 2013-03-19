@@ -71,11 +71,24 @@ module.exports = (graphicController) ->
         destroy: ->
           draggable.draggable 'destroy'
           resizable.resizable 'destroy'
+          $masks.remove()
       }
+  
+  editor.on 'apply', ({key}) ->
+    if key is 'crop'
+      # graphic.relative = {}
+      # width: 
+      graphic.filters.crop =
+        left: 0.125
+        top: 0.124
+        width: 0.75
+        height: 0.75
+      slot.filters.emit 'change'
   
   graphic.on 'activate', ->
     if editor.kit.active?.key is 'crop'
       graphicController.croppable = croppable graphicController
+  
   graphic.on 'deactivate', ->
     if editor.kit.active?.key is 'crop'
       graphicController.croppable.destroy()
