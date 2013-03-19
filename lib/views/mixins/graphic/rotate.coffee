@@ -47,11 +47,13 @@ module.exports = (graphicController) ->
         left: center[0] - (width / 2)
         top: center[1] - (height / 2)
     
-    while graphic.filters.rotate > (Math.PI * 2)
+    while graphic.filters.rotate >= (Math.PI * 2)
       graphic.filters.rotate -= (Math.PI * 2)
     
     while graphic.filters.rotate < 0
       graphic.filters.rotate += (Math.PI * 2)
+    
+    # graphic.filters.rotate %= Math.PI * 2
     
     slot.filters.emit 'change'
     
