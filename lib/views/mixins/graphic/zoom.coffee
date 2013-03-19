@@ -28,9 +28,7 @@ module.exports = (graphicController) ->
     zoom factor
   
   graphic.slot.graphics.on 'activate', ->
-    # (jQuery '#options-resize').show()
     (jQuery '#options-resize').css opacity: 1
   
   graphic.slot.graphics.on 'deactivate', ->
-    # (jQuery '#options-resize').hide()
     (jQuery '#options-resize').css opacity: 0.5
