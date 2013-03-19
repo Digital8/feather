@@ -73,6 +73,50 @@ module.exports = ({image, filters}) ->
     [inData, outData] = [outData, inData]
     processors.sepia inData.data, outData.data, width, height
   
-  ctx.putImageData outData, 0, 0
+  if filters.rotate
+    
+    theta = filters.rotate
+    
+    ctx.putImageData outData, 0, 0
+    
+    cw = width
+    ch = height
+    
+    cx = 0
+    cy = 0
+    
+    switch theta
+      when (Math.PI / 2)
+        cw = height
+        ch = width
+        cy = height * -1
+        break
+      
+      when Math.PI
+        cx = width * -1
+        cy = height * -1
+        break
+      
+      when (Math.PI / 2) * 3
+        cw = height
+        ch = width
+        cx = width * -1
+        break
+    
+    canvas2 = document.createElement 'canvas'
+    canvas2.width = cw
+    canvas2.height = ch
+    
+    ctx2 = canvas2.getContext '2d'
+    
+    ctx2.rotate theta
+    
+    ctx2.drawImage canvas, cx, cy
+    
+    return canvas2.toDataURL()
   
-  return canvas.toDataURL()
+  else
+    
+    ctx.putImageData outData, 0, 0
+    
+    return canvas.toDataURL()

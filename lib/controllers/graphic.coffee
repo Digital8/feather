@@ -24,6 +24,8 @@ module.exports = class Graphic extends EventEmitter
       (require '../views/mixins/graphic/translate') this
       (require '../views/mixins/graphic/scale') this
       (require '../views/mixins/graphic/rotate') this
+      (require '../views/mixins/graphic/delete') this
+      (require '../views/mixins/graphic/zoom') this
     
     @view.on 'mousedown', =>
       @emit 'interact'

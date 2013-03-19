@@ -5,17 +5,31 @@ module.exports = (graphicController) ->
   graphic.filters ?=
     fliph: no
     flipv: no
+    rotate: 0
   
   {slot} = graphic
   
   editor.ui.on 'orientate', (key) ->
+    
+    return unless graphic is graphic.slot.graphics.active
+    
     if key is 'horizontal'
-      if graphic is graphic.slot.graphics.active
-        graphic.filters.fliph = not graphic.filters.fliph
+      graphic.filters.fliph = not graphic.filters.fliph
     
     if key is 'vertical'
-      if graphic is graphic.slot.graphics.active
-        graphic.filters.flipv = not graphic.filters.flipv
+      graphic.filters.flipv = not graphic.filters.flipv
+    
+    if key is 'clockwise'
+      graphic.filters.rotate += Math.PI / 2
+    
+    if key is 'anticlockwise'
+      graphic.filters.rotate -= Math.PI / 2
+    
+    while graphic.filters.rotate > (Math.PI * 2)
+      graphic.filters.rotate -= (Math.PI * 2)
+    
+    while graphic.filters.rotate < 0
+      graphic.filters.rotate += (Math.PI * 2)
     
     slot.filters.emit 'change'
     
