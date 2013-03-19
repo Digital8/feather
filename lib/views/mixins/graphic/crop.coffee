@@ -113,7 +113,7 @@ module.exports = (graphicController) ->
         data.left = right
         #console.log 'fliph'
       
-      if graphic.filters.rotate is 0
+      #if graphic.filters.rotate is 0
         #console.log 'quadrant 1'
       
       if graphic.filters.rotate is (Math.PI / 2)
