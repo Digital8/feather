@@ -98,53 +98,54 @@ module.exports = (graphicController) ->
   editor.on 'apply', ({key}) ->
     
     if key is 'crop'
-      
-      if (graphic.filters.rotate isnt 0) and (graphic.filters.rotate isnt Math.PI)
-        return
-      
       {data} = graphicController.croppable
       
       {top, left, width, height} = data
       
-      # this is the muntedness
-      # abs =
-      #   left: left * view.dom.width()
-      #   top: top * view.dom.height()
-      #   width: width * view.dom.width()
-      #   height: height * view.dom.height()
-      
-      # abs.right = view.dom.width() - (abs.left + abs.width)
-      # abs.bottom = view.dom.height() - (abs.top + abs.height)
-      
-      # if graphic.filters.rotate is Math.PI / 2
-      #   console.log 'munting the hax'
-      #   [abs.top, abs.right, abs.bottom, abs.left] = [abs.right, abs.bottom, abs.left, abs.top]
-        
-      #   data.left = abs.left / view.dom.width()
-      #   data.top = abs.top / view.dom.height()
-      #   data.width = abs.width / view.dom.width()
-      #   data.height = abs.height / view.dom.height()
-      #   data.right = abs.right / view.dom.width()
-      #   data.bottom = abs.bottom / view.dom.height()
-        
-      #   left = data.left
-      #   top = data.top
-      # </muntedness>
-      
       bottom = 1 - (top + height)
       right = 1 - (left + width)
       
-      if graphic.filters.flipv ^ graphic.filters.rotate is Math.PI
+      if graphic.filters.flipv
         data.top = bottom
-        console.log 'munted flipv'
+        console.log 'flipv'
       
-      if graphic.filters.fliph ^ graphic.filters.rotate is Math.PI
+      if graphic.filters.fliph
         data.left = right
-        console.log 'munted fliph'
+        console.log 'fliph'
       
-      # if graphic.filters.rotate is Math.PI
-      #   data.left = right
-      #   data.top = bottom
+      if graphic.filters.rotate is 0
+        console.log 'quadrant 1'
+      
+      if graphic.filters.rotate is (Math.PI / 2)
+        console.log 'quadrant 2'
+        realRight = right
+        realTop = top
+        if graphic.filters.fliph
+          realRight = left
+        if graphic.filters.flipv
+          realTop = bottom
+          
+        [data.top, data.left, data.width, data.height] = [realRight, realTop, height, width]
+        
+      if graphic.filters.rotate is (Math.PI)
+        console.log 'quadrant 3'
+        realBottom = bottom
+        realRight = right
+        if graphic.filters.fliph
+          realRight = left
+        if graphic.filters.flipv
+          realBottom = top
+        [data.top, data.left] = [realBottom, realRight]
+        
+      if graphic.filters.rotate is (3 * Math.PI / 2)
+        console.log 'quadrant 4'
+        realBottom = bottom
+        realLeft = left
+        if graphic.filters.fliph
+          realLeft = right
+        if graphic.filters.flipv
+          realBottom = top
+        [data.top, data.left, data.width, data.height] = [realLeft, realBottom , height, width]
       
       graphic.filters.crop ?= left: 0, top: 0, width: 1, height: 1
       
@@ -172,17 +173,6 @@ module.exports = (graphicController) ->
         width: cropAbs.width / graphic.image.width
         height: cropAbs.height / graphic.image.height
       
-      # # {top, left, width, height} = data
-      # # bottom = 1 - (top + height)
-      # # right = 1 - (left + width)
-      
-      # # if graphic.filters.flipv
-      # #   console.log 'munting flipv'
-      # #   data.top = bottom
-      # # if graphic.filters.fliph
-      # #   console.log 'munting fliph'
-      # #   data.left = right
-      
       graphic.relative =
         width: data.width * view.dom.width() / slotController.view.dom.width()
         height: data.height * view.dom.height() / slotController.view.dom.height()
@@ -194,7 +184,6 @@ module.exports = (graphicController) ->
       graphic.emit 'move'
       graphic.emit 'resize'
       
-      # graphic.filters.crop = data
       slot.filters.emit 'change'
   
   graphic.on 'activate', ->
