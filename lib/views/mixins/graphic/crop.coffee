@@ -56,7 +56,15 @@ module.exports = (graphicController) ->
           background: 'black'
         masks[key] = mask
       
+      data = {}
+      
       handleCrop = ->
+        
+        data.left = dom.position().left / view.dom.width()
+        data.top  = dom.position().top  / view.dom.height()
+        data.width  = dom.width() / view.dom.width()
+        data.height = dom.height() / view.dom.height()
+        
         masks.top.css height: dom.position().top, top: 0, width: '100%', left: 0
         masks.bottom.css height: view.dom.height() - (dom.position().top + dom.height()), bottom: 0, width: '100%'
         masks.left.css height: '100%', left: 0, top: 0, width: dom.position().left
@@ -65,9 +73,9 @@ module.exports = (graphicController) ->
       handleCrop()
       
       return {
-        croppable:
-          resizable: resizable
-          draggable: draggable
+        data: data
+        resizable: resizable
+        draggable: draggable
         destroy: ->
           draggable.draggable 'destroy'
           resizable.resizable 'destroy'
@@ -76,13 +84,17 @@ module.exports = (graphicController) ->
   
   editor.on 'apply', ({key}) ->
     if key is 'crop'
-      # graphic.relative = {}
-      # width: 
-      graphic.filters.crop =
-        left: 0.125
-        top: 0.124
-        width: 0.75
-        height: 0.75
+      
+      {data} = graphicController.croppable
+      
+      graphic.relative =
+        width: data.width * view.dom.width() / slotController.view.dom.width()
+        height: data.height * view.dom.height() / slotController.view.dom.width()
+      
+      graphic.emit 'move'
+      graphic.emit 'resize'
+      
+      graphic.filters.crop = data
       slot.filters.emit 'change'
   
   graphic.on 'activate', ->
