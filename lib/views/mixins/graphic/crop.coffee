@@ -23,8 +23,9 @@ module.exports = (graphicController) ->
       dom.appendTo view.dom
       
       draggable = dom.draggable
-        containment: view.dom
+        containment: view.dom.find('img')
         drag: -> handleCrop()
+        stop: -> handleCrop()
       
       resizable = dom.resizable
         handles: 'all'

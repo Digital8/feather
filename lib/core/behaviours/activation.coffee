@@ -31,3 +31,7 @@ module.exports = (subject) ->
     if previous?
       
       @emit 'deactivate', previous
+  
+  subject.on 'remove', (obj) ->
+    if subject.active is obj
+      subject.deactivate()
