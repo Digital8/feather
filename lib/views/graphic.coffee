@@ -17,9 +17,9 @@ module.exports = class Graphic extends EventEmitter
     @debugDom.appendTo @dom
     
     setInterval =>
-      @debugDom.text """
-        @slot.aspect: #{@graphic.aspect.toFixed(2)}
-        @aspect #{(@dom.width() / @dom.height()).toFixed(2)}
+      @debugDom.html """
+        <p>width: #{@dom.width()}</p>
+        <p>height: #{@dom.height()}</p>
       """
     , 1000
   

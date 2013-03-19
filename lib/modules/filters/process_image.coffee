@@ -16,6 +16,32 @@ module.exports = ({image, filters}) ->
   
   [inData, outData] = [outData, inData]
   
+  if filters.crop?
+    
+    [inData, outData] = [outData, inData]
+    
+    {crop} = filters
+    
+    crop =
+      left: parseInt (crop.left * width)
+      top: parseInt (crop.top * height)
+      width: parseInt (crop.width * width)
+      height: parseInt (crop.height * height)
+    
+    canvas2 = document.createElement 'canvas'
+    canvas2.width = crop.width
+    canvas2.height = crop.height
+    
+    ctx2 = canvas2.getContext '2d'
+    
+    ctx.putImageData inData, 0, 0
+    ctx2.drawImage canvas, -crop.left, -crop.top
+    
+    width = crop.width
+    height = crop.height
+    inData = util.createImageData ctx2, width, height
+    outData = ctx2.getImageData 0, 0, width, height
+  
   # flipv
   if filters.flipv
     [inData, outData] = [outData, inData]
@@ -73,11 +99,13 @@ module.exports = ({image, filters}) ->
     [inData, outData] = [outData, inData]
     processors.sepia inData.data, outData.data, width, height
   
-  if filters.rotate
+  if filters.rotate isnt 0
+    
+    [inData, outData] = [outData, inData]
     
     theta = filters.rotate
     
-    ctx.putImageData outData, 0, 0
+    ctx.putImageData inData, 0, 0
     
     cw = width
     ch = height
@@ -113,10 +141,13 @@ module.exports = ({image, filters}) ->
     
     ctx2.drawImage canvas, cx, cy
     
-    return canvas2.toDataURL()
+    width = cw
+    height = ch
+    inData = util.createImageData ctx2, cw, ch
+    outData = ctx2.getImageData 0, 0, cw, ch
   
-  else
-    
-    ctx.putImageData outData, 0, 0
-    
-    return canvas.toDataURL()
+  canvas.width = width
+  canvas.height = height
+  ctx.putImageData outData, 0, 0
+  
+  return canvas.toDataURL()
