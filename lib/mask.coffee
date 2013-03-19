@@ -19,7 +19,7 @@ module.exports = class Mask extends EventEmitter
     # @child.css
     #   border: '3px dashed rgb(180, 235, 250)'
     
-    @controller.on 'hide', =>
+    @controller?.on 'hide', =>
       @hide()
   
   hide: ->
