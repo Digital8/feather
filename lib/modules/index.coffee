@@ -6,8 +6,6 @@ module.exports =
   
   config: require './config'
   
-  # projects: require './projects'
-  
   graphics: require './graphics'
   
   kit: require './kit'
@@ -27,12 +25,6 @@ module.exports =
   measure: require './measure'
   cover: require './cover'
   center: require './center'
-  
-  # crop: require './crop'
-  # scale: require './scale'
-  # zoom: require './zoom'
-  # orientation: require './orientation'
-  # operations: require './operations'
   
   apply: require './apply'
   cancel: require './cancel'
