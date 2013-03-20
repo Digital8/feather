@@ -22,6 +22,8 @@ module.exports = class Kit extends EventEmitter
     
     @deactivate()
     
+    @emit 'apply'
+    
     callback active
   
   cancel: (callback) ->
@@ -30,6 +32,8 @@ module.exports = class Kit extends EventEmitter
     active?.cancel? null
     
     @deactivate active
+    
+    @emit 'cancel'
     
     callback active
   

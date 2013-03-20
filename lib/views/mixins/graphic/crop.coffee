@@ -86,6 +86,9 @@ module.exports = (graphicController) ->
   editor.on 'apply', ({key}) ->
     
     if key is 'crop'
+      
+      return unless graphicController.croppable?
+      
       {data} = graphicController.croppable
       
       {top, left, width, height} = data
