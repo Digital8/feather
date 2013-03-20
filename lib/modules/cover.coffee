@@ -2,9 +2,11 @@ module.exports = (editor) ->
   
   editor.cover = ({parent, child}) ->
     
-    if child.aspect < parent.aspect
+    if child.aspect is parent.aspect
       scale = parent.width / child.width
-    if child.aspect > parent.aspect
+    else if child.aspect < parent.aspect
+      scale = parent.width / child.width
+    else if child.aspect > parent.aspect
       scale = parent.height / child.height
     
     out = {

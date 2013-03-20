@@ -59,10 +59,6 @@ module.exports = (graphicController) ->
       
       data = {}
       
-      # debug = jQuery '<p>'
-      # debug.css color: 'white'
-      # debug.appendTo dom
-      
       handleCrop = ->
         
         data.left = dom.position().left / view.dom.width()
@@ -74,14 +70,6 @@ module.exports = (graphicController) ->
         masks.bottom.css height: view.dom.height() - (dom.position().top + dom.height()), bottom: 0, width: '100%'
         masks.left.css height: '100%', left: 0, top: 0, width: dom.position().left
         masks.right.css height: '100%', right: 0, top: 0, width: view.dom.width() - (dom.position().left + dom.width())
-        
-        # debug.html """
-        #   <p>left: #{dom.position().left}</p>
-        #   <p>top: #{dom.position().top}</p>
-        #   <p>width: #{dom.width()}</p>
-        #   <p>height: #{dom.height()}</p>
-        #   <p>data: #{JSON.stringify data}</p>
-        # """
       
       handleCrop()
       
@@ -107,28 +95,23 @@ module.exports = (graphicController) ->
       
       if graphic.filters.flipv
         data.top = bottom
-        #console.log 'flipv'
       
       if graphic.filters.fliph
         data.left = right
-        #console.log 'fliph'
-      
-      #if graphic.filters.rotate is 0
-        #console.log 'quadrant 1'
       
       if graphic.filters.rotate is (Math.PI / 2)
-        #console.log 'quadrant 2'
+        
         realRight = right
         realTop = top
+        
         if graphic.filters.fliph
           realRight = left
         if graphic.filters.flipv
           realTop = bottom
-          
-        [data.top, data.left, data.width, data.height] = [realRight, realTop, height, width]
         
+        [data.top, data.left, data.width, data.height] = [realRight, realTop, height, width]
+      
       if graphic.filters.rotate is (Math.PI)
-        #console.log 'quadrant 3'
         realBottom = bottom
         realRight = right
         if graphic.filters.fliph
@@ -136,9 +119,8 @@ module.exports = (graphicController) ->
         if graphic.filters.flipv
           realBottom = top
         [data.top, data.left] = [realBottom, realRight]
-        
+      
       if graphic.filters.rotate is (3 * Math.PI / 2)
-        #console.log 'quadrant 4'
         realBottom = bottom
         realLeft = left
         if graphic.filters.fliph
