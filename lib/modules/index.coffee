@@ -40,8 +40,6 @@ module.exports =
   save: require './save'
   load: require './load'
   
-  quality: require './quality'
-  
   reset: require './reset'
   
   ready: require './ready'
