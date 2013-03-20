@@ -174,8 +174,8 @@ module.exports = (graphicController) ->
         height: cropAbs.height / graphic.image.height
       
       graphic.relative =
-        width: data.width * view.dom.width() / slotController.view.dom.width()
-        height: data.height * view.dom.height() / slotController.view.dom.height()
+        width: width * view.dom.width() / slotController.view.dom.width()
+        height: height * view.dom.height() / slotController.view.dom.height()
       
       graphic.offset =
         left: (view.dom.position().left + (left  * view.dom.width()))  / slotController.view.dom.width()
