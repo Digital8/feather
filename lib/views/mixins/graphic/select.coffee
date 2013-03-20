@@ -4,11 +4,11 @@ module.exports = (graphicController) ->
   
   {slot} = graphic
   
-  zIndex = 666
+  slot.zIndex ?= 666
   
   bringToTop = (graphicController) ->
-    zIndex++
-    graphicController.view.dom.css 'z-index': zIndex
+    slot.zIndex++
+    graphicController.view.dom.css 'z-index': slot.zIndex
   
   graphicController.on 'interact', ->
     

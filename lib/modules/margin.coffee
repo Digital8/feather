@@ -4,6 +4,8 @@ module.exports = (editor) ->
     
     out = margin: {x: null, y: null}
     
+    debugger
+    
     if child.aspect > parent.aspect
       out.margin.x = Math.floor margin.x * parent.aspect
       scale = child.width / (parent.width - 2 * margin.x)
@@ -22,5 +24,7 @@ module.exports = (editor) ->
       height: parent.height - (2 * out.margin.y)
     
     delete out.margin
+    
+    out.aspect = out.width / out.height
     
     return out

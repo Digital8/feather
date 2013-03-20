@@ -32,7 +32,8 @@ module.exports = class Mask extends EventEmitter
   
   build: ->
     
-    @dom = jQuery """<div>"""
+    @dom = jQuery '<div>'
+    @dom.addClass 'mask-wrapper'
     @dom.css
       position: 'absolute'
       left: 0
@@ -70,6 +71,7 @@ module.exports = class Mask extends EventEmitter
       spawn key
     
     @border = jQuery '<div>'
+    @border.addClass 'border'
     @border.css
       position: 'absolute'
       left: 0
@@ -82,6 +84,12 @@ module.exports = class Mask extends EventEmitter
     
     @border2 = @border.clone().css('z-index': '')
     @border2.appendTo @dom
+  
+  setMargin: (margin) ->
+    
+    @margin = margin
+    
+    @push()
   
   push: ->
     @masks.top.css height: @margin.y, top: 0, width: '100%'
