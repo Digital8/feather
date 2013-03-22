@@ -19,7 +19,6 @@ module.exports =
   
   filters: require './filters'  # deps: [profiles]
   
-  fit: require './fit'
   contain: require './contain'
   margin: require './margin'
   measure: require './measure'
