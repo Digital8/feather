@@ -2,6 +2,7 @@ module.exports =
   Library: require './lib/core/library'
   Editor: require './lib/editor'
   Graphic: require './lib/graphic'
+  Text: require './lib/text'
   Profile: require './lib/profile'
   Project: require './lib/project'
   Mask: require './lib/mask'
@@ -12,5 +13,7 @@ module.exports =
     Activation: require './lib/core/behaviours/activation'
   Controller:
     Graphic: require './lib/controllers/graphic'
+    Text: require './lib/controllers/text'
   View:
     Graphic: require './lib/views/graphic'
+    Text: require './lib/views/text'

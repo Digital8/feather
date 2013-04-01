@@ -25,6 +25,8 @@ module.exports =
   cover: require './cover'
   center: require './center'
   
+  text: require './text'
+  
   apply: require './apply'
   cancel: require './cancel'
   
