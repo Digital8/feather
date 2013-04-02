@@ -1,5 +1,7 @@
 module.exports = (subject) ->
   
+  subject.population = 0
+  
   subject.on 'add', ->
     subject.population = (Object.keys subject.objects).length
     if subject.population is 1

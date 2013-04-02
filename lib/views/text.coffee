@@ -157,6 +157,8 @@ module.exports = class Text extends EventEmitter
     `
     
     @dom.textfill maxFontPixels: 120
+    
+    @dom.find('span').css 'line-height', "#{@dom.height()}px"
   
   deletable: ->
     
@@ -175,8 +177,9 @@ module.exports = class Text extends EventEmitter
     
     dom.click (event) =>
       event.preventDefault()
-      # graphic.slot.graphics.remove graphic
+      @text.slot.texts.remove @text
       @dom.remove()
+      @editor.kit.deactivate()
   
   show: ->
     
