@@ -25,11 +25,12 @@ module.exports = class Text extends EventEmitter
       left: @parent.width() * @text.left
       'text-align': 'center'
       'vertical-align': 'middle'
+      'z-index': 1000
     
     @dom.appendTo @parent
     
     @span = jQuery '<span>'
-    # @span.css 'line-height': 1
+    @span.css 'line-height': 1
     @span.appendTo @dom
     
     @span.html @text.value
@@ -50,65 +51,132 @@ module.exports = class Text extends EventEmitter
       @fit()
     
     if @mode is 'write'
-      @dom.draggable()
+      @dom.draggable
+        drag: =>
+          @emit 'interact'
       
-      @dom.resizable
+      @deletable()
+      @selectable()
+      @scalable()
+    
+    @fit()
+    
+    @text.on 'activate', =>
+      @editor.ui.emit 'text', @text
+  
+  scalable: ->
+    
+    {editor, text} = this
+    
+    {slot} = text
+    
+    scalable = =>
+      
+      resizable = @dom.resizable
         handles: 'all'
         aspectRatio: on
         resize: =>
           @fit()
-        # containment: @parent
+      
       @dom.find('.ui-resizable-handle').addClass 'ui-handle'
+      
+      return {
+        resizable: resizable
+        destroy: ->
+          resizable.resizable 'destroy'
+      }
     
-    @fit()
+    text.on 'activate', =>
+      if editor.kit.active?.key is 'scale'
+        @_scalable = scalable()
+    text.on 'deactivate', =>
+      if editor.kit.active?.key is 'scale'
+        @_scalable?.destroy?()
+    
+    editor.kit.on 'activate', ({key}) =>
+      if key is 'scale'
+        if slot.texts.active is text
+          @_scalable = scalable()
+    
+    editor.kit.on 'deactivate', ({key}) =>
+      if key is 'scale'
+        if slot.texts.active is text
+          @_scalable?.destroy?()
+  
+  selectable: ->
+    
+    {text} = this
+    
+    {slot} = text
+    
+    slot.zIndexText ?= 666
+    
+    bringToTop = =>
+      slot.zIndexText++
+      @dom.css 'z-index': slot.zIndexText
+    
+    @on 'interact', =>
+      slot.texts.activate text
+    
+    select = =>
+      bringToTop()
+      @dom.css 'box-shadow': '0px 0px 0px 3px #8ac53f'
+    
+    deselect = =>
+      @dom.css 'box-shadow': ''
+    
+    slot.texts.on 'activate', (_text) =>
+      if _text is text
+        select()
+    
+    slot.texts.on 'deactivate', (_text) =>
+      if _text is text
+        deselect()
+    
+    @dom.on 'mousedown', (event) =>
+      event.preventDefault()
+      @emit 'interact'
   
   fit: ->
     `
-    jQuery.fn.textfill = function(maxFontSize) {
-        maxFontSize = parseInt(maxFontSize, 10);
-        return this.each(function(){
-            var ourText = jQuery("span", this),
-                parent = ourText.parent(),
-                maxHeight = parent.height(),
-                maxWidth = parent.width(),
-                fontSize = parseInt(ourText.css("fontSize"), 10),
-                multiplier = maxWidth/ourText.width(),
-                newSize = (fontSize*(multiplier-0.1));
-            ourText.css(
-                "fontSize", 
-                (maxFontSize > 0 && newSize > maxFontSize) ? 
-                    maxFontSize : 
-                    newSize
-            );
-        });
-    };
+    jQuery.fn.textfill = function(options) {
+        var fontSize = options.maxFontPixels;
+        var ourText = jQuery('span:visible:first', this);
+        var maxHeight = jQuery(this).height();
+        var maxWidth = jQuery(this).width();
+        var textHeight;
+        var textWidth;
+        do {
+            ourText.css('font-size', fontSize);
+            textHeight = ourText.height();
+            textWidth = ourText.width();
+            fontSize = fontSize - 1;
+        } while ((textHeight > maxHeight || textWidth > maxWidth) && fontSize > 3);
+        return this;
+    }
     `
     
-    @dom.textfill()
-    
-    # resizer = jQuery """<span class="hidden-resizer" style="visibility: hidden; font-size: 333px;"></span>"""
-    # resizer.appendTo document.body
-    
-    # resizer.html text.value
-    
-    # # desired_width = 500
-    # # size = null
-    # # steps = 100
-    
-    # while resizer.width() < @parent.width()
-    #   steps--
-    #   return if steps <= 0
-      
-    #   console.log resizer.width(), desired_width
-      
-    #   size = parseInt(resizer.css("font-size"), 10)
-    #   resizer.css("font-size", size + 1)
-    #   console.log size
-    
-    # text.resize size
+    @dom.textfill maxFontPixels: 120
   
-  # size: ->
-  #   @dom.css 'font-size': @text.size
+  deletable: ->
+    
+    dom = jQuery '<div>'
+    dom.appendTo @dom
+    dom.css
+      width: 20
+      height: 20
+      top: -10
+      right: -10
+      position: 'absolute'
+      'line-height': 20
+      'font-size': 20
+      'z-index': 1000
+    dom.addClass 'ui-handle-delete'
+    
+    dom.click (event) =>
+      event.preventDefault()
+      # graphic.slot.graphics.remove graphic
+      @dom.remove()
   
   show: ->
     

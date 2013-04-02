@@ -11,6 +11,8 @@ module.exports = class Text extends EventEmitter
     @[key] = value for key, value of args
     
     @id ?= uuid()
+    
+    @color ?= '#BADA55'
   
   resize: ({width, height}) ->
     
