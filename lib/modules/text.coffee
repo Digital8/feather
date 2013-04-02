@@ -37,8 +37,7 @@ module.exports = (editor) ->
     (jQuery "#font-value").val text.font
     (jQuery "#font-value").change()
     # (jQuery "#color").setColor text.color
-    debugger
-    jQuery.farbtastic('#color').setColor text.color
+    jQuery.farbtastic('#picker').setColor text.color
   
   editor.kit.on 'activate', ({key}) ->
     return unless key is 'text'
