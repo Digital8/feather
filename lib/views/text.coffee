@@ -74,7 +74,7 @@ module.exports = class Text extends EventEmitter
       
       resizable = @dom.resizable
         handles: 'all'
-        aspectRatio: on
+        # aspectRatio: on
         resize: =>
           @fit()
       
@@ -109,7 +109,7 @@ module.exports = class Text extends EventEmitter
     
     {slot} = text
     
-    slot.zIndexText ?= 666
+    slot.zIndexText ?= 1666
     
     bringToTop = =>
       slot.zIndexText++
