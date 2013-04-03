@@ -16,7 +16,7 @@ module.exports = (graphicController) ->
   
   select = (graphicController) ->
     bringToTop graphicController
-    graphicController.view.dom.css 'box-shadow': '0px 0px 0px 3px #8ac53f'
+    graphicController.view.dom.css 'box-shadow': '0px 0px 0px 3px blue'
   
   deselect = (graphicController) ->
     graphicController.view.dom.css 'box-shadow': ''
