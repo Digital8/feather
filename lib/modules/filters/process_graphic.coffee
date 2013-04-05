@@ -9,6 +9,6 @@ module.exports = ({graphic, filters}) ->
   for key, value of graphic.filters
     filters[key] = value
   
-  src = process image: image, filters: filters
+  {url} = process image: image, filters: filters
   
-  graphic.emit 'src', src
+  graphic.emit 'src', url

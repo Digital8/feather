@@ -17,3 +17,4 @@ module.exports =
   View:
     Graphic: require './lib/views/graphic'
     Text: require './lib/views/text'
+  filters: require './lib/modules/filters'

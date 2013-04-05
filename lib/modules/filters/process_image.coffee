@@ -150,4 +150,4 @@ module.exports = ({image, filters}) ->
   canvas.height = height
   ctx.putImageData outData, 0, 0
   
-  return canvas.toDataURL()
+  return canvas: canvas, url: canvas.toDataURL()
