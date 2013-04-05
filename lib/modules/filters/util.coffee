@@ -7,6 +7,12 @@ module.exports =
   #   (canvas.getContext '2d').putImageData imageData, 0, 0
   #   return canvas
   
+  canvas: (width, height) ->
+    canvas = document.createElement 'canvas'
+    canvas.width = width
+    canvas.height = height
+    return canvas
+  
   scaleImageToCanvas: (image, scale = 0.1) ->
     canvas = document.createElement 'canvas'
     canvas.width = image.width * scale

@@ -1,8 +1,8 @@
-util = require './util'
+# util = require './util'
 
 processors = require './processors'
 
-module.exports = ({image, filters}) ->
+module.exports = ({image, filters, util}) ->
   
   {width, height} = image
   
@@ -28,9 +28,7 @@ module.exports = ({image, filters}) ->
       width: parseInt (crop.width * width)
       height: parseInt (crop.height * height)
     
-    canvas2 = document.createElement 'canvas'
-    canvas2.width = crop.width
-    canvas2.height = crop.height
+    canvas2 = util.canvas crop.width, crop.height
     
     ctx2 = canvas2.getContext '2d'
     
@@ -53,6 +51,7 @@ module.exports = ({image, filters}) ->
     processors.flipv inData.data, outData.data, width, height
   
   if filters.saturation isnt 0
+    console.log 'saturation'
     [inData, outData] = [outData, inData]
     processors.hsl inData.data, outData.data, width, height,
       hue: 0
@@ -60,6 +59,7 @@ module.exports = ({image, filters}) ->
       lightness: 0
   
   if filters.lightness isnt 0
+    console.log 'lightness'
     [inData, outData] = [outData, inData]
     processors.hsl inData.data, outData.data, width, height,
       hue: 0
@@ -91,11 +91,13 @@ module.exports = ({image, filters}) ->
       b: -filters.temperature / 100
   
   if filters.contrast isnt 0
+    console.log 'contrast'
     [inData, outData] = [outData, inData]
     processors.brightness inData.data, outData.data, width, height,
       contrast: filters.contrast / 100
   
   if filters.sepia isnt 0
+    console.log 'sepia'
     [inData, outData] = [outData, inData]
     processors.sepia inData.data, outData.data, width, height
   
@@ -131,9 +133,7 @@ module.exports = ({image, filters}) ->
         cx = width * -1
         break
     
-    canvas2 = document.createElement 'canvas'
-    canvas2.width = cw
-    canvas2.height = ch
+    canvas2 = util.canvas cw, ch
     
     ctx2 = canvas2.getContext '2d'
     
