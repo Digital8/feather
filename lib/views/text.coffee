@@ -15,8 +15,6 @@ module.exports = class Text extends EventEmitter
     @dom = jQuery '<div>'
     @dom.css
       position: 'absolute'
-      left: 0
-      top: 0
       'font-size': @text.size
       color: '#BADA55'
       width: @parent.width() * @text.width
