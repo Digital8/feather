@@ -11,7 +11,7 @@ module.exports = ({graphic, filters}) ->
   for key, value of graphic.filters
     filters[key] = value
   
-  if window.CanvasRenderingContext2D? isnt editor.ENV.homo?
+  if window.CanvasRenderingContext2D? and not editor.ENV.homo?
     
     {url} = process image: image, filters: filters, util: require './util'
     
