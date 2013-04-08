@@ -2,11 +2,11 @@
 
 processors = require './processors'
 
-module.exports = ({image, filters, util}) ->
+module.exports = ({image, filters, util, config}) ->
   
   {width, height} = image
   
-  canvas = util.scaleImageToCanvas image, 0.5
+  canvas = util.scaleImageToCanvas image, (config?.quality or 1)
   ctx = canvas.getContext '2d'
   
   {width, height} = canvas

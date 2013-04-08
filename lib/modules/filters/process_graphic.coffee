@@ -12,8 +12,11 @@ module.exports = ({graphic, filters}) ->
     filters[key] = value
   
   if window.CanvasRenderingContext2D? and not editor.ENV.homo?
+    {width, height} = image
+    quality = 200000 / (width * height)
+    if quality > 1 then quality = 1
     
-    {url} = process image: image, filters: filters, util: require './util'
+    {url} = process image: image, filters: filters, util: require './util', config: {quality: quality}
     
     graphic.emit 'src', url
   
