@@ -37,18 +37,14 @@ module.exports = class Kit extends EventEmitter
     
     callback active
   
-  include: (type, defaults = {}) ->
+  include: ({key, tool}) ->
     
     args =
-      key: type.name.toLowerCase()
+      key: key
       kit: this
       editor: @editor
     
-    if defaults?
-      for key, value of defaults
-        args[key] = value
-    
-    instance = new type args
+    instance = new tool args
     
     @tools.add instance
     
