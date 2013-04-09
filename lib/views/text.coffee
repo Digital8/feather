@@ -28,7 +28,6 @@ module.exports = class Text extends EventEmitter
     @span = jQuery '<span>'
     @span.css
       'line-height': 1
-      # 'font-size': @text.size
       'font-family': @text.font
       color: @text.color
     @span.appendTo @dom
@@ -60,6 +59,13 @@ module.exports = class Text extends EventEmitter
       @deletable()
       @selectable()
       @scalable()
+      
+      @on 'fit', =>
+        @text.box =
+          left: @span.position().left / @parent.width()
+          top: @span.position().top / @parent.height()
+          width: @span.width() / @parent.width()
+          height: @span.height() / @parent.height()
     
     @fit()
     
@@ -183,6 +189,8 @@ module.exports = class Text extends EventEmitter
     @dom.textfill maxFontPixels: 120
     
     @dom.find('span').css 'line-height', "#{@dom.height()}px"
+    
+    @emit 'fit'
   
   deletable: ->
     
