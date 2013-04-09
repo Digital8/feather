@@ -15,12 +15,10 @@ module.exports = class Text extends EventEmitter
     @dom = jQuery '<div>'
     @dom.css
       position: 'absolute'
-      'font-size': @text.size
-      color: '#BADA55'
-      width: @parent.width() * @text.width
-      height: @parent.height() * @text.height
-      top: @parent.height() * @text.top
-      left: @parent.width() * @text.left
+      width: @parent.width() * @text.relative.width
+      height: @parent.height() * @text.relative.height
+      top: @parent.height() * @text.offset.top
+      left: @parent.width() * @text.offset.left
       'text-align': 'center'
       'vertical-align': 'middle'
       'z-index': 1000
@@ -28,15 +26,16 @@ module.exports = class Text extends EventEmitter
     @dom.appendTo @parent
     
     @span = jQuery '<span>'
-    @span.css 'line-height': 1
+    @span.css
+      'line-height': 1
+      # 'font-size': @text.size
+      'font-family': @text.font
+      color: @text.color
     @span.appendTo @dom
     
     @span.html @text.value
     
     @fit()
-    
-    @text.on 'resize', =>
-      @fit()
     
     @text.on 'color', (color) =>
       @span.css color: color
@@ -51,6 +50,11 @@ module.exports = class Text extends EventEmitter
     if @mode is 'write'
       @dom.draggable
         drag: =>
+          @text.offset =
+            left: @dom.position().left / @parent.width()
+            top: @dom.position().top / @parent.height()
+          @text.emit 'move'
+          
           @emit 'interact'
       
       @deletable()
@@ -61,6 +65,19 @@ module.exports = class Text extends EventEmitter
     
     @text.on 'activate', =>
       @editor.ui.emit 'text', @text
+    
+    @text.on 'resize', =>
+      @dom.css
+        width: @parent.width() * @text.relative.width
+        height: @parent.height() * @text.relative.height
+    
+    @text.on 'move', =>
+      @dom.css
+        left: @text.offset.left * @parent.width()
+        top: @text.offset.top * @parent.height()
+    
+    @text.on 'resize', =>
+      @fit()
   
   scalable: ->
     
@@ -72,8 +89,17 @@ module.exports = class Text extends EventEmitter
       
       resizable = @dom.resizable
         handles: 'all'
-        # aspectRatio: on
         resize: =>
+          @text.relative =
+            width: @dom.width() / @parent.width()
+            height: @dom.height() / @parent.height()
+          @text.emit 'resize'
+          
+          @text.offset =
+            left: @dom.position().left / @parent.width()
+            top: @dom.position().top / @parent.height()
+          @text.emit 'move'
+          
           @fit()
       
       @dom.find('.ui-resizable-handle').addClass 'ui-handle'

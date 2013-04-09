@@ -50,9 +50,11 @@ module.exports = (editor) ->
     
     if slot.texts.population is 0
       text = slot.texts.new
-        width: 1
-        height: 0.25
-        top: 0.5
-        left: 0
+        relative:
+          width: 1
+          height: 0.25
+        offset:
+          top: 0.5
+          left: 0
         value: 'WallCreations'
       slot.texts.activate text

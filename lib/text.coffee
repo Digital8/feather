@@ -13,10 +13,14 @@ module.exports = class Text extends EventEmitter
     @id ?= uuid()
     
     @color ?= '#BADA55'
+    
+    @font ?= 'Arial'
+    
+    @value ?= 'WallCreations'
   
   resize: ({width, height}) ->
     
-    @width = width
-    @height = height
+    @relative.width = width
+    @relative.height = height
     
     @emit 'resize'
