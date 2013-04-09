@@ -16,6 +16,10 @@ module.exports = (editor, args, context) ->
       
       project.layouts.on 'add', (layout) ->
         
+        layout.slots.on 'add', (slot) ->
+          
+          (require './filterify') slot
+        
         layout.slots.map (key, slot) ->
           
           (require './filterify') slot
