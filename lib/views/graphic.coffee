@@ -49,9 +49,6 @@ module.exports = class Graphic extends EventEmitter
       top: 0
     @image.attr src: @graphic.image.src
     
-    # @graphic.on 'resize', =>
-    # @contain()
-    
     @contain()
     
     @graphic.on 'resize', =>
@@ -63,8 +60,6 @@ module.exports = class Graphic extends EventEmitter
       @position()
     
     @position()
-    
-    # @debug()
     
     @graphic.on 'src', (src) =>
       @image.attr src: src
