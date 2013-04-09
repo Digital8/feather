@@ -78,3 +78,17 @@ module.exports = class Library extends EventEmitter
       @remove object
     
     return
+  
+  got: (key) ->
+    
+    return @objects[key]?
+  
+  unset: (key) ->
+    
+    return unless @got key
+    
+    object = @objects[key]
+    
+    delete @objects[key]
+    
+    @emit 'remove', object
