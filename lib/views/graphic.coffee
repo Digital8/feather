@@ -36,6 +36,7 @@ module.exports = class Graphic extends EventEmitter
       position: 'absolute'
       left: 0
       top: 0
+      zIndex: @graphic.z
     @dom.appendTo @parent
     
     @image = jQuery '<img>'

@@ -4,6 +4,8 @@ module.exports = (graphicController) ->
   
   {slot} = graphic
   
+  {layout} = slot
+  
   scalable = (graphicController) ->
     
     unless args?
@@ -38,11 +40,15 @@ module.exports = (graphicController) ->
       graphicController.scalable.destroy()
   
   editor.kit.on 'activate', ({key}) ->
-    if key is 'scale'
-      if graphic.slot.graphics.active is graphic
-        graphicController.scalable = scalable graphicController
+    return unless key is 'scale'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    graphicController.scalable = scalable graphicController
   
   editor.kit.on 'deactivate', ({key}) ->
-    if key is 'scale'
-      if graphic.slot.graphics.active is graphic
-        graphicController.scalable.destroy()
+    return unless key is 'scale'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    graphicController.scalable.destroy()

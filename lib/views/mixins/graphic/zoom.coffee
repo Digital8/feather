@@ -2,6 +2,10 @@ module.exports = (graphicController) ->
   
   {editor, graphic, view} = graphicController
   
+  {slot} = graphic
+  
+  {layout} = slot
+  
   zoom = (factor) ->
     
     width = graphic.relative.width * factor
@@ -25,7 +29,8 @@ module.exports = (graphicController) ->
     graphic.emit 'resize'
   
   editor.ui.on 'zoom', (factor) ->
-    return unless graphic.slot.graphics.active is graphic
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
     
     zoom factor
   

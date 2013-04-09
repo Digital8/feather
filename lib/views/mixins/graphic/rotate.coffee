@@ -9,6 +9,8 @@ module.exports = (graphicController) ->
   
   {slot} = graphic
   
+  {layout} = slot
+  
   editor.ui.on 'orientate', (key) ->
     
     return unless graphic is graphic.slot.graphics.active
@@ -53,8 +55,6 @@ module.exports = (graphicController) ->
     while graphic.filters.rotate < 0
       graphic.filters.rotate += (Math.PI * 2)
     
-    # graphic.filters.rotate %= Math.PI * 2
-    
     slot.filters.emit 'change'
     
     graphic.emit 'move'
@@ -69,10 +69,15 @@ module.exports = (graphicController) ->
       editor.ui.rotate.disable()
   
   editor.kit.on 'activate', ({key}) ->
-    if key is 'orientation'
-      if graphic.slot.graphics.active is graphic
-        editor.ui.rotate.enable()
+    return unless key is 'orientation'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    editor.ui.rotate.enable()
+  
   editor.kit.on 'deactivate', ({key}) ->
-    if key is 'orientation'
-      if graphic.slot.graphics.active is graphic
-        editor.ui.rotate.disable()
+    return unless key is 'orientation'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    editor.ui.rotate.disable()

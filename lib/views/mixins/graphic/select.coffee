@@ -4,15 +4,16 @@ module.exports = (graphicController) ->
   
   {slot} = graphic
   
-  slot.zIndex ?= 666
-  
   bringToTop = (graphicController) ->
-    slot.zIndex++
-    graphicController.view.dom.css 'z-index': slot.zIndex
+    slot.z += 1
+    graphic.z = slot.z
+    graphic.emit 'z'
   
   graphicController.on 'interact', ->
-    
     graphic.slot.graphics.activate graphic
+  
+  graphic.on 'z', ->
+    graphicController.view.dom.css 'z-index': graphic.z
   
   select = (graphicController) ->
     bringToTop graphicController

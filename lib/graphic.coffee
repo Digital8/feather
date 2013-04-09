@@ -20,3 +20,5 @@ module.exports = class Graphic extends EventEmitter
     @config = {}
     
     @fit ?= yes
+    
+    @z ?= 666

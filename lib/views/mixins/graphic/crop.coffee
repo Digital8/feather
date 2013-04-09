@@ -7,6 +7,8 @@ module.exports = (graphicController) ->
   
   {slot} = graphic
   
+  {layout} = slot
+  
   croppable = (graphicController) ->
     
     unless args?
@@ -180,11 +182,15 @@ module.exports = (graphicController) ->
       graphicController.croppable.destroy()
   
   editor.kit.on 'activate', ({key}) ->
-    if key is 'crop'
-      if graphic.slot.graphics.active is graphic
-        graphicController.croppable = croppable graphicController
+    return unless key is 'crop'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    graphicController.croppable = croppable graphicController
   
   editor.kit.on 'deactivate', ({key}) ->
-    if key is 'crop'
-      if graphic.slot.graphics.active is graphic
-        graphicController.croppable.destroy()
+    return unless key is 'crop'
+    return unless layout.slots.active is slot
+    return unless slot.graphics.active is graphic
+    
+    graphicController.croppable.destroy()

@@ -21,7 +21,6 @@ module.exports =
   
   contain: require './contain'
   margin: require './margin'
-  measure: require './measure'
   cover: require './cover'
   center: require './center'
   
