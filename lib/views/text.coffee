@@ -38,9 +38,11 @@ module.exports = class Text extends EventEmitter
     
     @text.on 'color', (color) =>
       @span.css color: color
+      @fit()
     
     @text.on 'font', (font) =>
       @span.css 'font-family': font
+      @fit()
     
     @text.on 'value', (value) =>
       @span.html value
