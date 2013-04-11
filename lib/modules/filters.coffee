@@ -1,2 +1,3 @@
 module.exports = ->
+  
   (require './filters/entry') arguments...

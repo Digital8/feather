@@ -29,8 +29,6 @@ module.exports =
   apply: require './apply'
   cancel: require './cancel'
   
-  reset: require './reset'
-  
   ready: require './ready'
   
   modules: require './modules'
