@@ -23,12 +23,8 @@ module.exports = ({graphic, filters}) ->
   
   else
     
+    {api} = editor
+    
     json = JSON.stringify filters
     
-    if window.location.hostname is 'localhost'
-      
-      graphic.emit 'src', "http://localhost:8080/filter/#{encodeURIComponent graphic.image.src}?args=#{encodeURIComponent json}"
-    
-    else
-      
-      graphic.emit 'src', "http://api.takesitlikeapro.com:8080/filter/#{encodeURIComponent graphic.image.src}?args=#{encodeURIComponent json}"
+    graphic.emit 'src', "#{api}/filter/#{encodeURIComponent graphic.image.src}?args=#{encodeURIComponent json}"
