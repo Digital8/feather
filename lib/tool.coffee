@@ -17,10 +17,6 @@ module.exports = class Tool extends EventEmitter
       return unless id is @ui
       
       @emit 'slide', value
-    
-    @previous =
-      filtes: {}
-      graphics: {}
   
   commit: ->
   
