@@ -58,7 +58,7 @@
 }
 
 .ui-handle-delete {
-  background: #eeeeee url("/css/images/icons/delete-handle.png") no-repeat center center;
+  background: url("/css/images/icons/delete-handle.png") no-repeat center center;
   background-size: 100% 100%;
   box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
   -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
@@ -89,7 +89,7 @@
 }
 
 .ui-handle {
-  background: #eeeeee url("/css/images/icons/resize-handle.png") no-repeat center center;
+  background: url("/css/images/icons/resize-handle.png") no-repeat center center;
   background-size: 100% 100%;
   box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
   -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.15);
