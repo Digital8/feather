@@ -17,7 +17,12 @@ module.exports = (graphicController) ->
   
   select = (graphicController) ->
     bringToTop graphicController
-    graphicController.view.dom.css 'box-shadow': '0px 0px 0px 3px blue'
+    graphicController.view.dom.css
+      # 'box-shadow': '0px 0px 0px 3px blue'
+      '-webkit-box-shadow': '#666 0px 0px 50px'
+      '-moz-box-shadow': '#666 0px 0px 50px'
+      'box-shadow': '#666 0px 0px 50px'
+      behavior: 'url(/PIE.php)'
   
   deselect = (graphicController) ->
     graphicController.view.dom.css 'box-shadow': ''
