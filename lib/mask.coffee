@@ -54,6 +54,7 @@ module.exports = class Mask extends EventEmitter
       '-webkit-pointer-events': 'none'
       'pointer-events': 'none'
       zIndex: 1000000000000
+      display: 'none'
     
     @dom.append @mask
     
