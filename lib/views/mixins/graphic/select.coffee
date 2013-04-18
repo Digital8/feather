@@ -22,7 +22,9 @@ module.exports = (graphicController) ->
       '-webkit-box-shadow': '#666 0px 0px 50px'
       '-moz-box-shadow': '#666 0px 0px 50px'
       'box-shadow': '#666 0px 0px 50px'
-      behavior: 'url(/PIE.php)'
+      # behavior: 'url(/PIE.php)'
+    
+    PIE.attach graphicController.view.dom.get(0)
   
   deselect = (graphicController) ->
     graphicController.view.dom.css 'box-shadow': ''
