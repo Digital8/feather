@@ -2,7 +2,7 @@ module.exports = (graphicController) ->
   
   {graphic, view} = graphicController
   
-  dom = jQuery '<img>'
+  dom = jQuery '<div>'
   dom.appendTo view.dom
   dom.css
     width: 20
