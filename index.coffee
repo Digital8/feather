@@ -20,3 +20,4 @@ module.exports =
   filters:
     process_image: require './lib/modules/filters/process_image'
   parse: require './lib/parse'
+  pointer: require './lib/pointer'
