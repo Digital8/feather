@@ -1,6 +1,6 @@
 module.exports = (graphicController) ->
   
-  {graphic, editor} = graphicController
+  {graphic, editor, view} = graphicController
   
   {slot} = graphic
   
@@ -13,21 +13,32 @@ module.exports = (graphicController) ->
     graphic.slot.graphics.activate graphic
   
   graphic.on 'z', ->
-    graphicController.view.dom.css 'z-index': graphic.z
+    view.dom.css 'z-index': graphic.z
+  
+  border = ({color, width}) ->
+    
+    # map = if Modernizr.boxshadow
+    #   out = {}
+    #   for prefix in Modernizr._prefixes
+    #     out["#{prefix}box-shadow"]
+    # else
+    #   border: {}
+    
+    # if args?
+    #   {color, width} = args
+    # # if Modernizr.boxshadow
+    # # else
+    
+    return border: "#{color} #{width}px"
   
   select = (graphicController) ->
-    bringToTop graphicController
-    graphicController.view.dom.css
-      # 'box-shadow': '0px 0px 0px 3px blue'
-      '-webkit-box-shadow': '#666 0px 0px 50px'
-      '-moz-box-shadow': '#666 0px 0px 50px'
-      'box-shadow': '#666 0px 0px 50px'
-      # behavior: 'url(/PIE.php)'
     
-    PIE.attach graphicController.view.dom.get(0)
+    bringToTop graphicController
+    
+    view.dom.css (border color: 'blue', width: 3)
   
   deselect = (graphicController) ->
-    graphicController.view.dom.css 'box-shadow': ''
+    view.dom.css (border color: 'blue', width: 0)
   
   slot.graphics.on 'activate', (_graphic) ->
     if _graphic is graphic
