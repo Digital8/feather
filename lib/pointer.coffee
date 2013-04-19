@@ -2,18 +2,28 @@ module.exports =
   
   none: (element) ->
     
-    (jQuery element).bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
+    $element = jQuery element
+    
+    if Modernizr.pointerevents
       
-      @style.display = 'none'
+      $element.css
+        '-webkit-pointer-events': 'none'
+        'pointer-events': 'none'
+    
+    unless Modernizr.pointerevents
       
-      x = event.pageX
-      y = event.pageY
-      
-      under = document.elementFromPoint x, y
-      
-      @style.display = ''
-      
-      event.stopPropagation()
-      event.preventDefault()
-      
-      (jQuery under).trigger event.type
+      $element.bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
+        
+        @style.display = 'none'
+        
+        x = event.pageX
+        y = event.pageY
+        
+        under = document.elementFromPoint x, y
+        
+        @style.display = ''
+        
+        event.stopPropagation()
+        event.preventDefault()
+        
+        (jQuery under).trigger event.type

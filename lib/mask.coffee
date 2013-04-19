@@ -51,10 +51,7 @@ module.exports = class Mask extends EventEmitter
       width: '100%'
       height: '100%'
       opacity: 0.2
-      '-webkit-pointer-events': 'none'
-      'pointer-events': 'none'
       zIndex: 1000000000000
-      # display: 'none'
     
     Feather.pointer.none @mask
     
