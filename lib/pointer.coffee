@@ -2,7 +2,7 @@ module.exports =
   
   none: (element) ->
     
-    (jQuery element).bind 'click mouseover', (event) ->
+    (jQuery element).bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
       
       @style.display = 'none'
       
