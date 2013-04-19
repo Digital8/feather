@@ -150,12 +150,15 @@ module.exports = class Text extends EventEmitter
     @on 'interact', =>
       slot.texts.activate text
     
+    border = ({color, width}) ->
+      border: "#{color} #{width}px solid"
+    
     select = =>
       bringToTop()
-      @dom.css 'box-shadow': '0px 0px 0px 3px #8ac53f'
+      @dom.css (border color: '#b4ebfc', width: 3)
     
     deselect = =>
-      @dom.css 'box-shadow': ''
+      @dom.css (border color: '#b4ebfc', width: 0)
     
     slot.texts.on 'activate', (_text) =>
       if _text is text
