@@ -43,7 +43,7 @@ module.exports = class Mask extends EventEmitter
     @dom.appendTo @parent
     
     @mask = jQuery '<div>'
-    
+    @mask.appendTo @dom
     @mask.css
       position: 'absolute'
       left: 0
@@ -54,9 +54,9 @@ module.exports = class Mask extends EventEmitter
       '-webkit-pointer-events': 'none'
       'pointer-events': 'none'
       zIndex: 1000000000000
-      display: 'none'
+      # display: 'none'
     
-    @dom.append @mask
+    Feather.pointer.none @mask
     
     spawn = (key) =>
       element = jQuery """<div>"""
