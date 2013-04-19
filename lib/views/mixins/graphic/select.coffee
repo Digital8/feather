@@ -29,7 +29,7 @@ module.exports = (graphicController) ->
     # # if Modernizr.boxshadow
     # # else
     
-    return border: "#{color} #{width}px"
+    return border: "#{color} #{width}px solid"
   
   select = (graphicController) ->
     
