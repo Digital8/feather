@@ -26,4 +26,11 @@ module.exports =
         event.stopPropagation()
         event.preventDefault()
         
-        (jQuery under).trigger event
+        # don't pass args through for clicks
+        if event.type in ['click']
+          
+          (jQuery under).trigger event.type
+        
+        else
+        
+          (jQuery under).trigger event
