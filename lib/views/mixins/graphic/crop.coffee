@@ -1,4 +1,4 @@
-{Mask} = require 'feather'
+{Mask} = Feather = require 'feather'
 util = require 'util'
 
 module.exports = (graphicController) ->
@@ -42,7 +42,6 @@ module.exports = (graphicController) ->
       $masks = jQuery '<div>'
       $masks.appendTo view.dom
       $masks.css
-        opacity: 0.5
         position: 'absolute'
         left: 0
         top: 0
@@ -56,7 +55,8 @@ module.exports = (graphicController) ->
         mask.appendTo $masks
         mask.css
           position: 'absolute'
-          background: 'black'
+          # background: 'black'
+        Feather.opacity mask
         masks[key] = mask
       
       data = {}
@@ -68,10 +68,10 @@ module.exports = (graphicController) ->
         data.width  = dom.width() / view.dom.width()
         data.height = dom.height() / view.dom.height()
         
-        masks.top.css height: dom.position().top, top: 0, width: '100%', left: 0
+        masks.top.css height: dom.position().top, top: 0, width: '100%'
         masks.bottom.css height: view.dom.height() - (dom.position().top + dom.height()), bottom: 0, width: '100%'
-        masks.left.css height: '100%', left: 0, top: 0, width: dom.position().left
-        masks.right.css height: '100%', right: 0, top: 0, width: view.dom.width() - (dom.position().left + dom.width())
+        masks.left.css left: 0, top: dom.position().top, width: dom.position().left, height: dom.height()
+        masks.right.css height: dom.height(), right: 0, top: dom.position().top, width: view.dom.width() - (dom.position().left + dom.width())
       
       handleCrop()
       
