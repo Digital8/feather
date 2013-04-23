@@ -16,8 +16,6 @@ module.exports = class Mask extends EventEmitter
     @push()
     
     @dom.append @child
-    # @child.css
-    #   border: '3px dashed rgb(180, 235, 250)'
     
     @controller?.on 'hide', =>
       @hide()
@@ -51,7 +49,7 @@ module.exports = class Mask extends EventEmitter
       width: '100%'
       height: '100%'
       opacity: 0.2
-      zIndex: 1000000000000
+      zIndex: 100000
       'pointer-events': 'none'
     
     Feather.pointer.none @mask

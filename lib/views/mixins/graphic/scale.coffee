@@ -25,6 +25,7 @@ module.exports = (graphicController) ->
           graphic.emit 'move'
       
       view.dom.find('.ui-resizable-handle').addClass 'ui-handle'
+      view.dom.find('.ui-resizable-handle').css zIndex: 1000000
       
       return {
         resizable: resizable

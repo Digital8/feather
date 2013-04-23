@@ -26,4 +26,4 @@ module.exports =
         event.stopPropagation()
         event.preventDefault()
         
-        (jQuery under).trigger event.type
+        (jQuery under).trigger event
