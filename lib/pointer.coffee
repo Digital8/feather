@@ -12,8 +12,6 @@ module.exports =
     
     unless Modernizr.pointerevents
       
-      console.log 'shimming pointerevents'
-      
       $element.bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
         
         @style.display = 'none'
