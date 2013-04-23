@@ -44,6 +44,7 @@ module.exports = class Mask extends EventEmitter
     @mask.appendTo @dom
     @mask.css
       position: 'absolute'
+      display: 'inline-block'
       left: 0
       top: 0
       width: '100%'
