@@ -13,4 +13,4 @@ module.exports = (dom, opacity = 0.1) ->
     dom.css {opacity}
   
   unless support
-    dom.css background: 'url(/css/images/mask.png)'
+    dom.css background: 'url(/images/mask.png)'
