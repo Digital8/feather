@@ -6,7 +6,7 @@ module.exports = (dom, opacity = 0.1) ->
   
   support = yes
   
-  if ua.browser is 'msie' and version.major is '8'
+  if ua.browser is 'msie' and ua.version.major is '8'
     support = no
   
   if support
