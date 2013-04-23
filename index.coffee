@@ -21,3 +21,4 @@ module.exports =
     process_image: require './lib/modules/filters/process_image'
   parse: require './lib/parse'
   pointer: require './lib/pointer'
+  opacity: require './lib/opacity'
