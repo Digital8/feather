@@ -55,15 +55,16 @@ module.exports = class Mask extends EventEmitter
       zIndex: 100000
       'pointer-events': 'none'
     
-    Feather.opacity @mask
     Feather.pointer.none @mask
     
     spawn = (key) =>
       element = jQuery """<div>"""
+      element.appendTo @mask
       element.css
         position: 'absolute'
         background: 'black'
-      @mask.append element
+      
+      Feather.opacity element
       
       @masks ?= {}
       @masks[key] = element
@@ -93,10 +94,10 @@ module.exports = class Mask extends EventEmitter
     @push()
   
   push: ->
-    @masks.top.css height: @margin.y, top: 0, width: '100%'
-    @masks.bottom.css height: @margin.y, bottom: 0, width: '100%'
-    @masks.left.css width: @margin.x, left: 0, height: '100%'
-    @masks.right.css width: @margin.x, right: 0, height: '100%'
+    @masks.top.css    height: @margin.y, top: 0,    left: 0, right: 0
+    @masks.bottom.css height: @margin.y, bottom: 0, left: 0, right: 0
+    @masks.left.css   width: @margin.x,  left: 0,   top: @margin.y,  bottom: @margin.y
+    @masks.right.css  width: @margin.x,  right: 0,  top: @margin.y,  bottom: @margin.y
     
     @border.css
       left: @child.position().left

@@ -4,7 +4,7 @@ module.exports = (dom, opacity = 0.1) ->
   
   # app.socket.emit 'debug', ua
   
-  support = yes
+  support = no
   
   if ua.browser is 'msie' and ua.version.major is '8'
     support = no
@@ -13,4 +13,4 @@ module.exports = (dom, opacity = 0.1) ->
     dom.css {opacity}
   
   unless support
-    dom.css background: 'url(/images/mask.png)'
+    dom.css background: 'url(/css/images/mask.png)'
