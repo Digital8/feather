@@ -49,10 +49,9 @@ module.exports = class Mask extends EventEmitter
       top: 0
       width: '100%'
       height: '100%'
-      opacity: 0.2
-      filter: 'alpha(opacity=20)'
       '-ms-filter': "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)"
-      filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=20)'
+      filter: 'alpha(opacity=20)'
+      opacity: 0.2
       zIndex: 100000
       'pointer-events': 'none'
     
