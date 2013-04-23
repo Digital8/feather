@@ -4,32 +4,28 @@ module.exports =
     
     $element = jQuery element
     
-    # console.log 'Modernizr.pointerevents', Modernizr.pointerevents
+    if Modernizr.pointerevents
+      
+      $element.css
+        '-webkit-pointer-events': 'none'
+        'pointer-events': 'none'
     
-    # if Modernizr.pointerevents
+    unless Modernizr.pointerevents
       
-    # console.log 'native pointerevents'
+      console.log 'shimming pointerevents'
       
-    $element.css
-      '-webkit-pointer-events': 'none'
-      'pointer-events': 'none'
-    
-    # unless Modernizr.pointerevents
-      
-    #   console.log 'shimming pointerevents'
-      
-    #   $element.bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
+      $element.bind 'click mouseover mousedown mouseout mousemove mouseup mousein', (event) ->
         
-    #     @style.display = 'none'
+        @style.display = 'none'
         
-    #     x = event.pageX
-    #     y = event.pageY
+        x = event.pageX
+        y = event.pageY
         
-    #     under = document.elementFromPoint x, y
+        under = document.elementFromPoint x, y
         
-    #     @style.display = ''
+        @style.display = ''
         
-    #     event.stopPropagation()
-    #     event.preventDefault()
+        event.stopPropagation()
+        event.preventDefault()
         
-    #     (jQuery under).trigger event.type
+        (jQuery under).trigger event.type

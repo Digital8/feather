@@ -35,10 +35,10 @@ module.exports = (graphicController) ->
     
     bringToTop graphicController
     
-    view.dom.css (border color: 'blue', width: 3)
+    view.dom.find('img').css (border color: 'blue', width: 3)
   
   deselect = (graphicController) ->
-    view.dom.css (border color: 'blue', width: 0)
+    view.dom.find('img').css (border color: 'blue', width: 0)
   
   slot.graphics.on 'activate', (_graphic) ->
     if _graphic is graphic

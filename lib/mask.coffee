@@ -52,6 +52,7 @@ module.exports = class Mask extends EventEmitter
       height: '100%'
       opacity: 0.2
       zIndex: 1000000000000
+      'pointer-events': 'none'
     
     Feather.pointer.none @mask
     

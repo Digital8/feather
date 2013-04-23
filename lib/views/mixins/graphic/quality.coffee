@@ -12,13 +12,13 @@ module.exports = (graphicController) ->
     }[key]
   
   border = ({color, width}) ->
-    border: "#{color} #{width}px solid"
+    return border: "#{color} #{width}px solid"
   
   graphic.on 'quality', ->
     
     return unless slot.graphics.active isnt graphic
     
-    view.dom.css border
+    view.dom.find('img').css border
       color: qualityKeyToColor graphic.quality.key
       width: 3
   
@@ -26,6 +26,6 @@ module.exports = (graphicController) ->
     
     return unless _graphic is graphic
     
-    view.dom.css border
+    view.dom.find('img').css border
       color: qualityKeyToColor graphic.quality.key
       width: 3

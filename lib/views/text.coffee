@@ -22,6 +22,7 @@ module.exports = class Text extends EventEmitter
       'text-align': 'center'
       'vertical-align': 'middle'
       'z-index': 1000
+      'box-sizing': 'content-box'
     
     @dom.appendTo @parent
     
