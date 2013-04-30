@@ -17,18 +17,6 @@ module.exports = (graphicController) ->
   
   border = ({color, width}) ->
     
-    # map = if Modernizr.boxshadow
-    #   out = {}
-    #   for prefix in Modernizr._prefixes
-    #     out["#{prefix}box-shadow"]
-    # else
-    #   border: {}
-    
-    # if args?
-    #   {color, width} = args
-    # # if Modernizr.boxshadow
-    # # else
-    
     return border: "#{color} #{width}px solid"
   
   select = (graphicController) ->
@@ -49,5 +37,4 @@ module.exports = (graphicController) ->
       deselect graphicController
   
   # editor.ui.on 'deselect', (event) ->
-  #   console.log 'deselect', event
   #   slot.graphics.deactivate()

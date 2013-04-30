@@ -51,7 +51,6 @@ module.exports = ({image, filters, util, config}) ->
     processors.flipv inData.data, outData.data, width, height
   
   if filters.saturation isnt 0
-    console.log 'saturation'
     [inData, outData] = [outData, inData]
     processors.hsl inData.data, outData.data, width, height,
       hue: 0
@@ -59,7 +58,6 @@ module.exports = ({image, filters, util, config}) ->
       lightness: 0
   
   if filters.lightness isnt 0
-    console.log 'lightness'
     [inData, outData] = [outData, inData]
     processors.hsl inData.data, outData.data, width, height,
       hue: 0
@@ -91,13 +89,11 @@ module.exports = ({image, filters, util, config}) ->
       b: -filters.temperature / 100
   
   if filters.contrast isnt 0
-    console.log 'contrast'
     [inData, outData] = [outData, inData]
     processors.brightness inData.data, outData.data, width, height,
       contrast: filters.contrast / 100
   
   if filters.sepia isnt 0
-    console.log 'sepia'
     [inData, outData] = [outData, inData]
     processors.sepia inData.data, outData.data, width, height
   
