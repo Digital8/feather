@@ -79,11 +79,13 @@ module.exports = class Text extends EventEmitter
       @dom.css
         width: @parent.width() * @text.relative.width
         height: @parent.height() * @text.relative.height
+      @fit()
     
     @text.on 'move', =>
       @dom.css
         left: @text.offset.left * @parent.width()
         top: @text.offset.top * @parent.height()
+      @fit()
     
     @text.on 'resize', =>
       @fit()
